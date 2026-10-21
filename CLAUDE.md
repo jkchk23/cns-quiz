@@ -9,7 +9,7 @@
 - `src/data_curated.js` — 개념 문제 `CURATED`: [단원, 문제, 정답, [오답 4개], 해설]
 - `src/engine.js` — 문제 풀 생성·보기 생성 규칙
 - `src/ui.js`, `src/template.html` — 화면
-- `build.py` — src를 합쳐 루트의 `index.html`, `sw.js`(캐시 버전 갱신), `manifest.json` 생성
+- `build.py` — src를 합쳐 루트의 `index.html`, `sw.js`(화면은 네트워크 우선 → 온라인이면 즉시 최신 반영), `manifest.json` 생성
 
 ## 수정 절차
 1. `src/`만 고친다 (루트 `index.html` 직접 수정 금지)
