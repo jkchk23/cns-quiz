@@ -646,11 +646,13 @@ const $ = s => document.querySelector(s);
 const app = () => $("#app");
 const ALL_UNITS = Object.keys(UNITS).map(Number);
 let session = null;
+let view = ""; // 지금 보이는 화면 — 홈 안에서 다시 그릴 때는 스크롤 위치를 유지
 const smooth = () => matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 
 // ───── 홈
 function poolFor(units) { return ESSAYS.filter(q => units.has(q.lec)); }
 function renderHome() {
+  const keepY = view === "home" ? window.scrollY : 0;
   session = null;
   const s = state.set;
   const units = new Set(s.units);
@@ -735,7 +737,8 @@ function renderHome() {
   $("#reset").onclick = () => {
     if (confirm("채점 기록을 모두 지울까요? 작성 중인 답안과 설정은 남아요.")) { state.q = {}; save(); renderHome(); }
   };
-  window.scrollTo(0, 0);
+  view = "home";
+  window.scrollTo(0, keepY);
 }
 
 function renderStats() {
@@ -766,6 +769,7 @@ function startQuiz(list, mode) {
 }
 
 function renderQ() {
+  view = "quiz";
   if (session.i >= session.items.length) return renderResult();
   const q = session.items[session.i];
   const total = session.items.length, idx = session.i;
@@ -863,6 +867,7 @@ function showFeedback(q, g) {
 
 // ───── 결과
 function renderResult() {
+  view = "result";
   const log = session.log;
   const scored = log.filter(l => l.s !== null);
   const avg = scored.length ? Math.round(scored.reduce((a, l) => a + l.s, 0) / scored.length) : 0;
@@ -894,6 +899,7 @@ function renderResult() {
 // ───── 모범답안 모음
 let dictUnit = 0, dictQ = "";
 function renderDict() {
+  view = "dict";
   session = null;
   const chips = [0, ...ALL_UNITS.filter(u => ESSAYS.some(q => q.lec === u))].map(u =>
     `<button class="chip ${dictUnit === u ? "on" : ""}" data-u="${u}">${u ? u + ". " + UNITS[u] : "전체"}</button>`).join("");

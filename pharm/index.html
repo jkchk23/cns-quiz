@@ -1593,11 +1593,13 @@ applyTheme();
 const $ = s => document.querySelector(s);
 const app = () => $("#app");
 let session = null;
+let view = ""; // 지금 보이는 화면 — 홈 안에서 다시 그릴 때는 스크롤 위치를 유지
 const NUMS = ["①", "②", "③", "④", "⑤"];
 const smooth = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
 
 // ───── 홈
 function renderHome() {
+  const keepY = view === "home" ? window.scrollY : 0;
   session = null;
   const s = state.set;
   const units = new Set(s.units), tags = new Set(s.tags);
@@ -1698,7 +1700,8 @@ function renderHome() {
   $("#reset").onclick = () => {
     if (confirm("맞힌·틀린 기록과 오답노트를 모두 지울까요? 설정은 유지됩니다.")) { state.q = {}; state.wrong = {}; save(); renderHome(); }
   };
-  window.scrollTo(0, 0);
+  view = "home";
+  window.scrollTo(0, keepY);
 }
 
 function renderStats() {
@@ -1747,6 +1750,7 @@ function tagLine(it) {
 }
 
 function renderQ() {
+  view = "quiz";
   const m = session.cur, it = m.it;
   const total = session.items.length, idx = session.i;
   const right = session.log.filter(l => l.ok).length;
@@ -1824,6 +1828,7 @@ function grade() {
 
 // ───── 결과
 function renderResult() {
+  view = "result";
   const log = session.log;
   const right = log.filter(l => l.ok).length;
   const wrongs = log.filter(l => !l.ok);
@@ -1856,6 +1861,7 @@ function renderResult() {
 // ───── 문항 훑어보기 (검색 + 정답·해설)
 let brUnit = "", brQ = "";
 function renderBrowse() {
+  view = "browse";
   session = null;
   const chips = ["", ...ALL_UNITS].map(u =>
     `<button class="chip ${brUnit === u ? "on" : ""}" data-u="${u}">${u ? UNITS[u] : "전체"}</button>`).join("");
