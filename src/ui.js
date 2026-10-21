@@ -7,7 +7,7 @@ function loadState() {
   s = s || {};
   s.q = s.q || {};          // id → [맞음, 틀림, 마지막시각]
   s.wrong = s.wrong || {};  // id → 시각
-  s.set = Object.assign({ units: [1,2,3,4,5,6,7,8,9,10,11], types: ["cur","mech","rmech","class","sig"], count: 20, prio: true }, s.set || {});
+  s.set = Object.assign({ units: [1,2,3,4,5,6,7,8,9,10,11], types: ["cur","mech","rmech","class","sig"], count: 20, prio: true, theme: "auto" }, s.set || {});
   return s;
 }
 function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {} }
@@ -17,6 +17,27 @@ const ALL_POOL = buildPool(new Set(ALL_UNITS), new Set(Object.keys(TYPES)));
 const POOL_BY_ID = Object.fromEntries(ALL_POOL.map(p => [p.id, p]));
 // 오답노트에 남아 있지만 문제 은행에서 사라진 id 정리
 Object.keys(state.wrong).forEach(id => { if (!POOL_BY_ID[id]) delete state.wrong[id]; });
+
+// ───── 화면 색
+const THEMES = [
+  ["auto", "자동", null],
+  ["light", "밝게", ["#EEF1F4", "#2848A0"]],
+  ["dark", "어둡게", ["#14181D", "#6F8EF0"]],
+  ["mint", "민트", ["#E6F2EE", "#1D7A63"]],
+  ["lavender", "라벤더", ["#EEECF7", "#5847C2"]],
+  ["paper", "종이", ["#F2EBDD", "#8A5528"]]
+];
+function applyTheme() {
+  const t = state.set.theme || "auto";
+  if (t === "auto") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = t;
+  const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+    if (!m.dataset.orig) m.dataset.orig = m.getAttribute("content");
+    m.setAttribute("content", t === "auto" ? m.dataset.orig : bg);
+  });
+}
+applyTheme();
 
 const $ = s => document.querySelector(s);
 const app = () => $("#app");
@@ -78,6 +99,12 @@ function renderHome() {
     </div>
   </div>
 
+  <section class="block">
+    <div class="bhead"><h2>화면 색</h2></div>
+    <div class="themes">${THEMES.map(([k, label, c]) => `<button class="th ${(s.theme || "auto") === k ? "on" : ""}" data-th="${k}" aria-pressed="${(s.theme || "auto") === k}">
+      <span class="sw">${c ? `<i style="background:${c[0]}"></i><i style="background:${c[1]}"></i>` : `<i style="background:#EEF1F4"></i><i style="background:#14181D"></i>`}</span>${label}</button>`).join("")}</div>
+  </section>
+
   ${renderStats()}
 
   <footer class="foot">
@@ -96,6 +123,7 @@ function renderHome() {
     state.set.types = [...set]; save(); renderHome();
   });
   app().querySelectorAll(".seg").forEach(b => b.onclick = () => { state.set.count = +b.dataset.c; save(); renderHome(); });
+  app().querySelectorAll(".th").forEach(b => b.onclick = () => { state.set.theme = b.dataset.th; save(); applyTheme(); renderHome(); });
   $("#allU").onclick = () => { state.set.units = ALL_UNITS.slice(); save(); renderHome(); };
   $("#noneU").onclick = () => { state.set.units = []; save(); renderHome(); };
   $("#prio").onchange = e => { state.set.prio = e.target.checked; save(); renderHome(); };
