@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CNS 약물 퀴즈</title>
+<title>약리학 객관식</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="약리·미생물">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14181D" media="(prefers-color-scheme: dark)">
-<script>try{var h=JSON.parse(localStorage.getItem("study-hub-v1"))||{},t=h.theme;if(!t){var o=JSON.parse(localStorage.getItem("cns-quiz-v1"));t=o&&o.set&&o.set.theme}if(t&&t!=="auto")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>try{var h=JSON.parse(localStorage.getItem("study-hub-v1"))||{},t=h.theme;if(t&&t!=="auto")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="apple-touch-icon" href="../icon-180.png">
 <link rel="icon" href="../icon-180.png">
 <link rel="manifest" href="../manifest.json">
@@ -183,6 +183,46 @@ h1,h2{margin:0}
   .srow{grid-template-columns:1fr 1.2fr 40px;}.sn{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ── 약리 퀴즈 전용 */
+.hint{color:var(--muted);font-size:13px}
+.ugroup+.ugroup{margin-top:16px}
+.ghead{display:flex;justify-content:space-between;align-items:baseline;margin:0 2px 8px;color:var(--muted);font-size:14px}
+.ghead .link{font-size:14px}
+.unit .uname{font-size:15px}
+.chips.wrap{flex-wrap:wrap;overflow:visible;padding-top:0}
+.chip small{color:var(--muted);margin-left:2px;font-variant-numeric:tabular-nums}
+.chip.on small{color:inherit;opacity:.7}
+.uname-sm{font-weight:600;color:var(--ink)}
+.kind.hot{border-color:var(--amber);color:var(--amber-ink);background:var(--hl)}
+.mhint{margin:-6px 0 14px;color:var(--muted);font-size:14.5px}
+.opt .onote{display:block;font-size:14.5px;line-height:1.45;margin-top:4px;color:var(--muted)}
+.opt .onote:empty{display:none}
+.opt.correct .onote{color:var(--ok)}
+.opt.wrong .onote{color:var(--no)}
+.opts.multi .opt{padding-right:12px}
+.opt .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);flex:none;margin-top:1px;position:relative;background:var(--surface)}
+.opt.sel{border-color:var(--cobalt);background:var(--surface)}
+.opt.sel .box{background:var(--cobalt);border-color:var(--cobalt)}
+.opt.sel .box::after{content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid var(--cobalt-ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.opt.sel.correct{background:var(--ok-bg);border-color:var(--ok)}
+.opt.sel.correct .box{background:var(--ok);border-color:var(--ok)}
+.opt.sel.wrong{background:var(--no-bg);border-color:var(--no)}
+.opt.sel.wrong .box{background:var(--no);border-color:var(--no)}
+.opt.missed{border-style:dashed}
+.opt.dim .onote{opacity:1}
+.checkbtn{margin-top:14px}
+.checkbtn:disabled{background:var(--line);color:var(--muted)}
+.expl{white-space:pre-line}
+.dcard .bq{font-weight:600;margin:8px 0;word-break:keep-all;line-height:1.5}
+.blist-o{list-style:none;margin:0;padding:0;font-size:15px;line-height:1.55}
+.blist-o li{padding:2px 0;color:var(--muted)}
+.blist-o li.ans{color:var(--ok);font-weight:600}
+.bexp{margin-top:8px;font-size:15px}
+.bexp summary{cursor:pointer;color:var(--cobalt);padding:4px 0}
+.bexp p{margin:6px 0;word-break:keep-all}
+.solo{margin-top:10px;width:100%}
+@media (max-width:520px){.units{grid-template-columns:1fr 1fr}}
 /*__HUBCSS__*/
 </style>
 </head>

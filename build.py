@@ -1,6 +1,7 @@
 """src/ → 배포 파일 생성.
 
-  cns/index.html    CNS 약리 객관식   (src/cns + src/shared)
+  pharm/index.html  약리 객관식(박해정) (src/pharm + src/shared)
+  cns/index.html    옛 주소 → pharm/ 로 이동
   micro/index.html  미생물 서술형     (src/micro + src/shared)
   index.html        시작 페이지: 마지막으로 연 과목으로 바로 이동
   sw.js, manifest.json  두 앱 공용 (홈 화면 아이콘 하나)
@@ -13,7 +14,7 @@ shared_js = (src / 'shared' / 'hub.js').read_text()
 shared_css = (src / 'shared' / 'hub.css').read_text()
 
 APPS = {
-    'cns':   ['data_drugs.js', 'data_curated.js', 'engine.js', 'ui.js'],
+    'pharm': ['data_units.js', 'q_cns1.js', 'q_cns2.js', 'q_cns3.js', 'q_lec1.js', 'q_lec2.js', 'q_extra.js', 'engine.js', 'ui.js'],
     'micro': ['data_essay.js', 'engine.js', 'ui.js'],
 }
 
@@ -24,6 +25,10 @@ for app, files in APPS.items():
     (root / app).mkdir(exist_ok=True)
     (root / app / 'index.html').write_text(html)
     print(app, len(html))
+
+# 옛 CNS 주소 → 약리
+(root / 'cns').mkdir(exist_ok=True)
+(root / 'cns' / 'index.html').write_text('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>약리학 객관식</title><script>location.replace("../pharm/")</script><a href="../pharm/">약리학 객관식으로 이동</a>')
 
 # 시작 페이지 — 저장된 마지막 과목으로 즉시 이동 (기본 CNS)
 (root / 'index.html').write_text("""<!doctype html>
@@ -39,8 +44,8 @@ for app, files in APPS.items():
 <link rel="icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <script>
-var last = "cns";
-try { var h = JSON.parse(localStorage.getItem("study-hub-v1")); if (h && (h.last === "cns" || h.last === "micro")) last = h.last; } catch (e) {}
+var last = "pharm";
+try { var h = JSON.parse(localStorage.getItem("study-hub-v1")); if (h && h.last === "micro") last = "micro"; } catch (e) {}
 location.replace(last + "/");
 </script>
 <style>
@@ -49,13 +54,13 @@ body{margin:0;font:17px/1.5 -apple-system,"Apple SD Gothic Neo",system-ui,sans-s
 a{display:block;margin:8px 0;padding:14px 22px;border-radius:12px;background:#2848A0;color:#fff;text-decoration:none;text-align:center}
 </style>
 </head>
-<body><main><a href="cns/">CNS 약리 객관식</a><a href="micro/">미생물 서술형</a></main></body>
+<body><main><a href="pharm/">약리학 객관식</a><a href="micro/">미생물 서술형</a></main></body>
 </html>
 """)
 
 ver = datetime.datetime.now().strftime('%Y%m%d%H%M')
 (root / 'sw.js').write_text(f"""const CACHE = 'study-hub-{ver}';
-const FILES = ['./', 'index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
+const FILES = ['./', 'index.html', 'pharm/', 'pharm/index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
 // 설치 시 HTTP 캐시를 건너뛰고 서버에서 새로 받아 저장
 self.addEventListener('install', e => {{
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, {{ cache: 'reload' }})))));
@@ -69,7 +74,7 @@ self.addEventListener('activate', e => {{
 function fallbackFor(url) {{
   const p = new URL(url).pathname;
   if (p.includes('/micro')) return 'micro/index.html';
-  if (p.includes('/cns')) return 'cns/index.html';
+  if (p.includes('/pharm') || p.includes('/cns')) return 'pharm/index.html';
   return 'index.html';
 }}
 self.addEventListener('fetch', e => {{

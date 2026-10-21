@@ -1,5 +1,5 @@
-const CACHE = 'study-hub-202610212141';
-const FILES = ['./', 'index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
+const CACHE = 'study-hub-202610212344';
+const FILES = ['./', 'index.html', 'pharm/', 'pharm/index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
 // 설치 시 HTTP 캐시를 건너뛰고 서버에서 새로 받아 저장
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: 'reload' })))));
@@ -13,7 +13,7 @@ self.addEventListener('activate', e => {
 function fallbackFor(url) {
   const p = new URL(url).pathname;
   if (p.includes('/micro')) return 'micro/index.html';
-  if (p.includes('/cns')) return 'cns/index.html';
+  if (p.includes('/pharm') || p.includes('/cns')) return 'pharm/index.html';
   return 'index.html';
 }
 self.addEventListener('fetch', e => {

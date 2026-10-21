@@ -261,10 +261,10 @@ a.sbtn:active{background:var(--bg)}
 <script>
 const CURRENT_SUBJECT = "micro";
 // ───── 공용: 과목 전환 · 화면 색 · 마지막으로 연 과목
-// 두 앱(cns/, micro/)이 같은 저장공간을 쓰므로 여기 값은 서로 공유된다.
+// 각 과목 앱(pharm/, micro/)이 같은 저장공간을 쓰므로 여기 값은 서로 공유된다.
 const HUB_KEY = "study-hub-v1";
 const SUBJECTS = [
-  { id: "cns", path: "cns", label: "CNS 약리", sub: "객관식" },
+  { id: "pharm", path: "pharm", label: "약리학", sub: "객관식" },
   { id: "micro", path: "micro", label: "미생물", sub: "서술형" }
 ];
 const hub = (() => {
