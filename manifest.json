@@ -1,6 +1,6 @@
 {
- "name": "CNS 약물 퀴즈",
- "short_name": "CNS 퀴즈",
+ "name": "약리·미생물 문제",
+ "short_name": "약리·미생물",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",

@@ -28,7 +28,7 @@ const THEMES = [
   ["paper", "종이", ["#F2EBDD", "#8A5528"]]
 ];
 function applyTheme() {
-  const t = state.set.theme || "auto";
+  const t = getTheme();
   if (t === "auto") delete document.documentElement.dataset.theme;
   else document.documentElement.dataset.theme = t;
   const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
@@ -69,6 +69,7 @@ function renderHome() {
     `<button class="seg ${s.count === c ? "on" : ""}" data-c="${c}">${c || "전체"}</button>`).join("");
 
   app().innerHTML = `
+  ${subjectSwitcher()}
   <header class="home-head">
     <h1>CNS 약물<br>객관식 문제</h1>
     <p class="lede">강의록 기반 문항 ${CUR.length}개와 약물 ${DRUGS.length}개로 만든 자동 문항. 보기는 풀 때마다 새로 섞입니다.</p>
@@ -101,7 +102,7 @@ function renderHome() {
 
   <section class="block">
     <div class="bhead"><h2>화면 색</h2></div>
-    <div class="themes">${THEMES.map(([k, label, c]) => `<button class="th ${(s.theme || "auto") === k ? "on" : ""}" data-th="${k}" aria-pressed="${(s.theme || "auto") === k}">
+    <div class="themes">${THEMES.map(([k, label, c]) => `<button class="th ${getTheme() === k ? "on" : ""}" data-th="${k}" aria-pressed="${getTheme() === k}">
       <span class="sw">${c ? `<i style="background:${c[0]}"></i><i style="background:${c[1]}"></i>` : `<i style="background:#EEF1F4"></i><i style="background:#14181D"></i>`}</span>${label}</button>`).join("")}</div>
   </section>
 
@@ -123,7 +124,7 @@ function renderHome() {
     state.set.types = [...set]; save(); renderHome();
   });
   app().querySelectorAll(".seg").forEach(b => b.onclick = () => { state.set.count = +b.dataset.c; save(); renderHome(); });
-  app().querySelectorAll(".th").forEach(b => b.onclick = () => { state.set.theme = b.dataset.th; save(); applyTheme(); renderHome(); });
+  app().querySelectorAll(".th").forEach(b => b.onclick = () => { setTheme(b.dataset.th); applyTheme(); renderHome(); });
   $("#allU").onclick = () => { state.set.units = ALL_UNITS.slice(); save(); renderHome(); };
   $("#noneU").onclick = () => { state.set.units = []; save(); renderHome(); };
   $("#prio").onchange = e => { state.set.prio = e.target.checked; save(); renderHome(); };
@@ -333,6 +334,4 @@ document.addEventListener("keydown", e => {
 
 renderHome();
 
-if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-  navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {});
-}
+registerSW();

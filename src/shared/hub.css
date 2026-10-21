@@ -1,0 +1,8 @@
+/* 과목 전환 메뉴 */
+.subj{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:0 0 22px;border-radius:14px;background:var(--surface);border:1.5px solid var(--line)}
+.sbtn{display:flex;align-items:baseline;justify-content:center;gap:7px;padding:11px 8px;border-radius:10px;color:var(--ink);text-decoration:none;font-size:16px;line-height:1.2;min-height:44px}
+.sbtn small{color:var(--muted);font-size:13px}
+.sbtn.on{background:var(--cobalt);color:var(--cobalt-ink)}
+.sbtn.on small{color:inherit;opacity:.8}
+a.sbtn:active{background:var(--bg)}
+@media (hover:hover){a.sbtn:hover{background:var(--bg)}}
