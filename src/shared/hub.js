@@ -1,8 +1,9 @@
 // ───── 공용: 과목 전환 · 화면 색 · 마지막으로 연 과목
-// 각 과목 앱(pharm/, micro/)이 같은 저장공간을 쓰므로 여기 값은 서로 공유된다.
+// 각 과목 앱(pharm/, drugs/, micro/)이 같은 저장공간을 쓰므로 여기 값은 서로 공유된다.
 const HUB_KEY = "study-hub-v1";
 const SUBJECTS = [
   { id: "pharm", path: "pharm", label: "약리학", sub: "객관식" },
+  { id: "drugs", path: "drugs", label: "CNS 약물", sub: "암기" },
   { id: "micro", path: "micro", label: "미생물", sub: "서술형" }
 ];
 const hub = (() => {
@@ -26,7 +27,7 @@ function getTheme() { return hub.theme || "auto"; }
 function setTheme(t) { hub.theme = t; hubSave(); }
 
 function subjectSwitcher() {
-  return `<nav class="subj" aria-label="과목 전환">${SUBJECTS.map(s =>
+  return `<nav class="subj" aria-label="과목 전환" style="grid-template-columns:repeat(${SUBJECTS.length},1fr)">${SUBJECTS.map(s =>
     s.id === CURRENT_SUBJECT
       ? `<span class="sbtn on" aria-current="page"><b>${s.label}</b><small>${s.sub}</small></span>`
       : `<a class="sbtn" href="../${s.path}/"><b>${s.label}</b><small>${s.sub}</small></a>`

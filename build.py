@@ -3,6 +3,7 @@
   pharm/index.html  약리 객관식(박해정) (src/pharm + src/shared)
   cns/index.html    옛 주소 → pharm/ 로 이동
   micro/index.html  미생물 서술형     (src/micro + src/shared)
+  drugs/index.html  CNS 약물 암기 (박해정 CNS 1–4 최종 요약본) (src/drugs + src/shared)
   index.html        시작 페이지: 마지막으로 연 과목으로 바로 이동
   sw.js, manifest.json  두 앱 공용 (홈 화면 아이콘 하나)
 """
@@ -16,6 +17,7 @@ shared_css = (src / 'shared' / 'hub.css').read_text()
 APPS = {
     'pharm': ['data_units.js', 'q_cns1.js', 'q_cns2.js', 'q_cns3.js', 'q_lec1.js', 'q_lec2.js', 'q_extra.js', 'engine.js', 'ui.js'],
     'micro': ['data_essay.js', 'engine.js', 'ui.js'],
+    'drugs': ['data_drugs.js', 'data_pairs.js', 'data_tf.js', 'ui.js'],
 }
 
 for app, files in APPS.items():
@@ -45,7 +47,7 @@ for app, files in APPS.items():
 <link rel="manifest" href="manifest.json">
 <script>
 var last = "pharm";
-try { var h = JSON.parse(localStorage.getItem("study-hub-v1")); if (h && h.last === "micro") last = "micro"; } catch (e) {}
+try { var h = JSON.parse(localStorage.getItem("study-hub-v1")); if (h && (h.last === "micro" || h.last === "drugs")) last = h.last; } catch (e) {}
 location.replace(last + "/");
 </script>
 <style>
@@ -54,13 +56,13 @@ body{margin:0;font:17px/1.5 -apple-system,"Apple SD Gothic Neo",system-ui,sans-s
 a{display:block;margin:8px 0;padding:14px 22px;border-radius:12px;background:#2848A0;color:#fff;text-decoration:none;text-align:center}
 </style>
 </head>
-<body><main><a href="pharm/">약리학 객관식</a><a href="micro/">미생물 서술형</a></main></body>
+<body><main><a href="pharm/">약리학 객관식</a><a href="drugs/">CNS 약물 암기</a><a href="micro/">미생물 서술형</a></main></body>
 </html>
 """)
 
 ver = datetime.datetime.now().strftime('%Y%m%d%H%M')
 (root / 'sw.js').write_text(f"""const CACHE = 'study-hub-{ver}';
-const FILES = ['./', 'index.html', 'pharm/', 'pharm/index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
+const FILES = ['./', 'index.html', 'pharm/', 'pharm/index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'drugs/', 'drugs/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
 // 설치 시 HTTP 캐시를 건너뛰고 서버에서 새로 받아 저장
 self.addEventListener('install', e => {{
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, {{ cache: 'reload' }})))));
@@ -74,6 +76,7 @@ self.addEventListener('activate', e => {{
 function fallbackFor(url) {{
   const p = new URL(url).pathname;
   if (p.includes('/micro')) return 'micro/index.html';
+  if (p.includes('/drugs')) return 'drugs/index.html';
   if (p.includes('/pharm') || p.includes('/cns')) return 'pharm/index.html';
   return 'index.html';
 }}

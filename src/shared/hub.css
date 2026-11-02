@@ -6,3 +6,4 @@
 .sbtn.on small{color:inherit;opacity:.8}
 a.sbtn:active{background:var(--bg)}
 @media (hover:hover){a.sbtn:hover{background:var(--bg)}}
+@media (max-width:620px){.sbtn{flex-direction:column;align-items:center;gap:1px;padding:8px 4px;font-size:15px}.sbtn small{font-size:12px}}

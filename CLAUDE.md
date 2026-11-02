@@ -1,13 +1,14 @@
 # 약리·미생물 문제 (iPad 웹앱, GitHub Pages)
 
 배포: https://jkchk23.github.io/cns-quiz/ — main 브랜치 루트가 그대로 서비스됨.
-한 저장소에 두 과목 앱이 있고, 각 앱 첫 화면 맨 위의 전환 메뉴로 오간다. 홈 화면 아이콘은 하나.
+한 저장소에 세 개의 앱(약리 객관식 · CNS 약물 암기 · 미생물 서술형)이 있고, 각 앱 첫 화면 맨 위의 전환 메뉴로 오간다. 홈 화면 아이콘은 하나.
 (미생물은 원래 jkchk23/micro-essay에 있었고 여기로 합쳐짐. 이후 수정은 이 저장소에서만 한다.)
 
 | 경로 | 앱 | 원본 |
 |---|---|---|
 | `pharm/` | 약리학 객관식 (박해정 교수님 CNS 7–10강 + 17–21강) | `src/pharm/` |
 | `cns/` | 옛 주소 — `pharm/`으로 이동만 함 | `build.py` 안 |
+| `drugs/` | CNS 약물 암기 카드 (박해정 CNS 1–4 최종 요약본) | `src/drugs/` |
 | `micro/` | 미생물 서술형 | `src/micro/` |
 | `index.html` | 시작 페이지 — 마지막으로 연 과목으로 즉시 이동 | `build.py` 안 |
 
@@ -22,16 +23,21 @@
     - 태그: 증례 · 짝 · 부정 · 계산 · 빈출 ('모두'는 자동). 메모: 오답이면 왜 틀렸는지
     - 근거는 2025 강의록. 기출(프로젝트의 박해정_기출정리)과 답이 다르게 읽힐 선지는 피할 것
   - `engine.js` — 선지 섞기·채점 / `ui.js`, `template.html` — 화면
+- CNS 약물 암기 (`src/drugs/`) — 출처: 사용자가 준 '약리학_7-10_CNS Drugs 1-4 최종 요약본'(36쪽 PDF). 요약본 내용만 옮길 것
+  - `data_drugs.js` — `SECTIONS`(s1–s10), `DRUGS`: [단원, 약물, 분류, 기전, 용도, 부작용·주의, 포인트, 표시(★ 강조 / 족 = 족보 근거 / 🎙 예시)]
+  - `data_pairs.js` — `PAIR_SETS`, `PAIRS`: [단원, 묶음, 앞(상황), 뒤(답), 메모(빈도)] — 시험 직전 30초·상황→약·부작용/해독제 역검색 등
+  - `data_tf.js` — `TF`: 요약본 28–36쪽 T/F 226문항 자동 추출 [단원(x = 교차), 번호, 문항, 정답, 해설]
+  - `ui.js` — 모드: 훑어보기 · 약물→정보 · 기전·용도→약물 · 핵심 짝 · T/F. 표기 `GABA_A`, `N_M`은 아래첨자로 표시
 - 미생물 (`src/micro/`)
   - `data_essay.js` — `UNITS`(조정제 교수님 17~20강), 서술형 문항 `ESSAYS`
     - `rubric`: 채점 항목 `{t: 설명, w: 가중치, k: [[대안…],[대안…]]}` → 각 묶음에서 하나 이상 답안에 있으면 인정(AND of OR)
     - 키워드는 공백·문장부호를 지우고 소문자로 비교(`engine.js`의 `norm`). 너무 짧은 키워드(예: 'na')는 오인식되니 피할 것
     - `model`: 모범답안 HTML, `tip`: 족보 해설·교수님 강조, `jokbo`: 족보 출처
   - `engine.js` — 채점 / `ui.js`, `template.html` — 화면
-- `build.py` — src를 합쳐 `pharm/index.html`, `micro/index.html`, `cns/index.html`(이동용), 루트 `index.html`·`sw.js`(화면은 네트워크 우선 → 온라인이면 즉시 최신 반영)·`manifest.json` 생성
+- `build.py` — src를 합쳐 `pharm/index.html`, `drugs/index.html`, `micro/index.html`, `cns/index.html`(이동용), 루트 `index.html`·`sw.js`(화면은 네트워크 우선 → 온라인이면 즉시 최신 반영)·`manifest.json` 생성
 
 ## 수정 절차
-1. `src/`만 고친다 (`pharm/`, `micro/`, `cns/`, 루트 `index.html` 직접 수정 금지)
+1. `src/`만 고친다 (`pharm/`, `drugs/`, `micro/`, `cns/`, 루트 `index.html` 직접 수정 금지)
 2. `python3 build.py`
 3. `node test/pharm_check.js` (구조·정답 위치) · `node test/micro_test.js` (모범답안 100점, 빈 답 0점)
 4. 커밋 후 main에 push
@@ -40,5 +46,6 @@
 - `study-hub-v1` — 공용: `theme`, `last`(마지막 과목)
 - `pharm-quiz-v1` — 약리 기록: `q`(id → [맞음, 틀림, 시각]), `wrong`(오답노트), `set`. id = 단원+문제 텍스트 해시 → 문제 문구를 바꾸면 그 문항 기록은 초기화됨 (선지·해설만 고치면 유지)
 - `cns-quiz-v1` — 폐기된 옛 CNS 기록. 약리 앱이 처음 열릴 때 지움
+- `drugs-study-v1` — 약물 암기: `k`(카드 id → 1 외움 / 0 다시), `tf`(T/F id → [맞음, 틀림, 최근 정오]), `set`. 카드 id = 단원+약물명(짝 카드는 묶음+앞면) 해시
 - `micro-essay-v1` — 미생물 기록: `q`(id → 점수 기록), `draft`(작성 중 답안), `set`(설정)
 - 각 앱 `state.set.theme`은 옛 값(첫 실행 때 `study-hub-v1`로 옮겨짐). 화면 색은 `getTheme()`만 쓸 것

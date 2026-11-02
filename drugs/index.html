@@ -1,0 +1,2655 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CNS 약물 암기</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="약리·미생물">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14181D" media="(prefers-color-scheme: dark)">
+<script>try{var h=JSON.parse(localStorage.getItem("study-hub-v1"))||{},t=h.theme;if(t&&t!=="auto")document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="apple-touch-icon" href="../icon-180.png">
+<link rel="icon" href="../icon-180.png">
+<link rel="manifest" href="../manifest.json">
+<style>
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --ink:#16212B; --muted:#5B6874; --line:#D5DCE2;
+  --cobalt:#2848A0; --cobalt-ink:#FFFFFF; --amber:#E7A532; --amber-ink:#3A2A06;
+  --ok:#23784A; --ok-bg:#E3F2E8; --no:#B93A2B; --no-bg:#FBE7E3; --hl:#FFF1D2;
+  --name:"Avenir Next Condensed","Avenir Next","Arial Narrow","Helvetica Neue",sans-serif;
+  --body:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+}
+/* 화면 색: 자동(기기 설정) · 밝게 · 어둡게 · 민트 · 라벤더 · 종이 */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme]), :root[data-theme="auto"]{ --bg:#14181D; --surface:#1D232A; --ink:#E7ECF0; --muted:#9AA6B1; --line:#323B45;
+    --cobalt:#6F8EF0; --cobalt-ink:#0C1530; --amber:#E9B04A; --amber-ink:#2A1D03;
+    --ok:#62C28A; --ok-bg:#183326; --no:#F08273; --no-bg:#3A1D19; --hl:#3A3220; }
+}
+:root[data-theme="dark"]{ --bg:#14181D; --surface:#1D232A; --ink:#E7ECF0; --muted:#9AA6B1; --line:#323B45;
+    --cobalt:#6F8EF0; --cobalt-ink:#0C1530; --amber:#E9B04A; --amber-ink:#2A1D03;
+    --ok:#62C28A; --ok-bg:#183326; --no:#F08273; --no-bg:#3A1D19; --hl:#3A3220; }
+:root[data-theme="mint"]{ --bg:#E6F2EE; --surface:#FFFFFF; --ink:#13302A; --muted:#55706A; --line:#C6DDD5;
+  --cobalt:#1D7A63; --cobalt-ink:#FFFFFF; --amber:#E7A532; --hl:#FFF2D4; --ok-bg:#DDF0E3; --no-bg:#FBE6E2; }
+:root[data-theme="lavender"]{ --bg:#EEECF7; --surface:#FFFFFF; --ink:#211D36; --muted:#625C80; --line:#D6D1EA;
+  --cobalt:#5847C2; --cobalt-ink:#FFFFFF; --amber:#E89B3A; --hl:#FFF0D9; }
+:root[data-theme="paper"]{ --bg:#F2EBDD; --surface:#FBF7EE; --ink:#2D2517; --muted:#6E6352; --line:#DFD3BC;
+  --cobalt:#8A5528; --cobalt-ink:#FFFFFF; --amber:#4E7C5B; --hl:#F6E7C4; --ok-bg:#E3EEDB; --no-bg:#F7E1D9; }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--body);
+  -webkit-tap-highlight-color:transparent;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+#app{max-width:760px;margin:0 auto;padding:28px 20px 48px}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-user-select:none;user-select:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+button:disabled{cursor:default}
+h1,h2{margin:0}
+
+/* 캡슐 배지: 단원 번호 */
+.pill{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:24px;border-radius:12px;
+  background:linear-gradient(90deg,var(--cobalt) 0 50%,var(--amber) 50% 100%);flex:none}
+.pill i{font:700 13px/1 var(--name);font-style:normal;color:#fff;background:var(--cobalt);padding:3px 7px;border-radius:9px;letter-spacing:.02em}
+.pill.sm{min-width:34px;height:18px}.pill.sm i{font-size:11px;padding:2px 5px}
+
+/* 홈 */
+.home-head{padding:8px 0 20px}
+.home-head h1{font:700 44px/1.05 var(--body);letter-spacing:-.02em}
+.lede{margin:12px 0 0;color:var(--muted);max-width:34em}
+.block{margin-top:26px}
+.bhead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.bhead h2{font-size:19px;font-weight:700}
+.links{display:flex;gap:14px}
+.link{background:none;border:0;padding:6px 0;color:var(--cobalt);font-size:15px}
+.link.danger{color:var(--no)}
+.units{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.unit{display:flex;align-items:center;gap:10px;text-align:left;padding:12px 12px;border-radius:12px;
+  background:var(--surface);border:1.5px solid var(--line);min-height:54px}
+.unit .uname{flex:1;font-size:15.5px;line-height:1.25}
+.unit .ucount{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.unit:not(.on){opacity:.55}
+.unit:not(.on) .pill{filter:grayscale(1)}
+.unit.on{border-color:var(--cobalt)}
+.types{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;overflow:hidden}
+.trow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:13px 16px;background:none;border:0;border-top:1px solid var(--line)}
+.trow:first-child{border-top:0}
+.trow .tl{flex:1;display:flex;flex-direction:column}
+.trow small{color:var(--muted);font-size:13.5px}
+.trow .tc{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.check{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);flex:none;position:relative}
+.trow.on .check{background:var(--cobalt);border-color:var(--cobalt)}
+.trow.on .check::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid var(--cobalt-ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.segs{display:flex;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:3px}
+.seg{flex:1;padding:10px 0;border:0;background:none;border-radius:9px;font-variant-numeric:tabular-nums}
+.seg.on{background:var(--ink);color:var(--bg);font-weight:600}
+.toggle{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:15.5px;color:var(--muted)}
+.toggle input{width:20px;height:20px;accent-color:var(--cobalt)}
+.actions{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.primary{width:100%;padding:17px;border:0;border-radius:14px;background:var(--cobalt);color:var(--cobalt-ink);font-size:18px;font-weight:700}
+.primary:disabled{background:var(--line);color:var(--muted)}
+.secondary{padding:15px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.secondary b{color:var(--no);margin-left:4px}
+.secondary:disabled{opacity:.5}
+.stats{display:flex;flex-direction:column;gap:9px}
+.srow{display:grid;grid-template-columns:minmax(0,1.4fr) 2fr 44px 48px;align-items:center;gap:10px;font-size:14.5px}
+.sname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar span{display:block;height:100%;background:var(--amber)}
+.sp{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.sn{text-align:right;color:var(--muted);font-size:13px}
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.th{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 6px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:14px}
+.th.on{border-color:var(--cobalt);box-shadow:inset 0 0 0 1px var(--cobalt)}
+.sw{width:44px;height:28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);display:flex;overflow:hidden}
+.sw i{flex:1}
+.foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px}
+
+/* 퀴즈 */
+.qtop{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.icon{width:42px;height:42px;border-radius:21px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;flex:none}
+.prog{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog span{display:block;height:100%;background:var(--cobalt);transition:width .3s}
+.count{font:700 20px/1 var(--name);font-variant-numeric:tabular-nums}
+.count small{color:var(--muted);font-weight:500}
+.qcard{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:22px 20px 20px}
+.qmeta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:14px}
+.kind{border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:12.5px}
+.kind.w{color:var(--no);border-color:var(--no)}
+.stem{margin:16px 0 18px;font-size:21px;line-height:1.5;font-weight:600;word-break:keep-all}
+.stem .dn{font:700 34px/1.1 var(--name);letter-spacing:.005em;display:inline-block;margin-right:2px}
+.stem .hl{background:var(--hl);padding:1px 6px;border-radius:5px;font-weight:700}
+.stem .sig{display:block;margin-top:12px;padding:12px 14px;border-left:4px solid var(--amber);background:var(--hl);border-radius:0 8px 8px 0;font-weight:500;font-size:18.5px}
+.opts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.opt{width:100%;display:flex;align-items:flex-start;gap:12px;text-align:left;padding:14px 15px;border-radius:13px;
+  border:1.5px solid var(--line);background:var(--bg);font-size:17px;line-height:1.45;min-height:56px;transition:background .15s,border-color .15s}
+.opt .num{font-size:20px;line-height:1.2;color:var(--muted);flex:none}
+.opt .ot{flex:1;word-break:keep-all;overflow-wrap:anywhere}
+@media (hover:hover){.opt:not(:disabled):hover{border-color:var(--cobalt)}}
+.opt:not(:disabled):active{transform:scale(.99)}
+.opt.correct{background:var(--ok-bg);border-color:var(--ok)}
+.opt.correct .num{color:var(--ok)}
+.opt.wrong{background:var(--no-bg);border-color:var(--no)}
+.opt.wrong .num{color:var(--no)}
+.opt.dim{opacity:.5}
+.opt:disabled{color:var(--ink)}
+#fb:empty{display:none}
+#fb{margin-top:18px}
+.verdict{font-weight:700;font-size:19px;margin-bottom:10px}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--no)}
+.expl{padding:13px 15px;border-radius:12px;background:var(--bg);font-size:16px;line-height:1.6;word-break:keep-all}
+.note{margin:10px 2px 0;color:var(--muted);font-size:15px}
+.next{margin-top:16px}
+.score{text-align:center;color:var(--muted);font-size:14px;margin-top:14px;font-variant-numeric:tabular-nums}
+
+/* 약물 카드 */
+.dcard{padding:14px 15px;border-radius:12px;background:var(--bg);margin-top:10px}
+.dtitle{color:var(--muted);font-size:13px;margin-bottom:2px}
+.dname{font:700 24px/1.2 var(--name);display:flex;align-items:center;gap:8px}
+.dcard dl{display:grid;grid-template-columns:44px 1fr;gap:4px 10px;margin:8px 0 0;font-size:15.5px;line-height:1.5}
+.dcard dt{color:var(--muted)}
+.dcard dd{margin:0;word-break:keep-all}
+
+/* 결과 */
+.res-head{padding:24px 0 6px}
+.big{font:700 84px/1 var(--name);font-variant-numeric:tabular-nums}
+.big small{font-size:40px;color:var(--muted)}
+.res-head p{color:var(--muted);margin:10px 0 0}
+.wlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.wlist li{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px 15px}
+.wq{font-weight:600;margin-bottom:8px;word-break:keep-all}
+.wq .dn{font:700 22px var(--name)}
+.wq .sig{display:block;font-weight:500;margin-top:4px;color:var(--muted)}
+.wa{font-size:15.5px;margin-top:4px;display:flex;gap:8px;align-items:baseline}
+.tag{flex:none;font-size:12px;padding:1px 7px;border-radius:6px;font-weight:600}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}.tag.no{background:var(--no-bg);color:var(--no)}
+
+/* 사전 */
+.dhead{font-size:22px}
+.search{width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;-webkit-appearance:none}
+.chips{display:flex;gap:7px;overflow-x:auto;padding:12px 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 13px;border-radius:18px;border:1.5px solid var(--line);background:var(--surface);font-size:14.5px;white-space:nowrap}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dlist .dcard{background:var(--surface);border:1.5px solid var(--line)}
+.empty{color:var(--muted);padding:30px 0;text-align:center}
+
+@media (max-width:520px){
+  #app{padding:18px 16px 40px}
+  .home-head h1{font-size:36px}
+  .stem{font-size:19px}.stem .dn{font-size:30px}
+  .srow{grid-template-columns:1fr 1.2fr 40px;}.sn{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ── 약리 퀴즈 전용 */
+.hint{color:var(--muted);font-size:13px}
+.ugroup+.ugroup{margin-top:16px}
+.ghead{display:flex;justify-content:space-between;align-items:baseline;margin:0 2px 8px;color:var(--muted);font-size:14px}
+.ghead .link{font-size:14px}
+.unit .uname{font-size:15px}
+.chips.wrap{flex-wrap:wrap;overflow:visible;padding-top:0}
+.chip small{color:var(--muted);margin-left:2px;font-variant-numeric:tabular-nums}
+.chip.on small{color:inherit;opacity:.7}
+.uname-sm{font-weight:600;color:var(--ink)}
+.kind.hot{border-color:var(--amber);color:var(--amber-ink);background:var(--hl)}
+.mhint{margin:-6px 0 14px;color:var(--muted);font-size:14.5px}
+.opt .onote{display:block;font-size:14.5px;line-height:1.45;margin-top:4px;color:var(--muted)}
+.opt .onote:empty{display:none}
+.opt.correct .onote{color:var(--ok)}
+.opt.wrong .onote{color:var(--no)}
+.opts.multi .opt{padding-right:12px}
+.opt .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);flex:none;margin-top:1px;position:relative;background:var(--surface)}
+.opt.sel{border-color:var(--cobalt);background:var(--surface)}
+.opt.sel .box{background:var(--cobalt);border-color:var(--cobalt)}
+.opt.sel .box::after{content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid var(--cobalt-ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.opt.sel.correct{background:var(--ok-bg);border-color:var(--ok)}
+.opt.sel.correct .box{background:var(--ok);border-color:var(--ok)}
+.opt.sel.wrong{background:var(--no-bg);border-color:var(--no)}
+.opt.sel.wrong .box{background:var(--no);border-color:var(--no)}
+.opt.missed{border-style:dashed}
+.opt.dim .onote{opacity:1}
+.checkbtn{margin-top:14px}
+.checkbtn:disabled{background:var(--line);color:var(--muted)}
+.expl{white-space:pre-line}
+.dcard .bq{font-weight:600;margin:8px 0;word-break:keep-all;line-height:1.5}
+.blist-o{list-style:none;margin:0;padding:0;font-size:15px;line-height:1.55}
+.blist-o li{padding:2px 0;color:var(--muted)}
+.blist-o li.ans{color:var(--ok);font-weight:600}
+.bexp{margin-top:8px;font-size:15px}
+.bexp summary{cursor:pointer;color:var(--cobalt);padding:4px 0}
+.bexp p{margin:6px 0;word-break:keep-all}
+.solo{margin-top:10px;width:100%}
+@media (max-width:520px){.units{grid-template-columns:1fr 1fr}}
+
+/* ── CNS 약물 암기 전용 */
+.st{color:#E0A100;font-weight:700}
+.mic{font-size:.95em}
+.jk{color:#7B4FC4;font-weight:700}
+.bd{display:inline-block;font-size:12px;font-weight:600;border-radius:6px;padding:1px 7px;margin-left:4px;border:1px solid var(--line);vertical-align:1px}
+.st-b{color:#9A6B00;background:#FFF3C9;border-color:#F1D27A}
+.jk-b{color:#6A3FB5;background:#F0E8FD;border-color:#D6C4F5}
+.mic-b{color:var(--muted)}
+.ok-b{color:var(--ok);border-color:var(--ok)}
+.no-b{color:var(--no);border-color:var(--no)}
+:root[data-theme="dark"] .st-b{background:#3A3016;color:#F0C75E;border-color:#5C4A1C}
+:root[data-theme="dark"] .jk-b{background:#2C2340;color:#C8B0F2;border-color:#463767}
+@media (prefers-color-scheme: dark){:root:not([data-theme]) .st-b{background:#3A3016;color:#F0C75E;border-color:#5C4A1C}:root:not([data-theme]) .jk-b{background:#2C2340;color:#C8B0F2;border-color:#463767}}
+.modes{display:flex;flex-direction:column;gap:8px}
+.mode{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface)}
+.mode .ml{flex:1;display:flex;flex-direction:column}
+.mode b{font-size:17px}.mode small{color:var(--muted);font-size:13.5px;margin-top:2px}
+.mode .mn{font:700 20px/1 var(--name);color:var(--cobalt);font-variant-numeric:tabular-nums}
+.mode:disabled{opacity:.45}
+@media (hover:hover){.mode:not(:disabled):hover{border-color:var(--cobalt)}}
+.prog3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.prog3 div{background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.prog3 b{font:700 26px/1.1 var(--name);font-variant-numeric:tabular-nums}
+.prog3 small{color:var(--muted);font-size:13px;line-height:1.3}
+.flash{display:block;-webkit-user-select:none;user-select:none;width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:22px 20px;min-height:340px;cursor:pointer;box-shadow:0 1px 0 var(--line)}
+.flash.flipped{cursor:default;border-color:var(--cobalt)}
+.flash .face{animation:fl .22s ease}
+@keyframes fl{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.flash .face{animation:none}}
+.fmeta{color:var(--muted);font-size:14px;margin-bottom:8px}
+.fname{font:700 40px/1.15 var(--name);margin:28px 0 18px;word-break:keep-all}
+.fname.sm{font-size:28px;margin:4px 0 10px}
+.fhint{color:var(--muted);font-size:14.5px;margin:24px 0 0}
+.fq{font-size:22px;font-weight:600;line-height:1.5;margin:26px 0 8px;word-break:keep-all}
+.fq.sm{font-size:16px;margin:2px 0 10px;color:var(--muted);font-weight:500}
+.fa{font-size:21px;font-weight:700;line-height:1.5;color:var(--ink);padding:12px 14px;background:var(--hl);border-radius:10px;word-break:keep-all}
+.fmemo{color:var(--muted);font-size:14px;margin:10px 0 0}
+.dl{margin:0;display:flex;flex-direction:column;gap:9px}
+.dl .r{display:grid;grid-template-columns:88px 1fr;gap:10px;font-size:16px;line-height:1.55}
+.dl dt{color:var(--muted);font-size:14px;padding-top:2px}
+.dl dd{margin:0;word-break:keep-all;overflow-wrap:anywhere}
+.fbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.fbtns.hidden{visibility:hidden}
+.again{color:var(--no)}
+.dc.againc{border-color:var(--no)}
+.dcard dl.dl{display:flex;flex-direction:column;gap:8px;margin:8px 0 0;font-size:inherit}
+.dlist .dcard .dl .r{font-size:15px}
+.ox{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.oxb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:18px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);font:700 34px/1 var(--name)}
+.oxb small{font:500 13px/1 var(--body);color:var(--muted)}
+.oxb.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.oxb.wrong{background:var(--no-bg);border-color:var(--no);color:var(--no)}
+.oxb.dim{opacity:.45}
+@media (max-width:520px){.fname{font-size:32px}.dl .r{grid-template-columns:1fr;gap:0}.dl dt{font-size:13px}.prog3 b{font-size:22px}}
+/* 과목 전환 메뉴 */
+.subj{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:0 0 22px;border-radius:14px;background:var(--surface);border:1.5px solid var(--line)}
+.sbtn{display:flex;align-items:baseline;justify-content:center;gap:7px;padding:11px 8px;border-radius:10px;color:var(--ink);text-decoration:none;font-size:16px;line-height:1.2;min-height:44px}
+.sbtn small{color:var(--muted);font-size:13px}
+.sbtn.on{background:var(--cobalt);color:var(--cobalt-ink)}
+.sbtn.on small{color:inherit;opacity:.8}
+a.sbtn:active{background:var(--bg)}
+@media (hover:hover){a.sbtn:hover{background:var(--bg)}}
+@media (max-width:620px){.sbtn{flex-direction:column;align-items:center;gap:1px;padding:8px 4px;font-size:15px}.sbtn small{font-size:12px}}
+
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const CURRENT_SUBJECT = "drugs";
+// ───── 공용: 과목 전환 · 화면 색 · 마지막으로 연 과목
+// 각 과목 앱(pharm/, drugs/, micro/)이 같은 저장공간을 쓰므로 여기 값은 서로 공유된다.
+const HUB_KEY = "study-hub-v1";
+const SUBJECTS = [
+  { id: "pharm", path: "pharm", label: "약리학", sub: "객관식" },
+  { id: "drugs", path: "drugs", label: "CNS 약물", sub: "암기" },
+  { id: "micro", path: "micro", label: "미생물", sub: "서술형" }
+];
+const hub = (() => {
+  let h = null;
+  try { h = JSON.parse(localStorage.getItem(HUB_KEY)); } catch (e) {}
+  return h || {};
+})();
+function hubSave() { try { localStorage.setItem(HUB_KEY, JSON.stringify(hub)); } catch (e) {} }
+
+// 예전 앱별 화면 색 설정을 한 번만 옮겨 온다
+if (!hub.theme) {
+  for (const k of ["cns-quiz-v1", "micro-essay-v1"]) {
+    try { const t = JSON.parse(localStorage.getItem(k)).set.theme; if (t) { hub.theme = t; break; } } catch (e) {}
+  }
+  hub.theme = hub.theme || "auto";
+}
+hub.last = CURRENT_SUBJECT;
+hubSave();
+
+function getTheme() { return hub.theme || "auto"; }
+function setTheme(t) { hub.theme = t; hubSave(); }
+
+function subjectSwitcher() {
+  return `<nav class="subj" aria-label="과목 전환" style="grid-template-columns:repeat(${SUBJECTS.length},1fr)">${SUBJECTS.map(s =>
+    s.id === CURRENT_SUBJECT
+      ? `<span class="sbtn on" aria-current="page"><b>${s.label}</b><small>${s.sub}</small></span>`
+      : `<a class="sbtn" href="../${s.path}/"><b>${s.label}</b><small>${s.sub}</small></a>`
+  ).join("")}</nav>`;
+}
+
+function registerSW() {
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+    navigator.serviceWorker.register("../sw.js", { scope: "../", updateViaCache: "none" }).catch(() => {});
+  }
+}
+
+// ───── 출처: 약리학_7-10_CNS Drugs 1-4 최종 요약본 (박해정 교수님, 족보 19–25년·퀴즈 반영)
+// 약물 카드: [단원, 약물, 분류, 기전, 용도, 부작용·주의, 포인트, 표시]
+//   표시: ★ = 교수님 강조 / 족 = 족보(기출) 출제·정답 근거 / 🎙 = 교수님 예시가 포인트에 있음
+const SECTIONS = {
+  s1: "진정수면제",
+  s2: "알코올",
+  s3: "항경련제",
+  s4: "골격근 이완제",
+  s5: "마취제",
+  s6: "파킨슨·알츠하이머",
+  s7: "항정신병·양극성",
+  s8: "항우울제",
+  s9: "Opioid",
+  s10: "남용약물"
+};
+const SECTION_GROUPS = [
+  { label: "CNS 1", units: ["s1", "s2", "s3"] },
+  { label: "CNS 2", units: ["s4", "s5"] },
+  { label: "CNS 3", units: ["s6", "s7", "s8"] },
+  { label: "CNS 4", units: ["s9", "s10"] }
+];
+
+const DRUGS = [
+// ── s1 진정수면제
+["s1","Diazepam","BZD — long(1–3일)","GABA_A agonist · α1 & γ2 (BZD site)","불안(진정제) · 근이완(BZD 중 유일) · premedication · 항경련(SE 1st IV/rectal) · 알코올 금단(long)","Day-after somnolence · anterograde amnesia · tolerance·dependence · 노인: active metabolite 축적 → 치매 유사(가성, 중단 시 회복)","대사 단계 多 → 김(→ nordazepam). 근이완은 diazepam만 ★. 국소마취제 경련·TCA overdose 경련에도","★족"],
+["s1","Chlordiazepoxide","BZD — long(1–3일)","GABA_A agonist · α1 & γ2","진정제 · 알코올 금단(long-acting)","간기능↓ 환자에선 축적 → 금단엔 lorazepam·oxazepam이 안전","대사 단계가 diazepam보다 더 많아 더 김 ★ (chlordiazepoxide > diazepam)","★족"],
+["s1","Clorazepate · Flurazepam · Quazepam","BZD — long(1–3일)","GABA_A agonist · α1 & γ2","진정제 (clorazepate: 성인 focal impaired awareness 항경련)","","긴 BZD = 진정제: 1일 1회, 농도 변화↓, 금단↓ / 단점: 낮에도 진정",""],
+["s1","Alprazolam","BZD — intermediate(10–20h)","GABA_A agonist · α1 & γ2","Panic attack · agoraphobia · 급성 불안","","🎙 드라마 약통 예시. Lipid solubility 낮아 서서히·길게 (triazolam과 대조)","족🎙"],
+["s1","Lorazepam","BZD — intermediate(10–20h)","GABA_A agonist · α1 & γ2","불안 · SE 1st IV(diazepam보다 김) · premedication · 알코올 금단(간기능↓ 시 ★) · cocaine/amphetamine 초조·경련","","간기능↓ + 알코올 금단 → lorazepam·oxazepam + thiamine (축적 방지) — 4개년","★족"],
+["s1","Temazepam","BZD — intermediate","GABA_A agonist · α1 & γ2","수면 '유지' 곤란 (t½ 8.8h)","","수면 중 2–3시간마다 깸 → temazepam · suvorexant · zolpidem·eszopiclone","족"],
+["s1","Estazolam","BZD — intermediate","GABA_A agonist · α1 & γ2","진정·수면","","",""],
+["s1","Oxazepam","BZD — short(3–8h)","GABA_A agonist · α1 & γ2","알코올 금단(간기능↓ 시) · 수면","","바로 conjugation → 축적 적음 → 간기능 저하 금단 환자","족"],
+["s1","Triazolam","BZD — short(3–8h)","GABA_A agonist · α1 & γ2","수면 '유도' 곤란 (t½ 2h)","Rebound insomnia · 금단 빠름","Lipid solubility↑ → 빠름·짧음 (alprazolam은 반대) ★","★족"],
+["s1","Midazolam","BZD","GABA_A agonist · α1 & γ2","Premedication(내시경·IV) — sedation + anterograde amnesia · refractory SE(3rd)","호흡억제 → flumazenil로 회복 촉진 ★ · 주사통·혈전정맥염(diazepam)","Anterograde = 투여 '이후'를 기억 못 함 (retrograde ✗). 내시경 중 호흡억제 → flumazenil(매년 출제)","★족"],
+["s1","Flumazenil","BZD antagonist","GABA_A의 BZD binding site에 high affinity · competitive antagonist","① BZD overdose 반전 ② 마취·진단 후 회복 촉진 ③ Z-drug 일부 억제","Barbiturate·ethanol·opioid·전신마취제 반전 ✗ ★","그래서 'GABA_A antagonist'가 아니라 'benzodiazepine antagonist'. 🎙 술 + 새벽 수면제 → 호흡억제 → 응급실 → flumazenil","★족🎙"],
+["s1","Thiopental · Methohexital","Barbiturate — ultra-short(20분)","GABA_A agonist · multiple subunit (BZD와 다른 부위)","마취 유도(IV) · refractory SE(thiopental)","BP↓ · 호흡억제 · 진통 ✗ · 장시간 주입 시 t½ 급증","Lipid-soluble → 빠른 발현·신속 회복. 🎙 흡입마취제는 기도 자극 → 먼저 짧은 유도제로 재운 뒤 흡입","족🎙"],
+["s1","Pentobarbital · Secobarbital · Amobarbital","Barbiturate — short(3–8h)","GABA_A agonist · multiple subunit","수면제로 드물게 · pentobarbital = refractory SE(마취용량)","Safety margin↓ → 과량 시 호흡억제","",""],
+["s1","Phenobarbital","Barbiturate — long(1–2일)","GABA_A agonist · multiple subunit","항경련: neonatal seizure 1st · SE IV(2nd)","CYP inducer(자기 자신 포함) ★ · sedation → 사회생활 환자 ✗ · cardiac defect(임신) · 급중단 ✗","해독제 없음 ★ → supportive·위세척·NaHCO₃ 소변 알칼리화(약산 → 이온화 → 배설↑). 🎙 신생아는 상관없음","★족🎙"],
+["s1","Zolpidem","Z-drug","GABA_A agonist · α & γ (BZD site 일부 공유)","수면제로만 — 유도 + 유지 (t½ 2–3h)","Nightmares · 몽유병 🎙(자면서 운전·냉장고, 본인은 기억 못 함)","Z-drug 수면제로만인 이유: ① 너무 빨라 진정 건너뛰고 수면 ② 반감기 짧음 ★. Flumazenil 반전 가능","★족🎙"],
+["s1","Zaleplon","Z-drug","GABA_A agonist · α & γ","수면 '유도'만 (t½ 1h)","","함정: zaleplon = 유도만 / zolpidem·eszopiclone = 유도 + 유지","족"],
+["s1","Eszopiclone","Z-drug","GABA_A agonist · α & γ","수면 유도 + 유지 (t½ 6h)","","",""],
+["s1","Ramelteon · Tasimelteon","Melatonin R agonist","Melatonin receptor agonist","수면제","의존·금단 없음 → 장기 복용 가능 · 효과 marginal","함정: melatonin 'antagonist' ✗","족"],
+["s1","Suvorexant · Lemborexant","Orexin R antagonist","Orexin 1,2 receptor antagonist","수면(유지)","Day-after sedation · narcolepsy · 우울↑ · 자살 충동","함정: lemborexant 'agonist' ✗. 🎙 Orexin knockout 쥐 — 식욕 표현형 없어 '망했다' → 하루 종일 꾸벅꾸벅 → 수면 수용체 발견","족🎙"],
+["s1","Buspirone","항불안제(비-BZD)","5-HT1A partial agonist (+weak D2)","항불안만(수면 ✗) · 불안장애 2nd-line","발현 1주↑ → panic·급성 ✗","내성·의존·금단 거의 없음. Full agonist ✗","★족"],
+
+// ── s2 알코올
+["s2","Ethanol","Alcohol","GABA_A ↑ + NMDA ↓ (그 외 GIRK·adenosine·glycine·5-HT3·nACh)","— (methanol·ethylene glycol 중독 시 ADH 경쟁 해독제로도 사용)","급성: 호흡억제·구토물 흡인(BAC >400) / 만성: tolerance·dependence, Wernicke-Korsakoff, 말초신경 손상(가장 흔함), alcoholic dementia · FAS","대사: ADH(primary, NAD⁺) + MEOS(다량·만성, CYP2E1·1A2·3A4, NADPH) → 만성 음주 → MEOS induction → 다른 약 제거↑ 🎙'술은 마시면 는다'. NMDA↓ in hippocampus → blackout","★족🎙"],
+["s2","Thiamine (B1)","비타민","Brain glucose 대사 보효소 보충","급성 중독·금단 모든 환자(in all cases) — Wernicke-Korsakoff 예방","","금단 완화제가 아님 ★ (WKS 예방 목적)","★족"],
+["s2","Naltrexone","Opioid antagonist","Long-acting μ-opioid antagonist","Alcoholism 재발 방지(갈망↓) · opioid detox(경구 48h, 동기 높은 환자)","Opioid 의존자에게 → 금단 악화","Naltrexone(갈망↓, 장기) ≠ Naloxone(급성 opioid 중독) — 5개년","★족"],
+["s2","Acamprosate","Alcoholism 치료","Weak NMDA antagonist + GABA_A activator","재발 방지","Severe renal impairment 금기 ★","Alcohol과 같은 기전 → '어디서 본 것 같지 않나요?' = acamprosate","★족"],
+["s2","Disulfiram","Alcoholism 치료","ALDH 억제 → 음주 시 acetaldehyde 축적 → 불쾌 반응","재발 방지 (갈망↓ ✗, 불쾌감으로 금주 유도)","환자가 약을 정확히 먹어야 함","함정: Disulfiram ⊣ ALDH ≠ Fomepizole ⊣ ADH","★족"],
+["s2","Fomepizole","해독제","ADH 직접 억제 → formate·oxalate 생성 차단","Methanol · ethylene glycol 중독 (+ 혈액투석 + bicarbonate)","","대안: ethanol (ADH에 더 높은 affinity로 경쟁). 함정: ethanol이 formate를 빨리 대사시키는 게 아님","★족"],
+["s2","Methanol","독성 알코올","ADH → formaldehyde → formate","—","'눈보라 속' 시력장애(retina) + 대사성 산증","🎙 코로나 당시 '소독제를 마시면 좋다' → 해외 methanol 중독. 연료·유리세정제(무색 → 물로 착각)","족🎙"],
+["s2","Ethylene glycol","독성 알코올","ADH → oxalate","—","CNS 흥분 → 억제 → 4–12h 산증 → oxalate 신세관 침착 → 지연성 신부전","부동액(달큰한 냄새 → 어린이). 순서 함정: 처음 '흥분' 후 억제","족"],
+
+// ── s3 항경련제
+["s3","Carbamazepine (CBZ)","Na⁺ channel 차단","Voltage-gated Na⁺ 차단 · inactivated state 안정화","Focal 1st ★ · bipolar · 삼차신경통","Rash, hyponatremia, diplopia, ataxia, aplastic anemia, agranulocytosis, SJS","CYP inducer ★. Rash 시 → lacosamide로 교체(감량·유지 ✗). 함정: 'CBZ – gingival hyperplasia' ✗(PHT)","★족"],
+["s3","Oxcarbazepine · Eslicarbazepine","Na⁺ channel 차단","CBZ 유사체","Focal","","Oxcarbazepine = 피임약 대사↑",""],
+["s3","Phenytoin (PHT)","Na⁺ channel 차단","Na⁺ inactivation 연장","Focal(주) · GTC · SE IV(2nd, fosphenytoin)","Nystagmus, diplopia, ataxia, gingival hyperplasia, hirsutism · 장기: coarse facies, osteomalacia(vit D), 신경병증 → DTR 이상 · fetal hydantoin","Albumin 결합 90% ← VPA·sulfonamide·phenylbutazone 치환 → PHT↑. CYP inducer. 외모 부작용 → 젊은 여성·소아청소년·외모 직업 회피 ★. PHT 부작용 '아닌 것' = agranulocytosis(CBZ)","★족"],
+["s3","Lacosamide","Na⁺ channel 차단","Na⁺ channel 억제 (slow inactivation 강화)","Focal 1st","경미 → 내약성 좋음","CBZ rash 시 교체 대상","족"],
+["s3","Lamotrigine (LTG)","Na⁺ channel 차단","Na⁺ channel 억제","Focal · GTC · LGS · absence(가임 여성) · bipolar(재발 예방, 특히 우울)","내약성 좋음 but rash → SJS ★ 즉시 중단 (소아 위험)","임신 안전 → 임신 계획 시 VPA 대신 lamotrigine ★ (3개년). VPA가 clearance↓. 피임약 영향 적음","★족"],
+["s3","Rufinamide","Na⁺ channel 차단","Na⁺ channel 차단","LGS — 특히 atonic","Somnolence, vomiting","피임약 대사↑",""],
+["s3","Cenobamate","Na⁺ channel 차단","Na⁺ 차단 + presynaptic GABA 방출↑","Focal add-on","★ QT 단축 → 부정맥","🎙 국내(SK) 개발","★🎙"],
+["s3","Zonisamide","다중 기전","Na⁺ 차단 등","Focal · GTC · infantile spasm · myoclonic","TPM 유사 · renal stone · 심한 rash → SJS 중단","","족"],
+["s3","Ethosuximide (ESM)","T-type Ca²⁺ 차단","Voltage-gated T-type Ca²⁺ 차단 → 탈분극 억제","Absence 1st ★ (3-Hz spike, 눈 깜빡임)","Gastric distress만 → 널리 사용","TC 공존 → VPA. VPA 병용 시 ESM 농도↑. 함정: 'ESM – DTR 검사' ✗(PHT). 5개년","★족"],
+["s3","Gabapentin · Pregabalin","α2δ ligand","Presynaptic Ca²⁺ α2δ 결합 → vesicle 융합↓ ('GABA analog'지만 GABA와 무관 ★)","Focal add-on · neuropathic pain (GBP: 대상포진후·당뇨 신경병증 / PGB: 섬유근통, RLS, 불안)","Somnolence, dizziness — 🎙 실제론 심한 어지럼·구토","Ca²⁺ 대조: ethosuximide = voltage-gated T-type(탈분극 억제) vs gabapentin = presynaptic 방출 장치","★🎙"],
+["s3","Levetiracetam (LEV)","SV2A","SV2A 결합 → vesicle glutamate 저장↓·방출↓","Focal · GTC · juvenile myoclonic","Somnolence·infection · ★ 행동·기분 변화(aggression, depression), psychosis","임신 안전 (lamotrigine과 함께 대안). Brivaracetam = 유사체","★족"],
+["s3","Perampanel","AMPA 차단","AMPA receptor antagonist","Focal·GTC additive만","★ Aggression, hostility (젊은·학습장애·치매, alcohol↑)","CYP3A4 대사 → CBZ·PHT 병용 시 효과↓ · levonorgestrel 피임약·IUD↓. 함정: 'perampanel – acute myopia' ✗(topiramate)","★족"],
+["s3","Felbamate","NMDA 차단","NMDA 차단 (+GABA_A↑)","Focal·LGS refractory만(3rd)","★ Aplastic anemia, severe hepatitis","드물지만 치명적 → 거의 안 씀","★족"],
+["s3","Vigabatrin","GABA-T 억제","GABA aminotransferase(분해) 억제 (+vesicle GABA transporter) → GABA↑","Infantile spasm 1st ★ · focal 보조","★ Psychosis, irreversible visual field defect → 시력검사","'Vigabatrin–Visual'. 🎙 영유아라 시야 검사 어려움","★족🎙"],
+["s3","Tiagabine","GAT-1 억제","GABA 재흡수(GAT-1) 억제","Focal 2nd·add-on","정신신경: excessive confusion, 우울","",""],
+["s3","Valproic acid (VPA)","다중 기전","Na⁺·Ca²⁺·GABA 등 다중","Generalized 전반 1st(TC·myoclonic·atonic·absence) · SE IV · bipolar · migraine 예방 (focal은 열세)","★ Idiosyncratic hepatotoxicity(2세 이하·다약제) · 체중↑ · 식욕↑ · 탈모 · urea cycle 결함 → 고암모니아 뇌병증(금기) · 임신: spina bifida, 인지↓, autism ★","CYP inhibitor ★ · PHT 치환 · LTG clearance↓ · ESM↑. 🎙 자폐 쥐 모델 = 임신 쥐에 VPA","★족🎙"],
+["s3","Topiramate (TPM)","다중 기전","Na⁺·Ca²⁺ 차단 + GABA_A↑ + kainate(AMPA/KA) 억제 + CA 억제","Focal~Dravet 광범위 · infantile spasm · migraine","Cognitive(언어·기억) · acute myopia·glaucoma → 즉시 중단 · renal stone · CA 억제 → 산증 · 체중↓","임신: oral cleft(16–21배). 피임약 대사↑","★족"],
+["s3","Clobazam","1,5-BZD","GABA_A agonist (기존 BZD와 다른 구조)","2세↑ LGS · Dravet","Sedation, 구음장애, 침흘림, aggression","CYP inducer(피임약 대사↑). BZD 역할: 경구 유지",""],
+["s3","Clonazepam · Nitrazepam","BZD","GABA_A agonist","Absence 대체(clonazepam)·atonic·myoclonic · infantile spasm 2nd · LGS","Sedation","Diazepam·lorazepam = IV/rectal SE 정지 ↔ clonazepam·nitrazepam·clorazepate·clobazam = 경구 유지 ★",""],
+["s3","Cannabidiol","Cannabinoid","CB 결합 아님 · 기전 불명","Dravet, LGS (병용만)","★ Hepatotoxicity → VPA와 병용 시 간수치","Cannabis sativa · 2018 국내 도입","★"],
+["s3","Fenfluramine","Amphetamine 유도체","불명","Dravet, LGS (병용만)","식욕↓, diarrhea","식욕억제제였던 약",""],
+["s3","Stiripentol","GABA_A 강화","Aromatic allylic alcohol → GABA_A","Dravet (clobazam 또는 VPA와 병용)","","",""],
+["s3","Everolimus","mTORC1 억제","mTORC1 결합·억제","TSC 관련 refractory focal","","TSC 결손 → mTOR 과활성 → 결절",""],
+["s3","Acetazolamide","CA 억제","Carbonic anhydrase 억제 (뇌 mild acidosis)","월경 중 발작 악화 여성","★ 내성 1주 내 → 유지 ✗","","★"],
+
+// ── s4 골격근 이완제
+["s4","Succinylcholine","Depolarizing NMB","N_M persistent agonist → 지속 탈분극 → desensitization (Phase I → II)","기관내삽관(5–10분, 짧은 약) · 항경련(근육만)","Hyperkalemia(K⁺ 유리 → cardiac arrest) ★ · 안압↑ · 위내압↑ · muscle pain · halothane과 부정맥 · volatile과 MH","Plasma butyrylcholinesterase 대사 → pseudo-ChE rare variant → 효과 오래 지속 ★. AChE inh: Phase I 증폭 / Phase II 억제. 회복약 불필요","★족"],
+["s4","Rocuronium · Vecuronium","Nondepolarizing NMB (intermediate, steroid형)","N_M competitive antagonist","수술 근이완 · 삽관","CV 영향 minimal (안전성↑)","Rocuronium 선호 ★ — 심장 안정성 + 반전약(sugammadex) 존재. Steroid형 → sugammadex(결합 → rapid reversal)","★족"],
+["s4","Cisatracurium","Nondepolarizing NMB (intermediate)","N_M competitive antagonist","수술 근이완","CV 영향 minimal","",""],
+["s4","Mivacurium · Atracurium","Nondepolarizing NMB (short / intermediate)","N_M competitive antagonist","Mivacurium = 짧아 삽관","Histamine release → hypotension","","족"],
+["s4","Tubocurarine · Metocurine","Nondepolarizing NMB","N_M competitive antagonist","—","Ganglionic blockade + histamine → hypotension (histamine 쪽이 더 주원인)","🎙 Curare 화살촉 — 아마존 원주민이 덩굴 추출물로 사냥감 마비","🎙"],
+["s4","Pancuronium","Nondepolarizing NMB (long, steroid형)","N_M competitive antagonist","—","Cardiac muscarinic block → tachycardia·HTN","",""],
+["s4","Neostigmine · Pyridostigmine","AChE inhibitor","AChE 억제 → ACh↑ → 경쟁에서 밀림 → 이완↓","Nondepolarizing NMB 잔여 blockade 회복","고농도 NMB면 효과↓","🎙 수술 = isoflurane + midazolam + nondepol NMB → 끝나면 AChE inhibitor로 빠른 회복","족🎙"],
+["s4","Sugammadex","반전약","Steroid형 NMB(rocuronium·vecuronium)에 결합","Rapid reversal","","Steroid NMB → sugammadex",""],
+["s4","Dantrolene","Antispasmodic (근육 직접)","RyR에 결합 → SR Ca²⁺ release↓","Malignant hyperthermia ★ (+cooling, acidosis 교정) · NMS(대안)","","MH = RyR1 mutation + volatile + succinylcholine → SR Ca²⁺ 지속 방출 → 강직·lactic acidosis·고열","★족"],
+["s4","Baclofen","Spasmolytic (중추)","GABA_B agonist(GPCR) — pre: Ca²⁺↓ / post: K⁺↑","강직(spasticity)","","경구 GABA-mimetic. 함정: GABA_A ✗ / antagonist ✗","족"],
+["s4","Tizanidine","Spasmolytic (중추)","α2 agonist (clonidine 유사) → upper MN의 glutamate 방출↓","강직","","25중간 객70 정답률 32%","족"],
+["s4","Botulinum toxin","Antispasmodic","Vesicle docking 방해 → ACh release↓ · local injection","뇌성마비 강직 · 눈·입 주위 주름 · overactive bladder · chronic migraine","","🎙 민감성 방광 — 어머님들이 화장실 걱정에 멀리 못 감 → 방광 마비. 주름처럼 효과 점점 반감 → 주기 투여","족🎙"],
+
+// ── s5 마취제
+["s5","Nitrous oxide (N₂O)","흡입마취제 (gas)","Inhibitory↑ + excitatory(NMDA·nACh)↓","유지 보조","장기 노출 → methionine synthase↓ → megaloblastic anemia","Blood:gas 0.47 → 유도·회복 가장 빠름 ★. MAC 105% → 유지 어려움. 순환 억제 최소, 자궁 영향 없음, nonpungent","★족"],
+["s5","Halothane","흡입마취제 (volatile)","—","—","Myocardial depression · catecholamine에 심근 sensitize → ventricular arrhythmia · halothane hepatitis(>40% 간대사)","Blood:gas 2.3 → 유도 느림, 환기↑ 효과 큼 ★. MAC 0.75 → 유지 쉬움. Nonpungent. 🎙 Cardiac arrest로 epinephrine 맞은 환자·갈색세포종 수술 → halothane 쓰면 부정맥 사망","★족🎙"],
+["s5","Enflurane","흡입마취제 (volatile)","—","—","Myocardial depression · nephrotoxicity(장기 노출)","🎙 계수(1.8)는 halothane(2.3)보다 빠르지만 halothane은 간대사로 제거 → elimination rate 거의 같음","족🎙"],
+["s5","Isoflurane","흡입마취제 (volatile)","—","유지 · 심부전 환자(vasodilation)","Pungent → 기침·breath-holding","NMB 근이완 증강 효과 최대 (isoflurane > sevo > des > enflurane > halothane > N₂O)","족"],
+["s5","Desflurane","흡입마취제 (volatile)","—","유지 · 심부전 환자","Pungent","B:G 0.42, 빠른 회복",""],
+["s5","Sevoflurane","흡입마취제 (volatile)","—","유지 · 심부전 환자 · 기도 문제 환자","","B:G 0.69, nonpungent, 빠른 유도·회복",""],
+["s5","Propofol","정맥마취제","GABA_A Cl⁻ potentiation","유도 · 진정(MAC·ICU·수면내시경) · 유지(continuous infusion 가능) ★","BP↓↓ → 서맥·asystole · apnea · 진통 ✗ → opioid 병용 · 주사통 · 우유주사(emulsion)","마취 유지 = propofol 하나뿐 ★ (context-sensitive t½ 거의 안 늘어남). Antiemetic → PONV 병력 환자. 🎙 수면내시경 후 곧바로 음식 섭취 가능","★족🎙"],
+["s5","Etomidate","정맥마취제","GABA_A Cl⁻↑","유도 — 심근수축력 저하 환자","★ Adrenocortical suppression(11β-hydroxylase 억제) → 지속주입 금지 · PONV 심함 · 주사통","Cardiovascular stability ★, barbiturate보다 호흡억제↓","★족"],
+["s5","Ketamine","정맥마취제","NMDA 억제 · dissociative","Propofol·barb·BZD 대용 · 저혈압·저혈량 환자 · 천식 · opioid 내성·hyperalgesia · 비협조 소아 premed","★ 불쾌한 각성 반응(생생한 꿈·환각·유체이탈) → 남용 · 눈물·침↑(항콜린 premed) · 고혈압·뇌졸중 금기","교감 자극(혈압 유지) · 호흡억제 최소 · 기관지 이완 · 강한 진통 · multiple routes (4개년) 🎙 '주사기만 봐도 울기 시작'하는 소아","★족🎙"],
+["s5","Dexmedetomidine","정맥마취제","α2 agonist","ICU 단기 진정(삽관·환기 환자) · 마취 보조","Heart block · 심한 서맥 · asystole","진통 + 호흡억제 없음. 🎙 개발 배경 — clonidine 복용 환자에서 마취제 요구량이 줄어든 것을 관찰","족🎙"],
+["s5","Fentanyl · Sufentanil · Remifentanil (마취)","Opioid","μ agonist","마취 중 진통","저혈압 · 호흡억제 · 근경직 · PONV","Morphine보다 빠른 진통 · naloxone으로 반전",""],
+["s5","Ondansetron (premed)","전마취제","5-HT3 antagonist","PONV 예방 ★","Serotonin syndrome 유발 약에 포함","🎙 '국시 단골'(항암 구토에도)","★🎙"],
+["s5","Lidocaine","국소마취제 — amide (medium)","Na⁺ channel 안쪽 차단 (inactivated form affinity 최고)","국소마취 기준·가장 널리 ★ · TCA overdose 부정맥","고농도: nystagmus·twitching → tonic-clonic convulsion → diazepam","pKa ~7.7 약염기 → 염증(산성) 부위에서 이온형↑ → 효과↓. + epinephrine → 국소 농도↑·지속, 전신독성↓ ★","★족"],
+["s5","Bupivacaine","국소마취제 — amide (long)","Na⁺ channel 차단","수술 후 진통 · 분만 · 척수마취","★ 심독성: cardiac arrest, arrhythmia → high-volume epidural 피함","Ropivacaine·levobupivacaine = 이성질체. 지용성↑ → more potent & longer","★"],
+["s5","Chloroprocaine","국소마취제 — ester (short)","Na⁺ channel 차단","초단시간 수술","","Ester = plasma butyrylcholinesterase → 빠른 가수분해 → 짧음",""],
+["s5","Cocaine (국소마취)","국소마취제 — ester (medium)","Na⁺ channel 차단 (+DAT 억제)","ENT 표면마취","","혈관수축 → 출혈↓. 함정: amide ✗","족"],
+["s5","Benzocaine","국소마취제 — ester","Na⁺ channel 차단","국소 도포(고지용성)","Methemoglobinemia","",""],
+
+// ── s6 PD·AD
+["s6","Levodopa","DA precursor","LAT로 뇌 진입 → DOPA decarboxylase로 DA 전환 (단독 시 1–3%만 뇌로)","PD main drug · 고령(70–75)·인지/정신 장애·빠른 호전 필요 시 즉시","On-off·wearing-off · GI(CTZ) · CV(빈맥, postural hypotension) · dyskinesia · confusion·delusion·hallucination ★ → psychosis 환자 금기","B6 → 말초 분해↑ · 비선택 MAOI·MAO-A inh → hypertensive crisis 병용 금기 ★ · 항정신병약 병용 금기. 강한 약은 나중을 위해 남겨둠","★족"],
+["s6","Carbidopa","DOPA decarboxylase inhibitor","말초 DOPA decarboxylase 억제 · BBB 통과 ✗","Levodopa와 병용","","L-DOPA 용량↓ + 말초 DA 부작용↓ (매년). 왜 DA 자체를 안 주나? DA는 극성↑ + transporter 없음 → BBB ✗ ★. 함정: COMT 억제 ✗","★족"],
+["s6","Bromocriptine","DA agonist — ergot","D2 agonist","PD first-line monotherapy(초기·비고령·경증) · levodopa 보조 · NMS · hyperprolactinemia","Psychosis 악화 · ergot → 말초혈관질환 금기","DA agonist 금기: psychosis, 최근 MI, 궤양","★족"],
+["s6","Pramipexole · Ropinirole · Rotigotine","DA agonist — non-ergot","Pramipexole D3 / Ropinirole D2 / Rotigotine D1–3(patch)","PD first-line monotherapy(초기) · levodopa 보조","Psychosis 악화","",""],
+["s6","Selegiline · Rasagiline · Safinamide","MAO-B inhibitor","Selective MAO-B 억제 (고용량 시 A도)","PD — 단독(rasagiline) 또는 levodopa 보조","Dyskinesia, insomnia","Selegiline 고용량 = 비선택 MAOI(항우울). 함정: 'safinamide – D2 agonist' ✗","족"],
+["s6","Entacapone · Opicapone","COMT inhibitor — 말초","말초 L-DOPA 분해↓ → 작용 연장","Levodopa-carbidopa 병용 시에만 ★","설사, vivid dreams, 환시, dyskinesia","Stalevo = levodopa + carbidopa + entacapone. Opicapone 1일 1회 취침 시 ★ — levodopa-carbidopa와 흡수 경쟁 → 시간 안 겹치게, 전후 1시간 금식","★족"],
+["s6","Tolcapone","COMT inhibitor — 말초 + 중추","COMT 억제","Levodopa-carbidopa 보조","간독성 ★","","★"],
+["s6","Benztropine · Trihexyphenidyl","Anticholinergic","Muscarinic 차단","Tremor·rigidity↑ 개선 (bradykinesia엔 약함) · 항정신병약 유발 parkinsonism ★","구갈 · 변비 · 시야","항정신병약 유발 parkinsonism엔 DA 약 ✗ — D2를 막아 둔 치료 효과가 사라짐 → anticholinergic","★족"],
+["s6","Apomorphine","DA agonist","Potent D2 agonist · SC·SL","Off-period 일시·급속 완화","CTZ 구역 → trimethobenzamide 3일 전부터","🎙 25중간 객71 정답률 8% — apomorphine은 opioid가 아니라 D2 agonist","★족🎙"],
+["s6","Amantadine","항바이러스제","기전 불명 (DA↑, M 차단, NMDA↓)","몇 주만 효과 → 급속 완화용 · 항정신병약 parkinsonism","Livedo reticularis · 요저류","함정: 'cholinergic 활성화' ✗","족"],
+["s6","Istradefylline","Adenosine A2A antagonist","Caffeine 유사 · A2A 차단","Off-period↓·wearing-off↓ (levodopa 보조)","환각 · psychosis · 충동조절 상실","25중간 정답(8%) — off-period 완화","★족"],
+["s6","Donepezil","AChE inhibitor","AChE 억제 → cholinergic transmission↑","Alzheimer's disease ★","","'AChE inhibitor 약물은? → donepezil / donepezil 기전은? → AChE inhibitor' = 최근 기종평 단골 (5개년). Galantamine(PD 치매)·rivastigmine·tacrine","★족"],
+["s6","Memantine","NMDA antagonist","NMDA 과자극(excitotoxicity) 방지","Alzheimer's disease","","","족"],
+["s6","Aducanumab","β-amyloid mAb","β-amyloid 표적 항체","AD","","승인 취소 — 부작용 아닌 재정 문제로 임상 중단",""],
+
+// ── s7 항정신병·양극성
+["s7","Chlorpromazine · Thioridazine","Typical — low potency (phenothiazine)","D2 차단 (+α1·H1·M 차단 강함)","조현병 (2nd line) · chlorpromazine 항구토","α1: 기립성 저혈압·사정 장애 · H1: 진정 · M: 구갈·배뇨곤란·변비(시간 지나면 개선) · thioridazine: QT 연장, retinitis pigmentosa","α 차단 부작용 → α 차단 적은 약(fluphenazine, haloperidol, ziprasidone)으로 교체","★족"],
+["s7","Haloperidol · Fluphenazine · Perphenazine","Typical — high potency","D2 차단 (≥60% 점유)","조현병(양성 증상) · Tourette","Severe EPS: 초기 parkinsonism·akathisia·acute dystonia → anticholinergic·diphenhydramine / 장기 TD","α 차단 very low. TD 위험: typical","★족"],
+["s7","Clozapine","Atypical","D2 + 5-HT2A (D4 > D2 → only 5-HT2A antagonist로 분류되기도)","3rd-line(무반응 시) — 단 자살 충동 환자엔 1차 ★","Agranulocytosis 1–2%, 초기 6–8주 → 혈액검사 필수 · 체중 증가(H1 + 5-HT2)","효과 최고. Agranulocytosis = 특이체질성(idiosyncratic) — 예상 불가·용량 비의존 ★ (cf. SJS). TD 시 교체 대상","★족"],
+["s7","Olanzapine","Atypical","D2 + 5-HT2A (clozapine처럼 only 5-HT2A로 분류되기도)","조현병(양성 + 음성) · bipolar manic · bipolar depression(+ fluoxetine) · 항구토","체중 증가 · 진정","","★족"],
+["s7","Quetiapine","Atypical","D2 + 5-HT2A","조현병 · bipolar depression 치료 ★ · TD 시 교체","진정","우울인데 항우울제 단독 ✗ → 조증 유발 → quetiapine","★족"],
+["s7","Risperidone · Paliperidone","Atypical","D2 + 5-HT2A","조현병 · bipolar manic(risperidone)","TD 위험(atypical 중 예외) · prolactin↑","","족"],
+["s7","Ziprasidone","Atypical","D2 + 5-HT2A","조현병","QT 연장","α 차단 very low","족"],
+["s7","Aripiprazole","Atypical (partial)","D2 partial agonist","조현병 · bipolar manic","","'줄친 약물만이라도 외워두세요' ★ — clozapine, olanzapine, paliperidone, quetiapine, risperidone, ziprasidone, zotepine, aripiprazole","★"],
+["s7","Valbenazine · Deutetrabenazine","VMAT inhibitor","VMAT 억제","Tardive dyskinesia","","TD = 지속 D2 차단 → 수용체 수↑·supersensitivity → 상대적 ACh 결핍. 처치: 용량↓ 또는 quetiapine·clozapine 교체 → VMAT inh","★족"],
+["s7","Diphenhydramine (EPS·NMS)","H1 antagonist (항콜린)","H1 차단 + 항콜린 · BBB 통과","Akathisia·acute dystonia · NMS","진정 · 항콜린","NMS(급격한 D2 차단: marked muscle rigidity + parkinsonism + 고열 + 자율신경 불안정) → diphenhydramine, diazepam (dantrolene, bromocriptine)","★족"],
+["s7","Lithium","Mood stabilizer","기전 불명 (1가 양이온 → Na⁺ 대체)","Bipolar 1st line · manic phase 치료 + 재발 예방","혈중 ≤1 mEq/L ★ (모니터링) · tremor → propranolol · 운동실조·구음·혼동 → 중단 · Na 저류 부종 · nephrotoxicity(신성 요붕증) · sick sinus 금기","Bipolar 1st-line (2개년)","★족"],
+["s7","Lamotrigine (bipolar)","Mood stabilizer","Na⁺ channel 억제","재발 예방만 — 특히 depressive","","급성 조증엔 ✗","족"],
+["s7","VPA · Carbamazepine (bipolar)","Mood stabilizer","—","급성 조증 + 재발 예방(특히 manic)","","",""],
+
+// ── s8 항우울제
+["s8","Fluoxetine","SSRI","SERT 억제","우울 1st · 소아 우울 · 소아 OCD · PMDD · 신경성 폭식증 · olanzapine 병용 bipolar depression","Insomnia(아침 복용) · GI(초기) · 성기능↓ · 소아 자살률↑ · overdose serotonin syndrome","최초 SSRI, active metabolite(norfluoxetine) 긴 t½ → 주 1회 제형 · MAOI 교체 시 washout ≥6주(긴 t½, 다른 SSRI는 ≥2주). 효과 최소 2주, 최대 12주↑","★족"],
+["s8","Sertraline","SSRI","SERT 억제","우울 · PMDD · 소아 OCD","Insomnia → 아침 복용 · GI · 성기능↓","효과 2주↑ / 불면 / GI / 갑자기 중단 ✗ (기립성 저혈압 ✗ — 25중간)","족"],
+["s8","Paroxetine","SSRI","SERT 억제","우울 · OCD","Hypersomnia · 체중↑ ★ · 성기능↓ · category D → 임산부 ✗","","★족"],
+["s8","Fluvoxamine · Citalopram · Escitalopram","SSRI","SERT 억제","우울 · OCD(fluvoxamine) · 소아 우울(escitalopram)","Fluvoxamine: hypersomnia","",""],
+["s8","Venlafaxine · Duloxetine · (Des/Levo)milnacipran","SNRI","SERT + NET 억제","SSRI 무효 · 통증 동반 우울 ★ · 신경병성 통증","SSRI 공통 + NE↑ → BP·HR↑ · discontinuation syndrome","","★족"],
+["s8","Imipramine · Amitriptyline · Clomipramine · Doxepin","TCA (3급 amine)","SERT ≥ NET 억제 + 수많은 수용체 차단","중등도~중증 · amitriptyline: 편두통·만성통증 · doxepin: 불면","M: 구갈·변비·요저류·시야흐림 · H1: 체중↑·진정 · α1: 기립성 저혈압(imipramine) · clomipramine: 성기능↓","Overdose(자살 시도 가장 빈번) → cardiotoxicity + 항콜린(혼수) + 경련 → NaHCO₃, diazepam, lidocaine · AChE inhibitor ✗ ★(심장 더 억제)","★족"],
+["s8","Desipramine · Nortriptyline","TCA (2급 amine)","NET > SERT","우울","TCA 부작용","Desipramine 복용자는 tryptophan-free diet에도 재발 ✗ (monoamine 가설 근거)","족"],
+["s8","Amoxapine","Tetracyclic","NET > SERT + postsynaptic D2 억제","조현병 + 우울","Parkinsonism","Antipsychotic 성질","족"],
+["s8","Maprotiline","Tetracyclic","NET > SERT","우울","","25중간 '모두 고르시오' 정답 짝","족"],
+["s8","Vilazodone","Tetracyclic","SERT만(NET ✗) + 5-HT1A partial","우울","성기능↓","",""],
+["s8","Phenelzine · Isocarboxazid · Tranylcypromine","MAOI — 비선택·irreversible","MAO-A(NE·5-HT)/B 억제","Last-line(음식·약물 상호작용) · atypical MDD","기립성 저혈압 · 체중↑ · 항콜린 · serotonin syndrome · 성불감증 최고","+ SSRI·SNRI·TCA → severe serotonin syndrome (washout ≥2주) · + tyramine → hypertensive crisis ★ 🎙 '치즈, 숙성육, 훈제생선, 레드와인, 생맥주, 대두제품, 소시지 — 다 맛있게 생긴 애들'","★족🎙"],
+["s8","Moclobemide","MAOI — reversible MAO-A","MAO-A 선택 억제","우울","Levodopa 병용 → hypertensive crisis","",""],
+["s8","Trazodone · Nefazodone","SARI (5-HT antagonist/reuptake inh)","Weak SSRI + 5-HT2A antagonist","Trazodone: 불면 치료 · nefazodone: 성기능 부작용 적음","H1 → 진정 · α1 → 기립성 저혈압 · trazodone: priapism · nefazodone: 치명적 간독성","25중간 함정: 'trazodone – α2 antagonist' ✗(mirtazapine)","★족"],
+["s8","Vortioxetine","5-HT modulator","SSRI 현저(예외) + 5-HT3/7 antag + 5-HT1A agonist","우울","구역 · 성기능 장애 ⚠️ 교체 대상 아님","",""],
+["s8","Bupropion","NDRI","Weak DA/NE reuptake inh (불확실)","우울 · 금연(1주 전부터) · 성기능 저하 환자 교체 ★","5-HT 부작용 ✗ · 구갈·발한 · 경련","🎙 우울증 치료했더니 의도치 않게 금연 성공률↑ → 금연약으로","★족🎙"],
+["s8","Mirtazapine","NaSSA","Presynaptic α2 autoreceptor antagonist → NE·5-HT release↑ + 5-HT2·5-HT3 antag · SERT/NET 억제 없음","불면 동반 우울 ★ · 성기능 저하 환자 교체","Potent H1 → 진정 · 체중↑","25중간 함정: 'mirtazapine – weak SSRI & 5-HT2A' ✗(trazodone)","★족"],
+["s8","Esketamine","NMDA antagonist","Ketamine S-이성질체","Intranasal · treatment-resistant · 자살사고 MDD · 5–7일","★ Dissociation 2h 내 최고 → 병원에서 2시간 관찰","","★족"],
+["s8","Brexanolone","GABA_A PAM","Allopregnanolone · progesterone 유도체","산후우울증 (IV 60h, 30일 유지)","과도한 진정, 의식소실","",""],
+
+// ── s9 Opioid
+["s9","Morphine","Strong μ agonist (natural)","μ full agonist ★ — pre: Ca²⁺ 억제 / post: K⁺ open → IPSP","강한 진통(화상·암) · acute pulmonary edema","호흡억제 ★ · miosis(pin-point) · 변비 · truncal rigidity · N/V(CTZ) · 서맥 · 항이뇨 · tolerance·dependence","내성 minimal = miosis, constipation, convulsion ★ → 복용 내내 축동·변비. 천장효과 없음 → 효과 떨어지면 용량만↑. 호흡억제·혼수 + 축동 → naloxone","★족"],
+["s9","Hydromorphone · Oxymorphone · Levorphanol","Strong μ agonist","μ agonist","강한 진통","Morphine 유사","Oxycodone+APAP 실패 암성 통증 → hydromorphone·methadone (4개년). '리스트를 알고 있어야' ★","★족"],
+["s9","Methadone","Strong μ agonist (synthetic)","Potent μ agonist","Opioid·heroin 중독 detox·maintenance · 강한 진통","의존 느림, 금단 경미","경구 · 서서히 · 24h → 내성·의존 느림. Heroin 12h 후 금단 → methadone(naloxone ✗). 🎙 heroin 중독자는 '주사만 봐도 행복' → 절대 주사제 ✗, 경구로","★족🎙"],
+["s9","Fentanyl","Strong μ agonist (synthetic)","μ agonist","수술 중 통증(가장 널리) · 암환자 패치","근경직 · 호흡억제","Morphine의 100배 · rapid onset·short","족"],
+["s9","Meperidine","Strong μ agonist","μ agonist + 항무스카린","1차 진통에서 제외","독성대사물 normeperidine(경련·정신병·신부전) · 빈맥 환자 금기","","족"],
+["s9","Codeine · Hydrocodone · Oxycodone","Mild–moderate agonist","μ agonist (codeine < hydrocodone < oxycodone)","중등도 이하 통증 · 진해(codeine) — 단독 ✗ → aspirin·APAP 병용","","Tramadol 실패 → 한 단계 위 = oxycodone/acetaminophen (25중간 31%). Codeine = 심한 금단 예외","족"],
+["s9","Dextromethorphan","진해제","μ 약해 진통보다 낮은 용량에서 기침 억제","기침(감기약)","","",""],
+["s9","Loperamide · Diphenoxylate · Difenoxin","지사제 opioid","μ agonist (loperamide BBB ✗)","설사 — loperamide 일반약","","🎙 지저분한 동남아 여행 후 배가 아프며 급격한 설사 → loperamide","족🎙"],
+["s9","Nalbuphine","Mixed agonist-antagonist","κ strong + μ antagonist","통증 (천장효과)","호흡억제 적음 — but 생기면 naloxone 반전 ✗ ★","⚠️ 분류: 2021·2023 '중등도' → 2025 '수업시간 강력으로 정정' · 강의록 efficacy High","★족"],
+["s9","Butorphanol","Mixed agonist-antagonist","κ + μ partial","통증","","",""],
+["s9","Pentazocine","Mixed agonist-antagonist","κ + weak μ antagonist","통증 (경구·주사)","자극성 → 피하주사 ✗","'다 강하고 pentazocine만 약하죠'",""],
+["s9","Buprenorphine","Partial μ agonist","μ partial(low intrinsic, tight binding) + δ·κ antagonist","Heroin detox·maintenance · 설하·주사·경피","μ에 tight → naloxone 해독 어려움","High efficacy·김","★족"],
+["s9","Tramadol","기타 (중추성)","SERT 억제 + very weak μ (+NET)","Chronic neuropathic pain · opioid 보조","호흡·심혈관 영향 ✗ · serotonin syndrome 유발 약","~codeine 수준","족"],
+["s9","Tapentadol","기타","Modest μ + NET 억제","중등도~중증 통증 · 신경병성 통증","GI 부작용↓","~oxycodone 수준",""],
+["s9","Naloxone","Opioid antagonist","μ competitive antagonist (δ·κ도)","Acute overdose — 호흡 약함 + 동공 작음 혼수 (매년)","짧음(30–81분) → 반복 투여 · 의존자 금단 악화","IV 30초 내 반전 · 응급실 제일 먼저 ★","★족"],
+["s9","Nalmefene","Opioid antagonist","Naltrexone 유도체","Overdose(IV, 8–12h) · alcoholism(경구)","","효과까지 5–10분 → 응급실 ✗ → 반복 overdose 관리",""],
+["s9","Methylnaltrexone · Naloxegol · Naldemedine","말초 μ antagonist","BBB 거의 통과 ✗","Opioid-induced constipation","","Alvimopan = 수술 후 장폐색(7일 이내)",""],
+
+// ── s10 남용약물
+["s10","Heroin","Class I (GPCR)","Morphine + acetyl 2개 → 지용성↑ → μ agonist","—","남용↑","Morphine·heroin = 가장 우려 · 진통 목적 없이 남용만. 만성 중독 3종: methadone·buprenorphine·naltrexone","★족"],
+["s10","THC (marijuana)","Class I (GPCR)","CB1 agonist","의료용: dronabinol·nabilone(만성통증 보조, AIDS·암 식욕부진·구토)","Euphoria·relaxation + 환각","Smoking 수 분 내 · t½ ~4h. 억제제이자 환각제 ★","★"],
+["s10","GHB","Class I (GPCR)","GABA_B weak agonist","—","Amnesia","🎙 '데이트 강간 약' — 무색·무미·무취 → 술 한 잔에 정신을 잃고 낯선 곳. '클럽에서 아무나 사주는 술 덥석 받지 마세요'","🎙"],
+["s10","LSD · Mescaline · Psilocybin","Class I (환각제)","Serotonin analog (5-HT2A agonist)","—","환각","의존·중독 ✗ — mesolimbic DA 영향 ✗ ★ · 수일 내 빠른 내성 + 교차내성 → 이틀 복용·이틀 휴식. 25중간 35%","★족"],
+["s10","Nicotine","Class II (ionotropic)","nAChR agonist → DA neuron 직접 흥분(excitation)","—","","중독자 수 세계 최다 ★. 치료: 패치·껌 / bupropion / cytisine·varenicline","★족"],
+["s10","Varenicline · Cytisine","금연 치료제","nAChR partial agonist","금연 (1주 전부터)","부작용 경련","🎙 '구석에 처박혀 있는 것 같았지만 기종평 출제' → 유사한 약을 넣어줘야 하니 '눈치껏 찍어' → partial agonist (2개년)","★족🎙"],
+["s10","Ketamine · PCP","Class II (ionotropic)","Noncompetitive NMDA antagonist","Dissociative 마취제로 개발 — 현재 ketamine만(PCP 금지)","PCP: aggression·painlessness·안구진탕·BP↑·빈맥·고열·agitation","Club drug(angel dust / Special K) · DA ✗ → 의존·중독 ✗, 환각 때문에 남용. 🎙 PCP — 통증을 못 느끼고 공격적 → 차도에 뛰어들기, 자기 손가락 절단","★족🎙"],
+["s10","Cocaine","Class III (transporter)","DAT 직접 억제 (+NET, SERT)","국소마취(이비인후과 표면)","CNS 흥분 · BP↑·빈맥(NET 차단) · 경련 · 고열 · 흉통 / overdose: 부정맥, 고열, 경련, 혼수, 사망 — ★ 고열로 사망할 만큼 심각","반전약 없음 → supportive + BZD(lorazepam). Overdose '아닌 것' 단골 = 서맥·호흡억제","★족"],
+["s10","Amphetamine · Methamphetamine","Class III (transporter)","DAT 타고 유입 → VMAT 억제 → vesicle 고갈 → DA가 DAT로 역유출","ADHD · narcolepsy (식욕억제제 금지)","DA → 비정상 운동·정신병 / CA → 각성·수면↓ / 5-HT → 환각·식욕↓·고열 · overdose: hypertensive crisis, 혈관수축, 부정맥","BP↑·산동·과다활동·공격·환각 → amphetamine (25중간 83%). 🎙 여관방에서 3박4일~1주 잠도 안 자고 반복 투여 / 우리나라는 필로폰, 서양은 cocaine 선호","★족🎙"],
+["s10","MDMA (ecstasy)","Class III (transporter)","SERT > DAT, NET","—","친밀감·empathy(지적 능력 유지) · 탈수 동반 고열 · serotonin syndrome · 경련 · 금단: mood 'offset'(우울)","🎙 Rave party(클럽) — 처음 보는 사람과도 금방 친해짐 · 탈수 악화 때문에 술을 잘 안 마시고 음료에","🎙"],
+["s10","Alcohol · BZD (남용)","Class II (ionotropic)","GABA_A 등","—","Overdose 호흡억제","Alcohol 금단 detox = BZD, 재발 방지 = naltrexone·acamprosate·disulfiram / BZD overdose = flumazenil",""]
+];
+
+// ───── 핵심 짝 카드 (요약본의 '시험 직전 30초', 상황 → 약물, 해독제·부작용 역검색 표)
+// [단원, 묶음, 앞(상황·단서), 뒤(답), 메모(빈도·함정)]
+const PAIR_SETS = {
+  p30: "시험 직전 30초 (족보 최다 출제 짝)",
+  sit: "상황 → 약물",
+  seiz: "발작 유형 → 1st-line",
+  ae: "부작용 → 약물 (역검색)",
+  anti: "해독제·반전약",
+  tgt: "같은 표적, 다른 약",
+  syn: "고열 증후군 4종"
+};
+const PAIRS = [
+// 시험 직전 30초 — CNS1
+["s1","p30","BZD 과량 · midazolam 호흡억제","Flumazenil (BZD competitive antagonist)","매년 출제"],
+["s3","p30","Absence (3-Hz spike, 눈 깜빡임)","Ethosuximide — T-type Ca²⁺ channel 차단","5개년"],
+["s3","p30","Status epilepticus","Diazepam·lorazepam IV (경구 ✗)","4개년"],
+["s2","p30","Methanol (눈보라 시야)","Fomepizole (or ethanol) — ADH 억제 → formate↓","5개년"],
+["s2","p30","Alcohol 갈망↓","Naltrexone (μ antagonist) · acamprosate","5개년"],
+["s2","p30","간기능 저하 + 알코올 금단","Lorazepam·oxazepam + thiamine","4개년"],
+["s3","p30","임신 계획 + 항경련제","Lamotrigine (VPA → spina bifida)","3개년"],
+["s3","p30","항경련제 부작용 짝짓기","PHT 잇몸·다모 / Vigabatrin 시야 / Felbamate 재생불량 / TPM·ZNS 신결석","4개년"],
+// CNS2
+["s4","p30","기관내삽관 중 hyperkalemia·심정지","Succinylcholine","3개년"],
+["s4","p30","Isoflurane + succinylcholine → 고열·강직","Malignant hyperthermia → dantrolene (RyR1)","2개년"],
+["s4","p30","NMB 잔여 blockade 회복","Neostigmine·pyridostigmine / steroid NMB → sugammadex","3개년"],
+["s5","p30","N₂O vs halothane 유도·환기","Blood:gas 계수 낮을수록 유도·회복 빠름 · halothane은 환기↑ 효과 큼","서술 2"],
+["s5","p30","심부전 환자 흡입마취","Isoflurane·desflurane·sevoflurane (vasodilation)",""],
+["s5","p30","천식 + 저혈압 / opioid 내성","Ketamine","4개년"],
+["s5","p30","PONV 병력 + 마취 유지","Propofol",""],
+["s5","p30","국소마취 + epinephrine","국소 농도↑·작용 연장·전신독성↓ / 염증 = pH↓ → 효과↓","4개년"],
+// CNS3
+["s6","p30","Levodopa + carbidopa","DOPA decarboxylase inhibitor · 말초 · BBB ✗ → L-DOPA 용량↓·말초 부작용↓","매년"],
+["s7","p30","항정신병약 초기 EPS","Anticholinergic(benztropine) · diphenhydramine","7개년"],
+["s7","p30","Tardive dyskinesia","용량↓ / quetiapine·clozapine 교체 / valbenazine","서술 3"],
+["s7","p30","음성 증상도 개선","Atypical 고르기 (clozapine·olanzapine·risperidone…)","5개년"],
+["s7","p30","Clozapine 수주 후 발열·인후통","Agranulocytosis → 혈액검사",""],
+["s6","p30","Alzheimer's disease","Donepezil = AChE inhibitor / Memantine = NMDA antagonist","5개년"],
+["s7","p30","Bipolar 1st-line","Lithium","2개년"],
+["s8","p30","항우울제 후 성기능 저하 → 교체","Bupropion · mirtazapine · nefazodone","매년"],
+["s8","p30","MAOI + 치즈·와인","Tyramine → hypertensive crisis","4개년"],
+// CNS4
+["s9","p30","호흡 약함 + 동공 작음 혼수","Naloxone (IV 30초)","매년"],
+["s9","p30","Oxycodone+APAP 실패 암성 통증","Hydromorphone · methadone (strong agonist)","4개년"],
+["s9","p30","Tramadol 실패 → 한 단계 위","Oxycodone/acetaminophen","25중간 31%"],
+["s9","p30","Heroin 만성 중독 3종","Methadone · buprenorphine · naltrexone","4개년"],
+["s9","p30","Heroin 12h 후 산동·과호흡(금단)","Methadone (naloxone ✗)","25중간"],
+["s10","p30","Varenicline·cytisine","nAChR partial agonist · 부작용 경련","2개년"],
+["s10","p30","VTA → NAc 신경전달물질","Dopamine","24기말"],
+["s10","p30","BP↑·산동·과다활동·공격·환각","Amphetamine","25중간 83%"],
+["s10","p30","PCP 증상 '아닌 것'","서맥 (빈맥이 맞음)","25중간"],
+
+// 상황 → 약물
+["s1","sit","불안장애 장기 1st-line","SSRI·SNRI (4주↑) · 2nd: TCA, MAOI, mirtazapine, buspirone, pregabalin",""],
+["s1","sit","Panic attack · agoraphobia 급성","Alprazolam","드라마 약통 예시"],
+["s1","sit","불안 진정제 (보기형)","Alprazolam, diazepam, buspirone",""],
+["s1","sit","수면 유도 곤란","Triazolam(t½ 2h) · zaleplon(1h)",""],
+["s1","sit","수면 유지 곤란","Temazepam(t½ 8.8h) · suvorexant · zolpidem·eszopiclone(유도+유지)","25중간 29%"],
+["s1","sit","진정 없이 수면제로만","Zolpidem, zaleplon (eszopiclone)",""],
+["s1","sit","Premedication (내시경)","Midazolam — sedation + anterograde amnesia",""],
+["s1","sit","마취 유도 IV (barbiturate)","Thiopental, methohexital (ultra-short 20분, lipid-soluble)",""],
+["s1","sit","BZD 중 근이완","Diazepam",""],
+["s5","sit","마취 유지 (지속주입 가능한 정맥마취제)","Propofol 하나뿐 — context-sensitive t½ 거의 안 늘어남","★"],
+["s5","sit","심근수축력 저하 환자 마취 유도","Etomidate (CV stability) — 부신 억제로 지속주입 ✗",""],
+["s5","sit","ICU 단기 진정, 호흡억제 없이","Dexmedetomidine (α2 agonist)",""],
+["s5","sit","비협조 소아·정신지체 premed","Ketamine — IV·IM·경구·직장·경막외",""],
+["s6","sit","PD — 고령 아님·경미(초기)","DA agonist 먼저 — levodopa는 나중을 위해 남겨둠","★"],
+["s6","sit","PD — 고령(70–75)·인지/정신 장애·빠른 호전 필요","Levodopa(+carbidopa) 즉시",""],
+["s6","sit","Levodopa 중 off·wearing-off","COMT inh · MAO-B inh · istradefylline / 급속 완화: apomorphine·amantadine",""],
+["s6","sit","항정신병약 유발 parkinsonism","Anticholinergic (DA 약 ✗ — D2 차단 효과가 사라짐)","★"],
+["s7","sit","Bipolar depression","Quetiapine · olanzapine + fluoxetine (항우울제 단독 ✗ → 조증)","★"],
+["s7","sit","자살 충동 조현병 환자","Clozapine 1차",""],
+["s8","sit","통증 동반 우울 · 신경병성 통증","TCA · SNRI",""],
+["s8","sit","불면 동반 우울","Mirtazapine · trazodone · doxepin · TCA",""],
+["s8","sit","과수면 우울","Fluoxetine · sertraline (insomnia 유발 쪽)",""],
+["s8","sit","강박장애(OCD)","Paroxetine, fluvoxamine","25중간"],
+["s8","sit","PMDD","Fluoxetine · sertraline",""],
+["s8","sit","금연","Bupropion",""],
+["s8","sit","신경성 폭식증","Fluoxetine",""],
+["s8","sit","조현병 + 우울","Amoxapine",""],
+["s8","sit","치료저항 · 자살사고 / 산후우울","Esketamine / brexanolone",""],
+["s9","sit","Acute pulmonary edema","Morphine",""],
+["s9","sit","동남아 여행 후 급격한 설사","Loperamide",""],
+
+// 발작 유형 → 1st-line
+["s3","seiz","Focal aware / impaired awareness / focal-to-bilateral","Carbamazepine (onset 기준 → 양측 진행해도 focal 치료)","★"],
+["s3","seiz","Generalized tonic-clonic (14–18세)","Valproic acid",""],
+["s3","seiz","Absence (4–12세, 여아 2:1, 5–15초)","Ethosuximide (임신 → lamotrigine)",""],
+["s3","seiz","Juvenile myoclonic (기상 1–2h 내 움찔)","Valproic acid",""],
+["s3","seiz","Atonic (LGS)","VPA + LTG + clobazam / rufinamide",""],
+["s3","seiz","Infantile spasm (West, <2세)","Vigabatrin · steroid·ACTH",""],
+["s3","seiz","Dravet (생후 6개월, febrile, SCN1A)","Clobazam·VPA + stiripentol·cannabidiol·fenfluramine",""],
+["s3","seiz","TSC refractory focal","Everolimus (mTORC1 ⊣)",""],
+["s3","seiz","Neonatal seizure","Phenobarbital",""],
+["s3","seiz","Status epilepticus 1st → 2nd → 3rd","Diazepam·lorazepam IV → phenytoin·fosphenytoin·VPA·levetiracetam·phenobarbital → pentobarbital·propofol·midazolam·thiopental","30분 기다리지 않음 → TC 5분↑ / focal 10분↑이면 투여"],
+["s3","seiz","월경 중 발작 악화","Acetazolamide (내성 1주 내)",""],
+
+// 부작용 → 약물
+["s3","ae","Gingival hyperplasia · hirsutism · nystagmus · coarse facies · DTR 이상","Phenytoin",""],
+["s3","ae","Hepatotoxicity(≤2세) · 체중↑ · 탈모 · spina bifida · 고암모니아혈증","Valproic acid",""],
+["s3","ae","Visual field defect · psychosis · confusion","Vigabatrin",""],
+["s3","ae","Aplastic anemia · hepatitis","Felbamate (CBZ도 aplastic anemia·agranulocytosis)",""],
+["s3","ae","Renal stone · acute myopia·glaucoma · 체중↓ · 산증 · cognitive","Topiramate (ZNS: renal stone)",""],
+["s3","ae","Aggression · hostility","Perampanel (LEV: 행동 변화)",""],
+["s3","ae","Hyponatremia · rash","Carbamazepine",""],
+["s3","ae","QT 단축","Cenobamate",""],
+["s3","ae","Gastric distress만","Ethosuximide",""],
+["s7","ae","Agranulocytosis","Clozapine",""],
+["s6","ae","Livedo reticularis","Amantadine",""],
+["s8","ae","Priapism","Trazodone",""],
+["s8","ae","치명적 간독성 (항우울제·PD약·흡입마취제)","Nefazodone · tolcapone · halothane",""],
+["s5","ae","Adrenocortical suppression","Etomidate",""],
+["s5","ae","Methemoglobinemia","Benzocaine",""],
+["s5","ae","Megaloblastic anemia","N₂O 장기 노출",""],
+["s5","ae","Nephrotoxicity","Enflurane · lithium",""],
+["s7","ae","QT 연장","Thioridazine · ziprasidone",""],
+["s7","ae","Retinitis pigmentosa","Thioridazine",""],
+["s4","ae","Hyperkalemia · 심정지","Succinylcholine",""],
+["s5","ae","심독성 국소마취제","Bupivacaine",""],
+["s10","ae","Dissociation · 환각","Ketamine · esketamine · PCP",""],
+["s8","ae","경련 (항우울·금연·국소마취)","Bupropion · varenicline · LA 고농도",""],
+["s9","ae","Normeperidine 축적","Meperidine",""],
+["s8","ae","성기능 부작용 낮음","Bupropion · mirtazapine · nefazodone",""],
+
+// 해독제·반전약
+["s1","anti","BZD (midazolam) · Z-drug 일부","Flumazenil (BZD site competitive) — barbiturate·alcohol·opioid ✗",""],
+["s1","anti","Barbiturate","해독제 없음 → NaHCO₃ 소변 알칼리화","★"],
+["s9","anti","Opioid 급성","Naloxone IV (반복) — nalbuphine·buprenorphine은 반전 어려움",""],
+["s4","anti","Nondepolarizing NMB","Neostigmine·pyridostigmine / steroid형 → sugammadex (succinylcholine은 불필요)",""],
+["s2","anti","Methanol · ethylene glycol","Fomepizole (or ethanol) + 투석 + bicarbonate",""],
+["s8","anti","TCA overdose","NaHCO₃ + diazepam + lidocaine (AChE inh ✗)","★"],
+["s5","anti","국소마취제 경련","Diazepam",""],
+["s10","anti","Cocaine · amphetamine","반전약 없음 → BZD(lorazepam) + 단시간 강압제",""],
+
+// 같은 표적, 다른 약
+["s1","tgt","GABA_A (+)","BZD · barbiturate · Z-drug · alcohol · propofol · etomidate · brexanolone(PAM) · diazepam(근이완)",""],
+["s4","tgt","GABA_B agonist","Baclofen(근이완) · GHB(weak, 남용)",""],
+["s10","tgt","NMDA 억제","Ketamine · esketamine · PCP · memantine(AD) · alcohol · acamprosate · felbamate · (amantadine)",""],
+["s4","tgt","α2 agonist","Tizanidine(근이완) · dexmedetomidine(ICU 진정) · clonidine",""],
+["s6","tgt","D2 agonist","Bromocriptine · ropinirole · apomorphine → 정신증·구역 부작용",""],
+["s7","tgt","D2 antagonist","항정신병약 · amoxapine · trimethobenzamide(apomorphine 구역 예방) · 항구토제",""],
+["s8","tgt","5-HT2A 차단","Atypical 항정신병약 · trazodone · nefazodone · mirtazapine(5-HT2)",""],
+["s9","tgt","Partial agonist","Aripiprazole(D2) · buprenorphine(μ) · varenicline·cytisine(nAChR) · buspirone(5-HT1A)",""],
+["s7","tgt","VMAT 억제","Reserpine(우울 유발) · valbenazine·deutetrabenazine(TD) · amphetamine(→ 역유출)",""],
+
+// 고열 증후군 4종
+["s4","syn","Malignant hyperthermia — 원인·특징","Volatile + succinylcholine (RyR1 유전) → massive contraction·acidosis → dantrolene + cooling",""],
+["s7","syn","NMS — 원인·특징","D2 차단 항정신병약(typical) → marked muscle rigidity + parkinsonism + 자율신경 불안정 → diphenhydramine, diazepam (dantrolene, bromocriptine)",""],
+["s8","syn","Serotonin syndrome — 원인·특징","SSRI, MAOI(+병용), tramadol, meperidine, fentanyl, ondansetron, MDMA, LSD → 근강직·발한·myoclonus·의식 변화 → BZD 진정 + 삽관·환기 (cyproheptadine)",""],
+["s10","syn","Cocaine/amphetamine overdose","부정맥·경련·고열(사망) → supportive + BZD(lorazepam)",""]
+];
+
+// ───── T/F 함정 문항 — 요약본 28–36쪽 그대로 (자동 추출)
+// [단원, 번호, 문항, 정답(true=T), 해설]
+const TF = [
+ [
+"s1",
+1,
+"NMDA receptor는 glutamate만 결합하면 열리며, 세 ionotropic glutamate receptor 중 Ca²⁺ 투과성이 가장 낮다.",
+false,
+"glutamate + glycine + 막 탈분극(Mg²⁺ 해제) 필요, Ca²⁺ 투과성 최고. Ca²⁺ ✗는 AMPA."
+],
+ [
+"s1",
+2,
+"VTA → nucleus accumbens 경로는 nigrostriatal 경로로, 손상 시 EPS와 Parkinson 증상이 나타난다.",
+false,
+"VTA → NAc = mesolimbic(보상·중독, dopamine). 운동·EPS = nigrostriatal."
+],
+ [
+"s1",
+3,
+"Benzodiazepine, barbiturate, zolpidem은 모두 GABAA agonist이지만, barbiturate만 BZD와 완전히 다른 multiple subunit 부위에 결합한다.",
+true,
+"BZD α1·γ2 / Z-drug α·γ(일부 공유) / barbiturate multiple subunit."
+],
+ [
+"s1",
+4,
+"Barbiturate와 alcohol은 용량-반응 곡선이 평평해져 마취 이상으로 진행하지 않으므로 BZD보다 안전하다.",
+false,
+"평평한 곡선 = Drug B = BZD. Barbiturate·alcohol(Drug A)은 coma·호흡억제· 사망까지."
+],
+ [
+"s1",
+5,
+"진정수면제는 공통적으로 CYP2E1에 의해 대사되며 만성 투여 시 이 효소가 유도된다.",
+false,
+"공통 대사 = CYP3A4. CYP2E1은 alcohol의 MEOS."
+],
+ [
+"s1",
+6,
+"Diazepam은 chlordiazepoxide보다 대사 단계가 많아 작용시간이 더 길다.",
+false,
+"반대 — chlordiazepoxide가 단계가 더 많아 더 김(active metabolite)."
+],
+ [
+"s1",
+7,
+"Triazolam은 lipid solubility가 높아 빠르게 흡수·작용하며 단시간 작용하므로 수면 유도에 쓰인다.",
+true,
+"Alprazolam은 낮아 서서히·길게(교수님 말실수 정정 포인트)."
+],
+ [
+"s1",
+8,
+"작용시간이 짧은 BZD는 하루에 여러 번 복용할 수 있어 언제 올지 모르는 불안에 대비하는 진정제로 적합하다.",
+false,
+"진정제 = 긴 BZD(1일 1회, 농도 변화↓, 금단↓). 짧은 약 = 수면제."
+],
+ [
+"s1",
+9,
+"수면 중 2–3시간마다 깨는 환자에게는 triazolam이나 zaleplon이 가장 적합하다.",
+false,
+"수면 유지 → temazepam(t½ 8.8 h), suvorexant, zolpidem·eszopiclone. Triazolam·zaleplon = 유도."
+],
+ [
+"s1",
+10,
+"Midazolam은 진정과 함께 투여 이전의 일을 잊게 하는 retrograde amnesia 때문에 premedication에 쓰인다.",
+false,
+"Anterograde amnesia(투여 이후를 기억 못 함)."
+],
+ [
+"s1",
+11,
+"Flumazenil은 GABAA receptor antagonist이므로 alcohol·barbiturate에 의한 호흡억제도 반전시킨다.",
+false,
+"BZD 결합부위 competitive antagonist = “benzodiazepine antagonist”. BZD·Z- drug만 반전."
+],
+ [
+"s1",
+12,
+"음주 후 수면제(BZD)를 과량 복용해 호흡곤란으로 내원한 환자에게 flumazenil을 투여한다.",
+true,
+"Alcohol + BZD additive 호흡억제 → flumazenil(매년 출제)."
+],
+ [
+"s1",
+13,
+"Phenobarbital 과량 시 해독제가 없으므로 소변을 산성화해 약물 배설을 촉진한다.",
+false,
+"약산 → 소변 알칼리화(NaHCO₃) → 이온화 → 재흡수↓."
+],
+ [
+"s1",
+14,
+"Phenobarbital은 CYP inhibitor로 다른 약물의 대사를 억제한다.",
+false,
+"대표적 CYP inducer(자기 자신 포함)."
+],
+ [
+"s1",
+15,
+"Thiopental·methohexital은 ultra-short-acting barbiturate로 IV 마취 유도에, phenobarbital은 long-acting으로 항경련에 쓰인다.",
+true,
+""
+],
+ [
+"s1",
+16,
+"Z-drug는 진정 효과가 강하고 반감기가 길어 불안장애에도 널리 쓰인다.",
+false,
+"너무 빨라 진정을 건너뛰고 바로 수면 + 반감기 짧음 → 수면제로만."
+],
+ [
+"s1",
+17,
+"Zaleplon은 수면 유도와 유지가 모두 어려운 환자에게, zolpidem은 수면 유도만 어려운 환자에게 쓴다.",
+false,
+"반대. Zaleplon(t½ 1 h) = 유도만, zolpidem·eszopiclone = 유도+유지."
+],
+ [
+"s1",
+18,
+"불면증에서 anterograde amnesia와 다음 날 졸림은 Z-drug가 BZD보다 크다.",
+false,
+"BZD > Z-drug → Z-drug가 더 널리."
+],
+ [
+"s1",
+19,
+"노인에서 BZD 복용 후 나타나는 치매 유사 증상은 비가역적 신경세포 손상 때문이다.",
+false,
+"active metabolite 축적에 의한 가성 증상 → 중단 시 회복."
+],
+ [
+"s1",
+20,
+"Buspirone은 5-HT1A full agonist로 작용이 빨라 panic attack에 즉시 효과적이다.",
+false,
+"5-HT1A partial agonist, 발현 1주↑ → 급성 ✗."
+],
+ [
+"s1",
+21,
+"Tasimelteon은 melatonin receptor antagonist이고, lemborexant는 orexin receptor agonist이다.",
+false,
+"Tasimelteon = melatonin agonist / lemborexant·suvorexant = orexin antagonist."
+],
+ [
+"s1",
+22,
+"Ramelteon은 GABAA에 작용하지 않아 의존성·금단이 없지만 효과는 marginal하고 개인차가 크다.",
+true,
+""
+],
+ [
+"s1",
+23,
+"Suvorexant는 의존성이 없고 특별한 부작용이 없어 널리 쓰인다.",
+false,
+"Day-after sedation, narcolepsy, 우울 악화, 자살 충동 → 널리 못 씀."
+],
+ [
+"s1",
+24,
+"불안장애의 first-line은 BZD이고, SSRI·SNRI는 BZD 무효 시 사용한다.",
+false,
+"First-line = SSRI·SNRI(4주↑). BZD = 급성·panic·악화 시 보조, 2–4주."
+],
+ [
+"s1",
+25,
+"Spasticity 등 근이완 목적으로 쓰는 BZD는 midazolam이다.",
+false,
+"Diazepam. Midazolam = premedication."
+],
+ [
+"s2",
+26,
+"Ethanol → acetaldehyde의 주 경로는 MEOS이고, 다량 음주 시 ADH 경로가 추가로 동원된다.",
+false,
+"주 경로 = ADH(NAD⁺). 다량·만성 = MEOS(CYP2E1·1A2·3A4, NADPH)."
+],
+ [
+"s2",
+27,
+"만성 음주는 MEOS를 억제하여 CYP로 대사되는 다른 약물의 혈중농도를 높인다.",
+false,
+"MEOS induction → 다른 약 제거↑(“술은 마시면 는다”)."
+],
+ [
+"s2",
+28,
+"Disulfiram은 ADH를, fomepizole은 ALDH를 억제한다.",
+false,
+"반대. Disulfiram ⊣ ALDH, fomepizole ⊣ ADH."
+],
+ [
+"s2",
+29,
+"ALDH heterozygote는 아시아인의 약 10%, inactive homozygote는 약 40%이다.",
+false,
+"Heterozygote 40%(flushing), inactive homozygote 10%(severe)."
+],
+ [
+"s2",
+30,
+"Alcohol은 지용성이 높아 CNS로 분포하며 주로 신장으로만 배설된다.",
+false,
+"작은 수용성 분자(크기로 통과). 배설 = 폐·소변."
+],
+ [
+"s2",
+31,
+"Alcohol에 의한 blackout은 hippocampus의 GABAA 억제 때문이다.",
+false,
+"hippocampus NMDA 억제 → 학습·기억 손상. GABAA는 활성화."
+],
+ [
+"s2",
+32,
+"BAC 100–200 mg/dL에서 호흡억제가, 400 mg/dL 이상에서 slurred speech·ataxia가 나타난다.",
+false,
+"100–200 = 운동장애·slurred speech·ataxia / >400 = 호흡억제·사망."
+],
+ [
+"s2",
+33,
+"Wernicke-Korsakoff syndrome은 vitamin B12 결핍이 원인이며, 초기에 기억장애가 나타난다.",
+false,
+"Thiamine(B1) 결핍. 초기 = 진전·ataxia·의식장애, 후기 = 기억장애."
+],
+ [
+"s2",
+34,
+"만성 음주의 CNS 영향 중 가장 흔한 것은 말초신경 손상(손발 저림)이다.",
+true,
+""
+],
+ [
+"s2",
+35,
+"급성 알코올 중독 시 저혈당·케톤산증에는 insulin, 심한 구토에는 sodium을 대량 투여한다.",
+false,
+"Glucose · thiamine · 전해질 · 심한 구토 → potassium."
+],
+ [
+"s2",
+36,
+"Thiamine은 알코올 금단증상이 심한 환자에게만 선택적으로 투여하는 금단 완화제이다.",
+false,
+"모든 환자, 목적은 WKS 예방(금단 완화제 아님)."
+],
+ [
+"s2",
+37,
+"간기능이 심하게 저하된 알코올 금단 환자에게는 long-acting인 chlordiazepoxide를 우선 투여한다.",
+false,
+"간기능↓ → lorazepam·oxazepam(축적 방지)."
+],
+ [
+"s2",
+38,
+"Delirium tremens는 음주 중단 후 수 시간 내 가장 먼저 나타나는 금단 증상이다.",
+false,
+"8 h 시작 → 2–3일 peak → DT는 3일 이후 늦게."
+],
+ [
+"s2",
+39,
+"Naltrexone은 short-acting μ-opioid agonist로, 급성 opioid 중독 해독에도 같은 목적으로 쓰인다.",
+false,
+"Long-acting μ antagonist(갈망↓). 급성 opioid 해독 = naloxone."
+],
+ [
+"s2",
+40,
+"Acamprosate는 weak NMDA antagonist + GABAA activator로 alcohol과 같은 기전이며, severe renal impairment에 금기이다.",
+true,
+""
+],
+ [
+"s2",
+41,
+"Disulfiram은 알코올에 대한 갈망 자체를 감소시켜 금주를 돕는다.",
+false,
+"갈망↓가 아니라 음주 시 acetaldehyde 불쾌감으로 금주 유도."
+],
+ [
+"s2",
+42,
+"Methanol 중독의 “눈보라 속” 시력장애와 대사성 산증은 formaldehyde 때문이다.",
+false,
+"Formate(formic acid)."
+],
+ [
+"s2",
+43,
+"Methanol 중독에 ethanol을 주는 이유는 ethanol이 formate를 빠르게 대사시키기 때문이다.",
+false,
+"ADH에 더 높은 affinity로 경쟁 → methanol 대사 자체를 막음."
+],
+ [
+"s2",
+44,
+"Ethylene glycol 중독은 처음 CNS 억제 후 흥분, 이후 대사성 산증과 oxalate 침착에 의한 신부전을 일으킨다.",
+false,
+"처음 흥분 → 억제 순서."
+],
+ [
+"s2",
+45,
+"Methanol과 ethylene glycol 중독은 독성 대사물은 다르지만 fomepizole/ethanol + 혈액투석 + bicarbonate로 동일하게 치료한다.",
+true,
+""
+],
+ [
+"s3",
+46,
+"Focal로 시작해 양측 강직-간대 발작으로 진행했다면 generalized onset으로 분류해 valproic acid를 1차로 쓴다.",
+false,
+"분류는 onset 기준 → focal → carbamazepine."
+],
+ [
+"s3",
+47,
+"Focal impaired awareness seizure에서는 의식장애로 환자가 쓰러지므로 주변에서 쉽게 알아챈다.",
+false,
+"쓰러지지 않음 — 눈 뜨고 자동증 반복 → 주변이 모름."
+],
+ [
+"s3",
+48,
+"Absence seizure는 전조증상 후 30초–1분 지속되며 남아에서 2배 많다.",
+false,
+"전조 ✗, 5–15초, 여아 2:1, 4–12세, 눈 깜빡임."
+],
+ [
+"s3",
+49,
+"Juvenile myoclonic seizure는 주로 잠들기 직전에 발생한다.",
+false,
+"기상 후 1–2시간 내(칫솔·젓가락)."
+],
+ [
+"s3",
+50,
+"Atonic seizure는 Dravet syndrome에서, febrile seizure로 시작하는 것은 Lennox-Gastaut syndrome의 특징이다.",
+false,
+"Atonic → LGS. Febrile seizure 시작·생후 6개월·SCN1A → Dravet."
+],
+ [
+"s3",
+51,
+"Infantile spasm은 2세 미만에 발생하며 50% 이상이 Lennox-Gastaut syndrome으로 진행한다.",
+true,
+"85% 정신지체."
+],
+ [
+"s3",
+52,
+"항경련제는 unprovoked seizure 1회 후 바로 시작하며, 효과를 높이기 위해 2–3제 병용이 원칙이다.",
+false,
+"2회 후 시작, 단일 약물(부작용 현저), 2년↑, 3–5년 무발작 → 서서히."
+],
+ [
+"s3",
+53,
+"대부분의 항경련제가 표적으로 하는 것은 voltage-gated Ca²⁺ channel이다.",
+false,
+"Na⁺ channel — “모르면 Na⁺”."
+],
+ [
+"s3",
+54,
+"Ethosuximide와 gabapentin은 모두 Ca²⁺ channel에 작용하며, 둘 다 presynaptic vesicle 융합을 억제한다.",
+false,
+"Ethosuximide = T-type voltage-gated → 탈분극 억제 / gabapentin = presynaptic α2δ → 방출 억제."
+],
+ [
+"s3",
+55,
+"Gabapentin·pregabalin은 GABA analog이므로 GABAA 수용체를 직접 활성화한다.",
+false,
+"GABA와 무관 — α2δ Ca²⁺ 억제."
+],
+ [
+"s3",
+56,
+"Levetiracetam은 SV2A에 결합해 vesicle의 glutamate 저장을 줄이며, 공격성·우울 같은 행동 변화를 일으킬 수 있다.",
+true,
+""
+],
+ [
+"s3",
+57,
+"Perampanel은 NMDA antagonist로 acute myopia를 일으키고, felbamate는 AMPA antagonist이다.",
+false,
+"Perampanel = AMPA, aggression / acute myopia = topiramate / felbamate = NMDA."
+],
+ [
+"s3",
+58,
+"Tiagabine은 GABA transaminase를 억제하고, vigabatrin은 GAT-1을 억제한다.",
+false,
+"반대. Tiagabine = GAT-1 / vigabatrin = GABA-T."
+],
+ [
+"s3",
+59,
+"Carbamazepine은 resting 상태의 Na⁺ channel에 결합해 채널 개방을 막는다.",
+false,
+"Inactivated state에 결합해 안정화."
+],
+ [
+"s3",
+60,
+"Carbamazepine의 대표 부작용은 gingival hyperplasia와 hirsutism이다.",
+false,
+"그건 phenytoin. CBZ = rash, hyponatremia, aplastic anemia, agranulocytosis, SJS."
+],
+ [
+"s3",
+61,
+"Carbamazepine 복용 중 rash가 생긴 focal seizure 환자에게는 lacosamide로 교체할 수 있다.",
+true,
+"25중간 객65 — 내약성 좋은 focal 1st-line."
+],
+ [
+"s3",
+62,
+"Phenytoin은 albumin 결합률이 낮아 valproic acid와 병용해도 혈중농도 변화가 없다.",
+false,
+"90% 결합 → VPA·sulfonamide가 치환 → PHT↑."
+],
+ [
+"s3",
+63,
+"Agranulocytosis는 phenytoin의 대표 부작용이다.",
+false,
+"CBZ 슬라이드 독성(“PHT 부작용 아닌 것” 단골)."
+],
+ [
+"s3",
+64,
+"Ethosuximide 복용 환자는 말초신경병증 확인을 위해 주기적으로 심부건반사 검사를 받아야 한다.",
+false,
+"DTR 이상 = phenytoin. Ethosuximide = GI distress."
+],
+ [
+"s3",
+65,
+"Cenobamate는 QT interval을 연장시켜 부정맥 위험이 있다.",
+false,
+"QT 단축."
+],
+ [
+"s3",
+66,
+"Pregabalin은 대상포진후신경통, gabapentin은 섬유근통에 대표적으로 쓰인다.",
+false,
+"Gabapentin = 대상포진후·당뇨 신경병증 / pregabalin = 섬유근통."
+],
+ [
+"s3",
+67,
+"Lamotrigine은 absence에서 ethosuximide보다 효과가 우수해 absence의 1차 약이다.",
+false,
+"1차 = ethosuximide. LTG는 덜하지만 임신(계획) 여성에서 선택."
+],
+ [
+"s3",
+68,
+"Lamotrigine은 내약성이 좋지만 skin rash가 생기면 SJS로 진행할 수 있어 즉시 중단한다.",
+true,
+""
+],
+ [
+"s3",
+69,
+"Valproic acid는 focal seizure에서 carbamazepine보다 효과가 우수하다.",
+false,
+"Focal은 CBZ·PHT보다 열세. Generalized 전반의 1st."
+],
+ [
+"s3",
+70,
+"Valproic acid의 idiosyncratic hepatotoxicity는 성인 단독요법 환자에서 가장 위험하다.",
+false,
+"2세 이하 영유아·다약제 복용 환자."
+],
+ [
+"s3",
+71,
+"Valproic acid는 체중 감소를, topiramate는 체중 증가를 일으킨다.",
+false,
+"반대. VPA = 체중↑·식욕↑·탈모 / TPM = 체중↓."
+],
+ [
+"s3",
+72,
+"Valproic acid는 CYP inducer이므로 복용 여성은 경구피임약 외 다른 피임법을 병행해야 한다.",
+false,
+"VPA는 유일한 inhibitor. 피임약 대사↑ = PHT·PB·CBZ·TPM·rufinamide·clobazam·perampanel."
+],
+ [
+"s3",
+73,
+"Ethosuximide는 valproic acid와 병용하면 대사가 억제되어 혈중농도가 증가한다.",
+true,
+"Absence + GTC 공존이면 VPA 선택."
+],
+ [
+"s3",
+74,
+"Topiramate와 zonisamide는 carbonic anhydrase를 억제해 신결석과 대사성 산증을 일으킬 수 있다.",
+true,
+""
+],
+ [
+"s3",
+75,
+"Topiramate 복용 중 급성 근시·녹내장이 생기면 용량을 줄여 계속 복용한다.",
+false,
+"시력 상실 위험 → 즉시 중단."
+],
+ [
+"s3",
+76,
+"Vigabatrin의 시야결손은 중단하면 회복되는 가역적 부작용이므로 시력검사는 필요 없다.",
+false,
+"Irreversible → 지속적 시력검사(영유아라 어려움)."
+],
+ [
+"s3",
+77,
+"Felbamate는 내약성이 좋아 focal seizure의 first-line으로 널리 쓰인다.",
+false,
+"Aplastic anemia·severe hepatitis → refractory에만(3rd)."
+],
+ [
+"s3",
+78,
+"Phenobarbital은 sedation이 적어 학교에 다니는 소아의 유지요법으로 선호된다.",
+false,
+"Sedation이 최대 부작용 → 신생아 seizure 1st에만."
+],
+ [
+"s3",
+79,
+"Clobazam은 1,4-benzodiazepine이며 2세 미만 Lennox-Gastaut에 쓴다.",
+false,
+"1,5-BZD, 2세 이상 LGS."
+],
+ [
+"s3",
+80,
+"Cannabidiol은 CB receptor 결합을 통해 효과를 내며 Dravet syndrome에 단독요법으로 쓴다.",
+false,
+"CB 결합 때문이 아닌 것으로 생각, VPA·clobazam과 병용, 간독성 주의."
+],
+ [
+"s3",
+81,
+"Fenfluramine은 amphetamine 유도체로 원래 식욕억제제였으며 Dravet·LGS에 병용한다.",
+true,
+""
+],
+ [
+"s3",
+82,
+"Everolimus는 TSC 단백질을 억제해 mTOR 과활성을 막는다.",
+false,
+"TSC 단백질은 원래 mTOR 억제자 → 결손 시 mTOR↑ → everolimus가 mTORC1 억제."
+],
+ [
+"s3",
+83,
+"Acetazolamide는 내성이 잘 생기지 않아 장기 유지요법에 적합하다.",
+false,
+"1주 내 내성 → 월경 중 발작 악화 시에만."
+],
+ [
+"s3",
+84,
+"Status epilepticus는 30분 이상이 정의이므로 tonic-clonic seizure가 시작되면 30분을 기다린 뒤 약물을 투여한다.",
+false,
+"TC 5분↑, focal 10분↑이면 바로."
+],
+ [
+"s3",
+85,
+"Status epilepticus의 first-line은 phenytoin IV이며, diazepam은 2nd-line이다.",
+false,
+"1st = diazepam·lorazepam(IV·rectal). PHT·VPA·LEV·PB = 2nd."
+],
+ [
+"s3",
+86,
+"Status epilepticus로 의식이 없는 환자에게 valproic acid를 경구 투여하는 것이 적절하다.",
+false,
+"경구 ✗(흡인) → diazepam IV."
+],
+ [
+"s3",
+87,
+"Diazepam·lorazepam은 SE를 멈추는 데, clonazepam·nitrazepam·clorazepate·clobazam은 경구 유지에 쓴다.",
+true,
+""
+],
+ [
+"s3",
+88,
+"임신 중에는 최기형성 때문에 항경련제를 중단하는 것이 원칙이다.",
+false,
+"중단 ✗(발작 → 태아 저산소). LTG·LEV로 교체."
+],
+ [
+"s3",
+89,
+"Valproate–척추갈림증, phenobarbital–구순구개열, topiramate–심장기형, phenytoin–hydantoin syndrome이다.",
+false,
+"Phenobarbital = cardiac defect, topiramate = oral cleft."
+],
+ [
+"s3",
+90,
+"Carbamazepine, valproic acid, lamotrigine은 bipolar disorder에도 쓰이며, carbamazepine은 삼차신경통에도 쓴다.",
+true,
+""
+],
+ [
+"s3",
+91,
+"Perampanel은 levonorgestrel 함유 피임약의 효과는 떨어뜨리지만 자궁 내 장치(IUD)에는 영향이 없다.",
+false,
+"Levonorgestrel IUD 효과도 ↓ → 다른 피임법 추가."
+],
+ [
+"s4",
+92,
+"Neuromuscular blocker는 spasticity를 치료하는 약으로, 척수에서 upper–lower motor neuron 간 전달을 억제한다.",
+false,
+"NMB는 치료제가 아님 — end plate NM 차단, 마취 중 근이완·삽관. 척수 작용 = spasmolytic."
+],
+ [
+"s4",
+93,
+"Nondepolarizing NMB 투여 중 neostigmine을 주면 ACh가 늘어 근이완이 감소(반전)한다.",
+true,
+""
+],
+ [
+"s4",
+94,
+"Succinylcholine phase I block에 AChE inhibitor를 투여하면 blocking이 억제된다.",
+false,
+"Phase I에선 탈분극 증폭. Blocking 억제는 phase II(nondepol처럼)."
+],
+ [
+"s4",
+95,
+"Succinylcholine은 synapse의 acetylcholinesterase에 의해 빠르게 대사되어 5–10분만 작용한다.",
+false,
+"AChE로 대사 ✗ → plasma butyrylcholinesterase(pseudo-ChE)."
+],
+ [
+"s4",
+96,
+"Pseudocholinesterase 결핍 환자에서는 succinylcholine의 근마비가 오래 지속되어 자발호흡 회복이 지연된다.",
+true,
+""
+],
+ [
+"s4",
+97,
+"NMB는 지용성이 높아 BBB를 통과하므로 진통과 의식소실 효과도 함께 나타난다.",
+false,
+"highly polar → 주사, BBB·태반 ✗ → 진통·의식소실 없음."
+],
+ [
+"s4",
+98,
+"Mivacurium·atracurium의 hypotension은 cardiac muscarinic receptor 차단 때문이다.",
+false,
+"histamine release. Cardiac M 차단 = pancuronium → 빈맥·고혈압."
+],
+ [
+"s4",
+99,
+"Rocuronium은 심혈관 영향이 거의 없고 sugammadex로 반전할 수 있어 기관내삽관에 널리 쓰인다.",
+true,
+""
+],
+ [
+"s4",
+100,
+"Sugammadex는 모든 nondepolarizing NMB와 succinylcholine을 반전시킨다.",
+false,
+"steroid형(rocuronium·vecuronium)만. Succinylcholine은 반전약 불필요."
+],
+ [
+"s4",
+101,
+"Succinylcholine은 녹내장을 유발하므로 금기이다.",
+false,
+"안압만 증가(녹내장은 아님 — 녹음 정정). 대표 독성 = hyperkalemia → cardiac arrest."
+],
+ [
+"s4",
+102,
+"Malignant hyperthermia는 RyR1 변이 환자에서 volatile anesthetic + succinylcholine으로 유발되며 dantrolene이 RyR에 결합해 SR Ca²⁺ 방출을 억제한다.",
+true,
+""
+],
+ [
+"s4",
+103,
+"Baclofen은 GABAA receptor agonist로 Cl⁻ 유입을 증가시킨다.",
+false,
+"GABAB(GPCR): pre Ca²⁺ ↓ / post K⁺ ↑."
+],
+ [
+"s4",
+104,
+"Tizanidine은 clonidine 유사 α2 agonist로 upper motor neuron의 glutamate 방출을 줄인다.",
+true,
+""
+],
+ [
+"s4",
+105,
+"모든 benzodiazepine은 spasmolytic으로 임상 효과가 있다.",
+false,
+"diazepam만."
+],
+ [
+"s4",
+106,
+"Botulinum toxin은 ryanodine receptor에 결합해 근수축을 억제한다.",
+false,
+"vesicle docking 방해 → ACh release ↓. RyR = dantrolene."
+],
+ [
+"s5",
+107,
+"전신마취의 다섯 목표(의식소실·amnesia·진통·자율반사 억제·근이완)는 propofol 단독으로 모두 달성된다.",
+false,
+"한 약으로 불가 → combination. Propofol은 진통 ✗."
+],
+ [
+"s5",
+108,
+"Blood:gas 분배계수가 높을수록 혈액에 잘 녹아 폐포분압이 빨리 올라 마취 유도가 빠르다.",
+false,
+"계수 낮을수록 유도·회복 빠름(N₂O 0.47 > halothane 2.3)."
+],
+ [
+"s5",
+109,
+"Halothane은 환기를 늘려도 FA/FI 변화가 작지만 N₂O는 크게 증가한다.",
+false,
+"반대 — halothane이 크게 증가(환기 확대 중요)."
+],
+ [
+"s5",
+110,
+"Cardiac output(폐혈류)이 증가하면 흡입마취 유도가 빨라진다.",
+false,
+"혈액에 더 녹아 지연."
+],
+ [
+"s5",
+111,
+"N₂O는 MAC가 105%로 유도는 빠르지만 유지를 위해 많은 양이 필요하고, halothane은 MAC 0.75%로 유지가 쉽다.",
+true,
+""
+],
+ [
+"s5",
+112,
+"MAC가 클수록 potency가 크다.",
+false,
+"MAC = 50% immobility 농도 → 작을수록 강력."
+],
+ [
+"s5",
+113,
+"Halothane은 간 대사가 거의 없어 enflurane보다 훨씬 늦게 회복된다.",
+false,
+">40% 간 대사 → 회복 속도 enflurane과 거의 같음(간독성의 이유)."
+],
+ [
+"s5",
+114,
+"심부전 환자에게는 myocardial depression이 적고 vasodilation이 주된 isoflurane·desflurane·sevoflurane을 쓴다.",
+true,
+""
+],
+ [
+"s5",
+115,
+"Bronchospasm 환자에게는 pungent한 desflurane·isoflurane이 적합하다.",
+false,
+"nonpungent(halothane, sevoflurane, N₂O)가 적합."
+],
+ [
+"s5",
+116,
+"Pheochromocytoma 수술에 halothane을 쓰면 catecholamine에 대한 심근 sensitization으로 부정맥 위험이 있다.",
+true,
+""
+],
+ [
+"s5",
+117,
+"Enflurane 장기 노출은 megaloblastic anemia, N₂O 장기 노출은 nephrotoxicity를 일으킨다.",
+false,
+"반대: enflurane = 신독성, N₂O = megaloblastic anemia."
+],
+ [
+"s5",
+118,
+"정맥마취제 중 마취 유지에 continuous infusion으로 쓸 수 있는 것은 propofol뿐이다.",
+true,
+""
+],
+ [
+"s5",
+119,
+"Propofol은 강력한 진통 효과가 있어 opioid 병용이 필요 없다.",
+false,
+"진통 ✗ → opioid 병용. 장점은 antiemetic, 상기도 반사 ↓."
+],
+ [
+"s5",
+120,
+"Etomidate는 cardiovascular stability가 뛰어나 장시간 지속주입하는 ICU 진정제로 쓰인다.",
+false,
+"adrenocortical suppression(11β-hydroxylase) → 지속주입 금지. ICU 단기 진정 = dexmedetomidine."
+],
+ [
+"s5",
+121,
+"Ketamine은 GABAA를 강화하는 해리성 마취제로 교감신경을 억제해 혈압을 낮춘다.",
+false,
+"NMDA 억제, 교감 자극(혈압 유지)."
+],
+ [
+"s5",
+122,
+"천식이 있고 혈압이 낮은 환자, opioid 내성 암환자에게 ketamine이 유용하다.",
+true,
+""
+],
+ [
+"s5",
+123,
+"Dexmedetomidine은 α2 agonist로 호흡억제가 심하지만 서맥은 없다.",
+false,
+"호흡억제 없음, 부작용 = heart block·심한 서맥·asystole."
+],
+ [
+"s5",
+124,
+"Midazolam 진정 중 호흡억제에는 naloxone을 투여한다.",
+false,
+"Flumazenil."
+],
+ [
+"s5",
+125,
+"국소마취제는 Na⁺ channel의 바깥쪽에 결합하므로 이온형이 많을수록 효과가 빠르다.",
+false,
+"채널 안쪽 → 비이온형이 막을 통과해야. 이온형이 안에서 결합."
+],
+ [
+"s5",
+126,
+"염증 부위는 산성이라 국소마취제의 비이온형 비율이 감소해 효과가 떨어진다.",
+true,
+""
+],
+ [
+"s5",
+127,
+"Epinephrine 병용은 국소마취제의 peak blood level을 높여 전신독성을 증가시킨다.",
+false,
+"흡수 지연 → peak ↓ → 전신독성 ↓, 작용 연장."
+],
+ [
+"s5",
+128,
+"Ester형 국소마취제는 간 CYP450으로 대사되어 작용이 길다.",
+false,
+"Ester = plasma butyrylcholinesterase → 짧음. Amide = 간 CYP → 김."
+],
+ [
+"s5",
+129,
+"Bupivacaine은 심독성이 가장 우려되는 long-acting amide이다.",
+true,
+""
+],
+ [
+"s5",
+130,
+"Benzocaine의 대표 독성은 methemoglobinemia이다.",
+true,
+""
+],
+ [
+"s6",
+131,
+"PD에서는 SN의 DA neuron 소실로 striatum GABA output이 감소하여 direct pathway가 과활성된다.",
+false,
+"GABA 과활성 → indirect pathway 과활성 → 운동 억제."
+],
+ [
+"s6",
+132,
+"Dopamine은 BBB의 DA transporter를 통해 뇌로 들어가지만 말초 분해가 빨라 L-DOPA를 쓴다.",
+false,
+"DA는 극성 ↑ + transporter 없음. L-DOPA는 LAT로 진입."
+],
+ [
+"s6",
+133,
+"Carbidopa는 중추 DOPA decarboxylase를 억제해 뇌에서 DA 생성을 조절한다.",
+false,
+"BBB ✗ → 말초에서만 억제 → L-DOPA 용량 ↓·말초 부작용 ↓."
+],
+ [
+"s6",
+134,
+"Carbidopa는 levodopa의 wearing-off를 늦춘다.",
+false,
+"용량·말초 부작용 ↓. Wearing-off ↓ = istradefylline, COMT inh."
+],
+ [
+"s6",
+135,
+"Levodopa의 환각·망상 부작용은 nigrostriatal pathway 과활성 때문이다.",
+false,
+"mesolimbic DA ↑ → psychosis 환자 금기."
+],
+ [
+"s6",
+136,
+"Levodopa + phenelzine 병용은 hypertensive crisis를 일으킬 수 있다.",
+true,
+""
+],
+ [
+"s6",
+137,
+"초기의 경미한 젊은 PD 환자는 가장 강력한 levodopa로 시작한다.",
+false,
+"DA agonist(first-line) — levodopa는 나중을 위해 남겨둠. 고령이면 levodopa."
+],
+ [
+"s6",
+138,
+"Entacapone은 levodopa 없이 단독으로도 PD 증상을 개선한다.",
+false,
+"levodopa-carbidopa 병용 시에만 효과(말초 COMT)."
+],
+ [
+"s6",
+139,
+"Opicapone은 levodopa-carbidopa와 흡수 경쟁을 피하기 위해 취침 시 1일 1회 복용한다.",
+true,
+""
+],
+ [
+"s6",
+140,
+"항정신병약 유발 parkinsonism은 DA agonist로 치료한다.",
+false,
+"anticholinergic(benztropine) — DA 약은 항정신병 효과를 없앰."
+],
+ [
+"s6",
+141,
+"Apomorphine은 μ-opioid agonist로 off-period를 급속히 완화한다.",
+false,
+"potent D2 agonist(SC·SL). 구역 → trimethobenzamide 3일 전부터."
+],
+ [
+"s6",
+142,
+"Istradefylline은 adenosine A2A agonist로 wearing-off를 줄인다.",
+false,
+"A2A antagonist(caffeine 유사)."
+],
+ [
+"s6",
+143,
+"Amantadine은 장기 유지에 효과적이며 livedo reticularis를 일으킬 수 있다.",
+false,
+"효과는 몇 주만 → 급속 완화용. Livedo는 맞음."
+],
+ [
+"s6",
+144,
+"Tolcapone은 말초와 중추 COMT를 모두 억제하며 간독성이 있다.",
+true,
+""
+],
+ [
+"s6",
+145,
+"Memantine은 AChE inhibitor이고 donepezil은 NMDA antagonist이다.",
+false,
+"반대: donepezil = AChE inh, memantine = NMDA antag."
+],
+ [
+"s7",
+146,
+"조현병 양성 증상은 mesocortical DA hypoactivity, 음성 증상은 mesolimbic DA hyperactivity와 관련된다.",
+false,
+"양성 = mesolimbic hyper, 음성 = mesocortical hypo."
+],
+ [
+"s7",
+147,
+"Mesocortical DA neuron의 5-HT2 receptor 차단은 DA release를 늘려 음성 증상을 개선한다.",
+true,
+""
+],
+ [
+"s7",
+148,
+"Typical 항정신병약은 D2 점유 30–50%에서 효과가 나타나 EPS가 적다.",
+false,
+"Typical ≥60%, severe EPS. 30–50% = atypical."
+],
+ [
+"s7",
+149,
+"Haloperidol과 fluphenazine은 음성 증상도 개선하는 atypical 약물이다.",
+false,
+"typical(high potency)."
+],
+ [
+"s7",
+150,
+"Clozapine과 olanzapine은 D4 억제가 D2보다 현저하여 5-HT2A antagonist로 분류된다.",
+true,
+""
+],
+ [
+"s7",
+151,
+"항정신병약에 의한 hyperprolactinemia는 tuberoinfundibular DA가 prolactin 분비를 촉진하기 때문이다.",
+false,
+"DA는 prolactin을 억제 → 차단 시 억제가 풀림."
+],
+ [
+"s7",
+152,
+"복용 초기 akathisia·급성 dystonia에는 diphenhydramine 같은 항콜린성 진정 항히스타민제를 쓸 수 있다.",
+true,
+""
+],
+ [
+"s7",
+153,
+"Tardive dyskinesia는 D2 receptor 수 감소로 생기며 용량을 늘리면 개선된다.",
+false,
+"수용체 수 ↑·supersensitivity → 용량 ↓, quetiapine·clozapine 교체, valbenazine."
+],
+ [
+"s7",
+154,
+"Valbenazine은 D2 receptor antagonist로 TD를 치료한다.",
+false,
+"VMAT inhibitor."
+],
+ [
+"s7",
+155,
+"Clozapine의 agranulocytosis는 용량 의존적 독성이다.",
+false,
+"특이체질성(용량 비의존), 초기 6–8주 → 혈액검사."
+],
+ [
+"s7",
+156,
+"Chlorpromazine으로 기립성 저혈압이 생기면 α 차단이 적은 haloperidol·ziprasidone으로 바꾼다.",
+true,
+""
+],
+ [
+"s7",
+157,
+"QT 연장 위험이 큰 항정신병약은 haloperidol과 clozapine이다.",
+false,
+"thioridazine, ziprasidone."
+],
+ [
+"s7",
+158,
+"NMS는 volatile anesthetic으로 유발되며 dantrolene이 1차 치료이다.",
+false,
+"NMS = D2 차단 항정신병약 → diphenhydramine·diazepam. Volatile → MH."
+],
+ [
+"s7",
+159,
+"Clozapine은 3rd line이지만 자살 충동 조현병 환자에게는 1차 선택이다.",
+true,
+""
+],
+ [
+"s7",
+160,
+"Lithium은 혈중 농도를 2 mEq/L 이상으로 유지해야 효과가 있다.",
+false,
+"≤1 mEq/L 유지·모니터링."
+],
+ [
+"s7",
+161,
+"Bipolar depression에는 SSRI 단독 투여가 1차이다.",
+false,
+"조증 유발 → quetiapine, olanzapine + fluoxetine 병용."
+],
+ [
+"s7",
+162,
+"Lamotrigine은 급성 조증 치료에 쓰인다.",
+false,
+"재발 예방(특히 우울)만."
+],
+ [
+"s8",
+163,
+"Monoamine 가설에서 우울증과 가장 관련 깊은 monoamine은 dopamine이다.",
+false,
+"5-HT·NE."
+],
+ [
+"s8",
+164,
+"SSRI는 복용 2–3일 내 최대 효과가 나타난다.",
+false,
+"최소 2주, 최대 12주↑ — 모든 항우울제."
+],
+ [
+"s8",
+165,
+"SSRI는 NE 관련 부작용이 없어 부작용이 적고 overdose에도 비교적 안전해 1st line이다.",
+true,
+""
+],
+ [
+"s8",
+166,
+"Fluoxetine·sertraline은 과수면, paroxetine·fluvoxamine은 불면을 유발한다.",
+false,
+"반대: fluoxetine·sertraline = insomnia."
+],
+ [
+"s8",
+167,
+"Paroxetine은 임신 category C로 임산부에게 비교적 안전하다.",
+false,
+"category D."
+],
+ [
+"s8",
+168,
+"Serotonin syndrome 치료에는 dantrolene과 cooling이 1차이다.",
+false,
+"BZD 진정 + 삽관·환기(cyproheptadine)."
+],
+ [
+"s8",
+169,
+"Desipramine과 nortriptyline은 NET보다 SERT를 더 강하게 억제하는 3급 amine이다.",
+false,
+"2급 amine, NET > SERT."
+],
+ [
+"s8",
+170,
+"Amoxapine은 D2 억제 작용이 있어 조현병에 동반된 우울증에 쓰일 수 있지만 parkinsonism을 일으킬 수 있다.",
+true,
+""
+],
+ [
+"s8",
+171,
+"Mirtazapine은 SERT와 NET을 모두 억제한다.",
+false,
+"SERT/NET 억제 없음 — α2 autoreceptor antagonist."
+],
+ [
+"s8",
+172,
+"TCA overdose 시 항콜린 증상을 반전시키기 위해 physostigmine 같은 AChE inhibitor를 준다.",
+false,
+"✗ — 심장 더 억제. NaHCO₃, diazepam, lidocaine."
+],
+ [
+"s8",
+173,
+"Imipramine의 구갈·시야흐림·변비는 muscarinic receptor 차단 때문이다.",
+true,
+""
+],
+ [
+"s8",
+174,
+"Moclobemide는 비선택적 irreversible MAOI이다.",
+false,
+"MAO-A selective, reversible."
+],
+ [
+"s8",
+175,
+"MAOI에서 fluoxetine으로 바꿀 때는 2주, fluoxetine에서 MAOI로 바꿀 때는 6주 이상 washout이 필요하다.",
+true,
+""
+],
+ [
+"s8",
+176,
+"MAOI 복용 중 치즈·레드와인 섭취 시 tyramine이 NET로 유입되어 NE 방출을 늘려 hypertensive crisis가 온다.",
+true,
+""
+],
+ [
+"s8",
+177,
+"Vortioxetine은 성기능 부작용이 낮아 SSRI 성불감증 환자의 교체약이다.",
+false,
+"vortioxetine = 구역·성기능 장애. 교체 = bupropion·mirtazapine·nefazodone."
+],
+ [
+"s8",
+178,
+"Trazodone은 priapism, nefazodone은 치명적 간독성이 드물게 나타난다.",
+true,
+""
+],
+ [
+"s8",
+179,
+"Bupropion은 serotonin 재흡수를 억제하는 금연 보조제이다.",
+false,
+"weak DA/NE reuptake inh, 5-HT ✗ → 성기능 부작용 ✗. 부작용 경련."
+],
+ [
+"s8",
+180,
+"Esketamine은 IV로 투여하는 GABAA PAM으로 산후우울증에 쓴다.",
+false,
+"Esketamine = intranasal NMDA antag(치료저항·자살사고). 산후우울 = brexanolone(IV 60 h)."
+],
+ [
+"s8",
+181,
+"통증을 동반한 우울증에는 SSRI보다 SNRI·TCA가 효과적이다.",
+true,
+""
+],
+ [
+"s9",
+182,
+"Codeine과 thebaine은 semisynthetic opioid이다.",
+false,
+"natural. Semisynthetic = heroin, hydromorphone, oxycodone…"
+],
+ [
+"s9",
+183,
+"κ receptor가 가장 강력한 analgesia·euphoria·호흡억제를 매개한다.",
+false,
+"μ. κ = 환각."
+],
+ [
+"s9",
+184,
+"Opioid receptor는 presynapse Ca²⁺ channel을 열고 postsynapse K⁺ channel을 닫는다.",
+false,
+"Ca²⁺ 억제, K⁺ open(IPSP)."
+],
+ [
+"s9",
+185,
+"Opioid 장기 복용 시 miosis와 변비에도 빠르게 내성이 생긴다.",
+false,
+"내성 거의 없음 → 지속."
+],
+ [
+"s9",
+186,
+"Morphine 같은 full μ agonist는 천장효과가 있어 증량해도 진통이 늘지 않는다.",
+false,
+"천장효과 없음. 천장효과 = mixed agonist-antagonist."
+],
+ [
+"s9",
+187,
+"Oxycodone은 strong agonist로 hydromorphone보다 강하다.",
+false,
+"Oxycodone = mild–moderate(그중 최강)."
+],
+ [
+"s9",
+188,
+"Tramadol 실패 시 한 단계 위 약물은 methadone이다.",
+false,
+"oxycodone/APAP(WHO 3단계 진입). Methadone은 두 단계."
+],
+ [
+"s9",
+189,
+"Fentanyl은 morphine의 100배 진통 효력, rapid onset·short duration이며 패치제가 있다.",
+true,
+""
+],
+ [
+"s9",
+190,
+"Methadone은 작용이 빠르고 짧아 heroin 급성 overdose에 쓴다.",
+false,
+"서서히·24 h·경구 → 만성 중독 detox. 급성 = naloxone."
+],
+ [
+"s9",
+191,
+"Nalbuphine에 의한 호흡억제는 naloxone으로 쉽게 반전된다.",
+false,
+"이미 μ antag → 반전 ✗."
+],
+ [
+"s9",
+192,
+"Buprenorphine은 intrinsic activity가 낮아 진통이 약하고 짧다.",
+false,
+"μ tight binding → high efficacy·long, naloxone 해독 어려움."
+],
+ [
+"s9",
+193,
+"Tramadol은 SERT 억제 + 매우 약한 μ agonist이며 호흡억제가 거의 없다.",
+true,
+""
+],
+ [
+"s9",
+194,
+"Tapentadol은 SERT 억제 + μ agonist로 morphine보다 강하다.",
+false,
+"NET 억제, ~oxycodone(< morphine)."
+],
+ [
+"s9",
+195,
+"Naltrexone은 IV로 30초 내 효과가 나타나 응급 overdose에 1차로 쓴다.",
+false,
+"그건 naloxone. Naltrexone = 경구 48 h detox(동기 높은 환자)."
+],
+ [
+"s9",
+196,
+"Nalmefene은 효과까지 5–10분 걸려 응급보다 반복 overdose 관리에 쓴다.",
+true,
+""
+],
+ [
+"s9",
+197,
+"Heroin 투약 12시간 후 산동·과호흡·오한·근육통을 보이면 naloxone을 준다.",
+false,
+"금단 → methadone. Naloxone은 금단 유발."
+],
+ [
+"s9",
+198,
+"Meperidine은 normeperidine 축적과 항무스카린 작용 때문에 1차 진통제에서 제외되었다.",
+true,
+""
+],
+ [
+"s10",
+199,
+"Dependence는 정신적, addiction은 신체적 의존이다.",
+false,
+"dependence = 신체적, addiction = 정신적."
+],
+ [
+"s10",
+200,
+"지용성이 낮고 작용이 긴 약일수록 중독이 잘 된다.",
+false,
+"지용성 ↑·작용 짧음."
+],
+ [
+"s10",
+201,
+"Reward pathway는 SN → striatum이다.",
+false,
+"VTA → nucleus accumbens(mesolimbic)."
+],
+ [
+"s10",
+202,
+"Heroin은 VTA dopamine neuron의 μ receptor를 직접 흥분시켜 DA를 올린다.",
+false,
+"GABA neuron 억제 → disinhibition."
+],
+ [
+"s10",
+203,
+"Nicotine은 DA neuron의 nAChR에 작용해 직접 흥분(excitation)시킨다.",
+true,
+""
+],
+ [
+"s10",
+204,
+"LSD·mescaline은 DA를 올려 강한 의존성을 일으킨다.",
+false,
+"serotonin analog, DA ✗ → 의존·중독 ✗, 교차내성."
+],
+ [
+"s10",
+205,
+"THC는 DA를 releasing하므로 전형적 환각제와 달리 의존·중독을 일으킨다.",
+true,
+""
+],
+ [
+"s10",
+206,
+"GHB는 GABAA 강력 agonist이다.",
+false,
+"GABAB weak agonist, amnesia."
+],
+ [
+"s10",
+207,
+"Varenicline은 nAChR full agonist로 금연 당일부터 복용한다.",
+false,
+"partial, 1주 전부터, 부작용 경련."
+],
+ [
+"s10",
+208,
+"Ketamine과 PCP는 competitive NMDA antagonist이며 강한 의존을 유발한다.",
+false,
+"noncompetitive, DA ✗ → 의존·중독 ✗."
+],
+ [
+"s10",
+209,
+"PCP 과량 시 서맥과 저혈압이 특징이다.",
+false,
+"빈맥·BP ↑, 고열, 안구진탕, 공격성, 무통."
+],
+ [
+"s10",
+210,
+"Cocaine은 DAT를 통해 유입되어 VMAT를 억제한다.",
+false,
+"그건 amphetamine. Cocaine = DAT 직접 억제."
+],
+ [
+"s10",
+211,
+"Cocaine overdose에서 나타나지 않는 것은 서맥과 호흡억제이다.",
+true,
+""
+],
+ [
+"s10",
+212,
+"Amphetamine의 catecholamine ↑ 효과는 환각·식욕억제, serotonin ↑ 효과는 각성·수면감소이다.",
+false,
+"반대: CA → 각성·수면↓ / 5-HT → 환각·식욕↓·고열."
+],
+ [
+"s10",
+213,
+"MDMA는 DAT > SERT이며 탈수 동반 고열이 특징이다.",
+false,
+"SERT > DAT. 고열은 맞음."
+],
+ [
+"s10",
+214,
+"환각제를 제외한 모든 남용 약물은 DA를 증가시킨다.",
+true,
+""
+],
+ [
+"x",
+215,
+"Malignant hyperthermia, NMS, serotonin syndrome의 1차 치료는 모두 dantrolene이다.",
+false,
+"MH = dantrolene / NMS = diphenhydramine·diazepam / serotonin = BZD + 기도 확보."
+],
+ [
+"x",
+216,
+"Flumazenil은 BZD뿐 아니라 barbiturate·alcohol에 의한 호흡억제도 반전시킨다.",
+false,
+"BZD(일부 Z-drug)만."
+],
+ [
+"x",
+217,
+"Baclofen과 GHB는 모두 GABAB agonist이다.",
+true,
+""
+],
+ [
+"x",
+218,
+"Tizanidine과 dexmedetomidine은 모두 α2 agonist이다.",
+true,
+""
+],
+ [
+"x",
+219,
+"Memantine, ketamine, esketamine, PCP는 모두 GABAA 작용 약물이다.",
+false,
+"모두 NMDA antagonist."
+],
+ [
+"x",
+220,
+"Brexanolone과 propofol·etomidate는 GABAA를 강화한다.",
+true,
+""
+],
+ [
+"x",
+221,
+"Valbenazine과 amphetamine은 VMAT에 작용한다는 공통점이 있다.",
+true,
+"valbenazine = VMAT inh(TD), amphetamine = VMAT 억제 → DA 역유출."
+],
+ [
+"x",
+222,
+"Apomorphine의 구역을 막기 위해 ondansetron을 미리 준다.",
+false,
+"trimethobenzamide(D2 antag) 3일 전부터 (25중간 객73 함정)."
+],
+ [
+"x",
+223,
+"Ondansetron은 serotonin syndrome을 유발할 수 있는 약에 포함된다.",
+true,
+""
+],
+ [
+"x",
+224,
+"Lidocaine은 국소마취제이면서 TCA overdose의 부정맥 치료에도 쓰인다.",
+true,
+""
+],
+ [
+"x",
+225,
+"Bupropion과 varenicline은 둘 다 금연에 쓰이며 공통 부작용으로 경련이 있다.",
+true,
+""
+],
+ [
+"x",
+226,
+"Cocaine은 남용 약물이지만 amide형 국소마취제로 이비인후과 표면마취에 쓰인다.",
+false,
+"ester형."
+]
+];
+
+// ───── 데이터 정리
+function hash(s) {
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36);
+}
+const CARDS = DRUGS.map(r => ({
+  id: "d:" + hash(r[0] + "|" + r[1]), kind: "drug", u: r[0], name: r[1], cls: r[2], mech: r[3], use: r[4], ae: r[5], pt: r[6],
+  star: r[7].includes("★"), jok: r[7].includes("족"), mic: r[7].includes("🎙")
+}));
+const PAIR_CARDS = PAIRS.map(r => ({
+  id: "p:" + hash(r[1] + "|" + r[2]), kind: "pair", u: r[0], set: r[1], front: r[2], back: r[3], memo: r[4],
+  star: /★/.test(r[4]), jok: /개년|매년|중간|기말|서술|%/.test(r[4]), mic: false
+}));
+const TFS = TF.map(r => ({ id: "t:" + r[1], u: r[0], n: r[1], q: r[2], t: r[3], e: r[4] }));
+const BYID = Object.fromEntries([...CARDS, ...PAIR_CARDS, ...TFS].map(c => [c.id, c]));
+const ALL_UNITS = Object.keys(SECTIONS);
+
+const MODES = {
+  browse: { label: "약물 카드 훑어보기", desc: "단원별 약물 프로필 — 검색 가능" },
+  d2i: { label: "약물 → 정보", desc: "약 이름을 보고 기전·용도·부작용 떠올리기" },
+  i2d: { label: "기전·용도 → 약물", desc: "단서를 보고 약 이름 맞히기" },
+  pair: { label: "핵심 짝 카드", desc: "시험 직전 30초 · 상황→약 · 부작용·해독제 역검색" },
+  tf: { label: "T/F 함정 문항", desc: `요약본의 ${TFS.length}문항, O/X로 바로 채점` }
+};
+
+// ───── 저장
+const STORE_KEY = "drugs-study-v1";
+const state = (() => {
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(STORE_KEY)); } catch (e) {}
+  s = s || {};
+  s.k = s.k || {};      // 카드 id → 1(알았음) / 0(다시)
+  s.tf = s.tf || {};    // T/F id → [맞음, 틀림]
+  s.set = Object.assign({ units: ALL_UNITS.slice(), only: "", count: 20, sets: Object.keys(PAIR_SETS) }, s.set || {});
+  s.set.units = s.set.units.filter(u => SECTIONS[u]);
+  return s;
+})();
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {} }
+
+// ───── 화면 색
+const THEMES = [
+  ["auto", "자동", null], ["light", "밝게", ["#EEF1F4", "#2848A0"]], ["dark", "어둡게", ["#14181D", "#6F8EF0"]],
+  ["mint", "민트", ["#E6F2EE", "#1D7A63"]], ["lavender", "라벤더", ["#EEECF7", "#5847C2"]], ["paper", "종이", ["#F2EBDD", "#8A5528"]]
+];
+function applyTheme() {
+  const t = getTheme();
+  if (t === "auto") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = t;
+  const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+    if (!m.dataset.orig) m.dataset.orig = m.getAttribute("content");
+    m.setAttribute("content", t === "auto" ? m.dataset.orig : bg);
+  });
+}
+applyTheme();
+
+const $ = s => document.querySelector(s);
+const app = () => $("#app");
+let session = null;
+let view = "";
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+// 요약본 기호 강조: ★ → 노란 별, 🎙 → 예시 표시
+function rich(s) {
+  return esc(s).replace(/\b(GABA|N)_([A-Z])\b/g, "$1<sub>$2</sub>").replace(/★/g, '<span class="st">★</span>').replace(/🎙/g, '<span class="mic">🎙</span>');
+}
+
+// 필터
+function filt(list) {
+  const units = new Set(state.set.units), only = state.set.only;
+  return list.filter(c => units.has(c.u) && (!only || (only === "star" && c.star) || (only === "jok" && c.jok) || (only === "again" && state.k[c.id] === 0)));
+}
+function pairPool() { const sets = new Set(state.set.sets); return filt(PAIR_CARDS).filter(c => sets.has(c.set)); }
+function tfPool() {
+  const units = new Set(state.set.units), only = state.set.only;
+  return TFS.filter(t => (units.has(t.u) || (t.u === "x" && units.size === ALL_UNITS.length)) &&
+    (only !== "again" || (state.tf[t.id] && state.tf[t.id][1] > 0 && state.tf[t.id][2] === 0)));
+}
+function poolFor(mode) { return mode === "pair" ? pairPool() : mode === "tf" ? tfPool() : filt(CARDS); }
+
+// ───── 홈
+function renderHome() {
+  const keepY = view === "home" ? window.scrollY : 0;
+  session = null;
+  const s = state.set, units = new Set(s.units);
+  const known = Object.values(state.k).filter(v => v === 1).length;
+  const again = Object.values(state.k).filter(v => v === 0).length;
+  const tfDone = Object.keys(state.tf).length;
+  const tfRight = Object.values(state.tf).filter(v => v[2] === 1).length;
+
+  const groups = SECTION_GROUPS.map(g => {
+    const allOn = g.units.every(u => units.has(u));
+    return `<div class="ugroup">
+      <div class="ghead"><span>${g.label}</span><button class="link" data-g="${g.units.join(",")}" data-on="${allOn}">${allOn ? "이 묶음 해제" : "이 묶음 선택"}</button></div>
+      <div class="units">${g.units.map(u => `<button class="unit ${units.has(u) ? "on" : ""}" data-u="${u}" aria-pressed="${units.has(u)}">
+        <span class="uname">${SECTIONS[u]}</span><span class="ucount">${CARDS.filter(c => c.u === u).length}</span></button>`).join("")}</div></div>`;
+  }).join("");
+
+  const onlyChips = [["", "전체"], ["star", "★ 교수님 강조만"], ["jok", "족보 출제만"], ["again", "다시 볼 것만"]]
+    .map(([k, l]) => `<button class="chip ${s.only === k ? "on" : ""}" data-only="${k}">${l}</button>`).join("");
+
+  const modes = Object.entries(MODES).map(([k, m]) => {
+    const n = poolFor(k).length;
+    return `<button class="mode" data-m="${k}" ${n ? "" : "disabled"}><span class="ml"><b>${m.label}</b><small>${m.desc}</small></span><span class="mn">${n}</span></button>`;
+  }).join("");
+
+  const setChips = Object.entries(PAIR_SETS).map(([k, l]) =>
+    `<button class="chip ${s.sets.includes(k) ? "on" : ""}" data-set="${k}">${l}</button>`).join("");
+
+  const counts = [10, 20, 40, 0].map(c => `<button class="seg ${s.count === c ? "on" : ""}" data-c="${c}">${c || "전체"}</button>`).join("");
+
+  app().innerHTML = `
+  ${subjectSwitcher()}
+  <header class="home-head">
+    <h1>CNS 약물<br>암기 카드</h1>
+    <p class="lede">박해정 교수님 CNS 1–4 최종 요약본으로 만든 약물 ${CARDS.length}종, 핵심 짝 ${PAIR_CARDS.length}장, T/F ${TFS.length}문항. <span class="st">★</span> 교수님 강조, <span class="jk">족보</span> 기출 근거, <span class="mic">🎙</span> 교수님 예시.</p>
+  </header>
+
+  <section class="block">
+    <div class="bhead"><h2>단원</h2>
+      <span class="links"><button class="link" id="allU">전체 선택</button><button class="link" id="noneU">모두 해제</button></span></div>
+    ${groups}
+  </section>
+
+  <section class="block">
+    <div class="bhead"><h2>범위</h2></div>
+    <div class="chips wrap">${onlyChips}</div>
+  </section>
+
+  <section class="block">
+    <div class="bhead"><h2>공부 방법</h2><span class="hint">한 번에 ${s.count || "전부"}장</span></div>
+    <div class="modes">${modes}</div>
+    <div class="segs" style="margin-top:10px">${counts}</div>
+  </section>
+
+  <section class="block">
+    <div class="bhead"><h2>핵심 짝 카드 묶음</h2></div>
+    <div class="chips wrap">${setChips}</div>
+  </section>
+
+  <section class="block">
+    <div class="bhead"><h2>진도</h2></div>
+    <div class="prog3">
+      <div><b>${known}</b><small>외운 카드</small></div>
+      <div><b>${again}</b><small>다시 볼 카드</small></div>
+      <div><b>${tfDone ? Math.round(tfRight / tfDone * 100) + "%" : "—"}</b><small>T/F 최근 정답률 (${tfDone}문항)</small></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="bhead"><h2>화면 색</h2></div>
+    <div class="themes">${THEMES.map(([k, label, c]) => `<button class="th ${getTheme() === k ? "on" : ""}" data-th="${k}">
+      <span class="sw">${c ? `<i style="background:${c[0]}"></i><i style="background:${c[1]}"></i>` : `<i style="background:#EEF1F4"></i><i style="background:#14181D"></i>`}</span>${label}</button>`).join("")}</div>
+  </section>
+
+  <footer class="foot"><span>출처: 약리학_7-10_CNS Drugs 1-4 최종 요약본</span><button class="link danger" id="reset">학습 기록 지우기</button></footer>`;
+
+  app().querySelectorAll(".unit").forEach(b => b.onclick = () => {
+    const set = new Set(state.set.units); set.has(b.dataset.u) ? set.delete(b.dataset.u) : set.add(b.dataset.u);
+    state.set.units = ALL_UNITS.filter(x => set.has(x)); save(); renderHome();
+  });
+  app().querySelectorAll("[data-g]").forEach(b => b.onclick = () => {
+    const set = new Set(state.set.units);
+    b.dataset.g.split(",").forEach(u => (b.dataset.on === "true" ? set.delete(u) : set.add(u)));
+    state.set.units = ALL_UNITS.filter(x => set.has(x)); save(); renderHome();
+  });
+  app().querySelectorAll("[data-only]").forEach(b => b.onclick = () => { state.set.only = b.dataset.only; save(); renderHome(); });
+  app().querySelectorAll("[data-set]").forEach(b => b.onclick = () => {
+    const set = new Set(state.set.sets); set.has(b.dataset.set) ? set.delete(b.dataset.set) : set.add(b.dataset.set);
+    state.set.sets = Object.keys(PAIR_SETS).filter(x => set.has(x)); save(); renderHome();
+  });
+  app().querySelectorAll(".seg").forEach(b => b.onclick = () => { state.set.count = +b.dataset.c; save(); renderHome(); });
+  app().querySelectorAll(".th").forEach(b => b.onclick = () => { setTheme(b.dataset.th); applyTheme(); renderHome(); });
+  app().querySelectorAll(".mode").forEach(b => b.onclick = () => start(b.dataset.m));
+  $("#allU").onclick = () => { state.set.units = ALL_UNITS.slice(); save(); renderHome(); };
+  $("#noneU").onclick = () => { state.set.units = []; save(); renderHome(); };
+  $("#reset").onclick = () => { if (confirm("외운 카드·T/F 기록을 모두 지울까요? 설정은 유지됩니다.")) { state.k = {}; state.tf = {}; save(); renderHome(); } };
+  view = "home";
+  window.scrollTo(0, keepY);
+}
+
+// ───── 시작
+function start(mode) {
+  if (mode === "browse") return renderBrowse();
+  let pool = poolFor(mode);
+  if (!pool.length) return;
+  // 다시 볼 것 → 안 본 것 → 외운 것 순
+  const key = c => mode === "tf" ? (state.tf[c.id] ? (state.tf[c.id][2] === 0 ? 0 : 2) : 1) : (state.k[c.id] === 0 ? 0 : state.k[c.id] === undefined ? 1 : 2);
+  pool = pool.map(c => ({ c, k: key(c) + Math.random() * 0.9 })).sort((a, b) => a.k - b.k).map(x => x.c);
+  pool.forEach(c => (c._re = 0));
+  const n = state.set.count ? Math.min(state.set.count, pool.length) : pool.length;
+  session = { mode, queue: pool.slice(0, n), total: n, done: 0, knew: 0, missed: [], flipped: false, answered: false };
+  next();
+}
+
+function next() {
+  if (!session.queue.length) return renderEnd();
+  session.cur = session.queue[0];
+  session.flipped = false; session.answered = false;
+  session.mode === "tf" ? renderTF() : renderFlash();
+}
+
+function topBar() {
+  const s = session;
+  return `<div class="qtop">
+    <button class="icon" id="quit" aria-label="그만하기">✕</button>
+    <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${s.total}" aria-valuenow="${s.done}"><span style="width:${s.done / s.total * 100}%"></span></div>
+    <span class="count">${Math.min(s.done + 1, s.total)}<small>/${s.total}</small></span></div>`;
+}
+function bindQuit() {
+  $("#quit").onclick = () => { if (!session.done || confirm("여기까지 기록은 저장돼요. 그만할까요?")) session.done ? renderEnd() : renderHome(); };
+}
+function badges(c) {
+  return `${c.star ? '<span class="bd st-b">★ 강조</span>' : ""}${c.jok ? '<span class="bd jk-b">족보</span>' : ""}${c.mic ? '<span class="bd mic-b">🎙 예시</span>' : ""}`;
+}
+
+// 약물 카드 본문
+function drugBody(c, hideName) {
+  const row = (k, v) => v && v !== "—" ? `<div class="r"><dt>${k}</dt><dd>${rich(v)}</dd></div>` : "";
+  return `<dl class="dl">${row("분류", c.cls)}${row("기전", c.mech)}${row("용도", c.use)}${row("부작용·주의", c.ae)}${row("포인트", hideName ? c.pt.replace(new RegExp(c.name.split(/[ ·(]/)[0], "gi"), "○○") : c.pt)}</dl>`;
+}
+
+// ───── 플래시카드
+function renderFlash() {
+  const s = session, c = s.cur, m = s.mode;
+  let front, back;
+  if (m === "d2i") {
+    front = `<div class="fmeta">${SECTIONS[c.u]}</div><div class="fname">${esc(c.name)}</div><p class="fhint">기전 · 용도 · 부작용을 떠올린 뒤 카드를 누르세요</p>`;
+    back = `<div class="fmeta">${SECTIONS[c.u]} ${badges(c)}</div><div class="fname sm">${esc(c.name)}</div>${drugBody(c)}`;
+  } else if (m === "i2d") {
+    const clue = [["분류", c.cls], ["기전", c.mech], ["용도", c.use]].filter(x => x[1] && x[1] !== "—");
+    front = `<div class="fmeta">${SECTIONS[c.u]} · 어떤 약일까요?</div><dl class="dl">${clue.map(([k, v]) => `<div class="r"><dt>${k}</dt><dd>${rich(v)}</dd></div>`).join("")}</dl><p class="fhint">약 이름을 떠올린 뒤 카드를 누르세요</p>`;
+    back = `<div class="fmeta">${SECTIONS[c.u]} ${badges(c)}</div><div class="fname sm">${esc(c.name)}</div>${drugBody(c)}`;
+  } else {
+    front = `<div class="fmeta">${PAIR_SETS[c.set]}</div><div class="fq">${rich(c.front)}</div><p class="fhint">답을 떠올린 뒤 카드를 누르세요</p>`;
+    back = `<div class="fmeta">${PAIR_SETS[c.set]} ${badges(c)}</div><div class="fq sm">${rich(c.front)}</div><div class="fa">${rich(c.back)}</div>${c.memo ? `<p class="fmemo">${rich(c.memo)}</p>` : ""}`;
+  }
+  app().innerHTML = `${topBar()}
+  <div class="flash ${s.flipped ? "flipped" : ""}" id="card" role="button" tabindex="0" aria-label="${s.flipped ? "카드 뒷면" : "카드 뒤집기"}">
+    <div class="face">${s.flipped ? back : front}</div>
+  </div>
+  <div class="fbtns ${s.flipped ? "" : "hidden"}">
+    <button class="secondary again" id="again">다시 볼래요</button>
+    <button class="primary" id="knew">알았어요</button>
+  </div>
+  <p class="score">${s.flipped ? "키보드: 1 다시 · 2 알았음" : "카드를 누르거나 스페이스바로 뒤집기"}</p>`;
+  $("#card").onclick = () => { if (!s.flipped) { s.flipped = true; renderFlash(); } };
+  if (s.flipped) { $("#again").onclick = () => grade(false); $("#knew").onclick = () => grade(true); }
+  bindQuit();
+  window.scrollTo(0, 0);
+}
+function grade(ok) {
+  const s = session, c = s.cur;
+  state.k[c.id] = ok ? 1 : 0; save();
+  s.queue.shift();
+  if (ok) { s.done++; s.knew++; }
+  else {
+    if (!s.missed.includes(c)) s.missed.push(c);
+    // 몰랐던 카드는 3–5장 뒤에 한 번 더
+    const pos = Math.min(s.queue.length, 3 + Math.floor(Math.random() * 3));
+    if (!c._re) { c._re = 1; s.queue.splice(pos, 0, c); } else { s.done++; c._re = 0; }
+  }
+  next();
+}
+
+// ───── T/F
+function renderTF() {
+  const s = session, t = s.cur;
+  app().innerHTML = `${topBar()}
+  <article class="qcard">
+    <div class="qmeta"><span class="uname-sm">${t.u === "x" ? "단원 교차" : SECTIONS[t.u]}</span><span class="kind">요약본 T/F ${t.n}</span></div>
+    <h2 class="stem">${rich(t.q)}</h2>
+    <div class="ox">
+      <button class="oxb" data-v="1">O<small>맞다</small></button>
+      <button class="oxb" data-v="0">X<small>틀리다</small></button>
+    </div>
+    <div id="fb"></div>
+  </article>
+  <p class="score">키보드: O / X (또는 1 / 2)</p>`;
+  app().querySelectorAll(".oxb").forEach(b => b.onclick = () => answerTF(b.dataset.v === "1"));
+  bindQuit();
+  window.scrollTo(0, 0);
+}
+function answerTF(v) {
+  const s = session, t = s.cur;
+  if (s.answered) return;
+  s.answered = true;
+  const ok = v === t.t;
+  const r = state.tf[t.id] || [0, 0, 0];
+  ok ? r[0]++ : r[1]++; r[2] = ok ? 1 : 0;
+  state.tf[t.id] = r; save();
+  s.done++; if (ok) s.knew++; else s.missed.push(t);
+  app().querySelectorAll(".oxb").forEach(b => {
+    b.disabled = true;
+    const bv = b.dataset.v === "1";
+    if (bv === t.t) b.classList.add("correct"); else if (bv === v) b.classList.add("wrong"); else b.classList.add("dim");
+  });
+  $("#fb").innerHTML = `<div class="verdict ${ok ? "ok" : "no"}">${ok ? "정답" : "오답"} — ${t.t ? "T (맞는 문장)" : "F (틀린 문장)"}</div>
+    ${t.e ? `<div class="expl">${rich(t.e)}</div>` : ""}
+    <button class="primary next" id="next">${s.queue.length > 1 ? "다음 문항" : "결과 보기"}</button>`;
+  $("#next").onclick = () => { s.queue.shift(); next(); };
+  $("#next").focus({ preventScroll: true });
+}
+
+// ───── 끝
+function renderEnd() {
+  const s = session;
+  view = "end";
+  const isTF = s.mode === "tf";
+  const label = c => c.kind === "drug" ? c.name : c.kind === "pair" ? c.front : c.q;
+  app().innerHTML = `
+  <header class="res-head">
+    <div class="big">${s.knew}<small>/${s.done}</small></div>
+    <p>${MODES[s.mode].label} · ${isTF ? "정답" : "알았어요"} ${s.knew}개${s.missed.length ? ` · ${isTF ? "틀린" : "다시 볼"} ${s.missed.length}개` : ""}</p>
+  </header>
+  <div class="actions">
+    ${s.missed.length ? `<button class="primary" id="redo">${isTF ? "틀린" : "다시 볼"} ${s.missed.length}개만 다시</button>` : ""}
+    <div class="row2"><button class="secondary" id="again">새로 ${MODES[s.mode].label}</button><button class="secondary" id="home">처음으로</button></div>
+  </div>
+  ${s.missed.length ? `<section class="block"><div class="bhead"><h2>${isTF ? "틀린 문항" : "다시 볼 카드"}</h2></div>
+    <ol class="wlist">${s.missed.map(c => `<li><div class="wq">${rich(label(c))}</div>${c.kind === "drug" ? `<div class="wa">${rich(c.mech)}</div>` : c.kind === "pair" ? `<div class="wa">${rich(c.back)}</div>` : `<div class="wa"><span class="tag ${c.t ? "ok" : "no"}">${c.t ? "T" : "F"}</span>${rich(c.e || "")}</div>`}</li>`).join("")}</ol></section>` : ""}`;
+  const mode = s.mode, missed = s.missed.slice();
+  const rd = $("#redo");
+  if (rd) rd.onclick = () => { missed.forEach(c => (c._re = 0)); session = { mode, queue: shuffle(missed), total: missed.length, done: 0, knew: 0, missed: [] }; next(); };
+  $("#again").onclick = () => start(mode);
+  $("#home").onclick = () => renderHome();
+  window.scrollTo(0, 0);
+}
+
+// ───── 약물 카드 훑어보기
+let brUnit = "", brQ = "";
+function renderBrowse() {
+  view = "browse"; session = null;
+  const chips = ["", ...ALL_UNITS].map(u => `<button class="chip ${brUnit === u ? "on" : ""}" data-u="${u}">${u ? SECTIONS[u] : "전체"}</button>`).join("");
+  app().innerHTML = `
+  <div class="qtop"><button class="icon" id="back" aria-label="처음으로">✕</button><h2 class="dhead">약물 카드</h2></div>
+  <input class="search" id="q" type="search" placeholder="약 이름·기전·부작용으로 찾기 (예: GABA, 간독성, flumazenil)" value="${esc(brQ)}" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <div class="chips">${chips}</div>
+  <div id="blist" class="dlist"></div>`;
+  $("#back").onclick = () => renderHome();
+  app().querySelectorAll(".chip").forEach(b => b.onclick = () => { brUnit = b.dataset.u; renderBrowse(); });
+  const q = $("#q"); q.oninput = () => { brQ = q.value; fillBrowse(); };
+  fillBrowse();
+}
+function fillBrowse() {
+  const t = brQ.trim().toLowerCase(), only = state.set.only;
+  const list = CARDS.filter(c => (!brUnit || c.u === brUnit) && (!only || (only === "star" && c.star) || (only === "jok" && c.jok) || (only === "again" && state.k[c.id] === 0)) &&
+    (!t || [c.name, c.cls, c.mech, c.use, c.ae, c.pt].join(" ").toLowerCase().includes(t)));
+  const pairs = t ? PAIR_CARDS.filter(c => (!brUnit || c.u === brUnit) && [c.front, c.back].join(" ").toLowerCase().includes(t)) : [];
+  $("#blist").innerHTML = (list.length || pairs.length)
+    ? `<p class="note">약물 ${list.length}종${pairs.length ? ` · 핵심 짝 ${pairs.length}장` : ""}${only ? " (범위 필터 적용 중)" : ""}</p>` +
+      list.map(c => `<article class="dcard dc ${state.k[c.id] === 0 ? "againc" : ""}">
+        <div class="fmeta">${SECTIONS[c.u]} ${badges(c)}${state.k[c.id] === 1 ? '<span class="bd ok-b">외움</span>' : state.k[c.id] === 0 ? '<span class="bd no-b">다시</span>' : ""}</div>
+        <div class="fname sm">${esc(c.name)}</div>${drugBody(c)}</article>`).join("") +
+      pairs.map(c => `<article class="dcard"><div class="fmeta">${PAIR_SETS[c.set]}</div><div class="fq sm">${rich(c.front)}</div><div class="fa">${rich(c.back)}</div></article>`).join("")
+    : `<p class="empty">“${esc(brQ)}”가 들어간 약물이 없어요. 철자를 바꾸거나 단원을 ‘전체’로 바꿔 보세요.</p>`;
+}
+
+// ───── 키보드
+document.addEventListener("keydown", e => {
+  if (!session || !session.cur) return;
+  if (e.target && e.target.tagName === "INPUT") return;
+  const k = e.key.toLowerCase();
+  if (session.mode === "tf") {
+    if (!session.answered && (k === "o" || k === "1")) answerTF(true);
+    else if (!session.answered && (k === "x" || k === "2")) answerTF(false);
+    else if (session.answered && (k === "enter" || k === " ")) { e.preventDefault(); session.queue.shift(); next(); }
+    return;
+  }
+  if (!session.flipped && (k === " " || k === "enter")) { e.preventDefault(); session.flipped = true; renderFlash(); }
+  else if (session.flipped && k === "1") grade(false);
+  else if (session.flipped && (k === "2" || k === "enter")) grade(true);
+});
+
+renderHome();
+registerSW();
+
+</script>
+</body>
+</html>
