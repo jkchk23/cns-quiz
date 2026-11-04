@@ -792,6 +792,16 @@ const LIST_SECS = [
 "k": "premedication",
 "i": [
 {
+"a": "famotidine",
+"n": "H₂"
+},
+",",
+{
+"a": "ranitidine",
+"n": "H₂"
+},
+",",
+{
 "a": "midazolam",
 "n": "불안↓"
 },
@@ -812,21 +822,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "famotidine",
-"n": "H₂",
-"o": 1
-},
-",",
-{
-"a": "ranitidine",
-"n": "H₂",
-"o": 1
-},
-",",
-{
 "a": "glycopyrrolate",
-"n": "서맥, 분비물 예방",
-"o": 1
+"n": "서맥, 분비물 예방"
 }
 ],
 "b": true
@@ -890,8 +887,7 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "levobupivacaine",
-"o": 1
+"a": "levobupivacaine"
 }
 ],
 "b": true
@@ -1039,14 +1035,12 @@ const LIST_SECS = [
 "i": [
 {
 "a": "entacapone",
-"n": "Stalevo",
-"o": 1
+"n": "Stalevo"
 },
 ",",
 {
 "a": "opicapone",
-"n": "취침 시 1회",
-"o": 1
+"n": "취침 시 1회"
 },
 "/",
 {
@@ -1130,8 +1124,7 @@ const LIST_SECS = [
 ",",
 {
 "a": "galantamine",
-"n": "PD 치매",
-"o": 1
+"n": "PD 치매"
 },
 ",",
 {
@@ -1277,6 +1270,11 @@ const LIST_SECS = [
 },
 "/",
 {
+"a": "droperidol",
+"n": "항구토"
+},
+",",
+{
 "a": "asenapine",
 "o": 1
 },
@@ -1288,12 +1286,6 @@ const LIST_SECS = [
 ",",
 {
 "a": "cariprazine",
-"o": 1
-},
-",",
-{
-"a": "droperidol",
-"n": "항구토",
 "o": 1
 },
 ",",
@@ -1362,8 +1354,7 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "droperidol",
-"o": 1
+"a": "droperidol"
 },
 "/",
 {
@@ -1531,29 +1522,24 @@ const LIST_SECS = [
 "k": "SNRI",
 "i": [
 {
-"a": "venlafaxine",
-"o": 1
+"a": "venlafaxine"
 },
 ",",
 {
-"a": "desvenlafaxine",
-"o": 1
+"a": "desvenlafaxine"
 },
 ",",
 {
-"a": "milnacipran",
-"o": 1
+"a": "milnacipran"
 },
 ",",
 {
-"a": "levomilnacipran",
-"o": 1
+"a": "levomilnacipran"
 },
 ",",
 {
 "a": "duloxetine",
-"n": "통증 동반 우울",
-"o": 1
+"n": "통증 동반 우울"
 }
 ],
 "b": true
@@ -1589,8 +1575,7 @@ const LIST_SECS = [
 ",",
 {
 "a": "amitriptyline",
-"n": "편두통, 만성통증",
-"o": 1
+"n": "편두통, 만성통증"
 },
 ",",
 {
@@ -1627,14 +1612,12 @@ const LIST_SECS = [
 ",",
 {
 "a": "maprotiline",
-"n": "NET 우세",
-"o": 1
+"n": "NET 우세"
 },
 ",",
 {
 "a": "vilazodone",
-"n": "SERT만",
-"o": 1
+"n": "SERT만"
 }
 ],
 "b": true
@@ -2153,13 +2136,11 @@ const LIST_SECS = [
 {
 "a": "dronabinol",
 "n": "식욕 증진",
-"p": "의료용",
-"o": 1
+"p": "의료용"
 },
 ",",
 {
-"a": "nabilone",
-"o": 1
+"a": "nabilone"
 }
 ],
 "b": true
@@ -2209,6 +2190,14 @@ const LIST_SECS = [
 "k": "nicotine / 금연 보조",
 "i": [
 {
+"a": "nicotine patch"
+},
+",",
+{
+"a": "gum"
+},
+",",
+{
 "a": "bupropion",
 "n": "1주 전 시작"
 },
@@ -2221,16 +2210,6 @@ const LIST_SECS = [
 {
 "a": "cytisine",
 "n": "nAChR partial"
-},
-",",
-{
-"a": "nicotine patch",
-"o": 1
-},
-",",
-{
-"a": "gum",
-"o": 1
 }
 ],
 "b": true
