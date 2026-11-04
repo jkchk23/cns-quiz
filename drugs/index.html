@@ -5155,10 +5155,11 @@ function tyResetGroup(g, onlyWrong) {
   TY_CELLS.filter(c => c.g === g && (!onlyWrong || ty.st[c.id] !== "ok")).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; delete ty.ans[c.id]; });
   if (!tyIds().some(i => ty.st[i] === "show")) ty.checked = false;
   tyKeep(renderType);
-  const f = app().querySelector(`[data-gh="${g}"]`);
-  const first = f && TY_CELLS.find(c => c.g === g && ty.st[c.id] !== "ok");
-  const el = first && app().querySelector(`.ty-in[data-id="${first.id}"]`);
-  if (el) el.focus({ preventScroll: true });
+  // 커서: 채점 직전 커서가 있던 칸(같은 중분류이고 다시 칠 수 있으면) → 아니면 그 중분류의 첫 빈칸
+  const keep = ty.keepId && TY_BYPOS[ty.keepId] && TY_BYPOS[ty.keepId].g === g ? app().querySelector(`.ty-in[data-id="${ty.keepId}"]`) : null;
+  const first = TY_CELLS.find(c => c.g === g && ty.st[c.id] !== "ok");
+  const el = keep && !keep.readOnly ? keep : first && app().querySelector(`.ty-in[data-id="${first.id}"]`);
+  if (el) { el.focus({ preventScroll: true }); const n = el.value.length; try { el.setSelectionRange(n, n); } catch (e) {} }
 }
 // 지금 작업 중인 중분류: 커서 있는 칸 → 마지막으로 친 칸 → 마지막으로 버튼·단축키 쓴 곳 → 화면 가운데 위쪽 제목
 function tyCurGroup() {
@@ -5180,6 +5181,9 @@ document.addEventListener("keydown", e => {
   if (!g) return;
   e.preventDefault(); e.stopPropagation();
   ty.lastG = g;
+  // 커서가 칸에 있으면 그 칸을 기억 → 채점 뒤 틀린 것만 초기화할 때 그 칸으로 돌아옴
+  const a = document.activeElement;
+  if (a && a.classList && a.classList.contains("ty-in")) ty.keepId = a.dataset.id;
   if (k === "Enter") tyCheck(g);
   else tyResetGroup(g, !e.shiftKey);
 }, true);
