@@ -434,7 +434,7 @@ function renderType() {
         const g = si + ":" + gi, gids = TY_CELLS.filter(c => c.g === g).map(c => c.id);
         const gok = gids.filter(i => ty.st[i] === "ok").length, gdone = gids.some(i => ty.st[i] === "show" || ty.st[i] === "hint");
         html += `<div class="ty-cat" data-gh="${g}"><span>${line}</span>${gids.length ? `<span class="ty-gs">${gok}/${gids.length}</span>
-          <button class="ty-gb" data-gc="${g}">채점</button><button class="ty-gb ghost" data-gr="${g}">초기화</button>` : ""}</div>`;
+          <button class="ty-gb" data-gc="${g}">채점</button><button class="ty-gb ghost" data-gw="${g}" ${gids.some(i => ty.st[i] === "show" || ty.st[i] === "hint" || (ty.val[i] && ty.st[i] !== "ok")) ? "" : "disabled"}>틀린 것만 초기화</button><button class="ty-gb ghost" data-gr="${g}">초기화</button>` : ""}</div>`;
       }
       else { while (open < row.l) { html += "<ul class=ty-ul>"; open++; } close(row.l); html += `<li>${line}</li>`; }
     });
@@ -478,13 +478,14 @@ function renderType() {
   $("#tyHint").onclick = tyHint;
   $("#tyCheck").onclick = () => tyCheck();
   app().querySelectorAll("[data-gc]").forEach(b => b.onclick = () => tyCheck(b.dataset.gc));
-  app().querySelectorAll("[data-gr]").forEach(b => b.onclick = () => {
-    const g = b.dataset.gr;
-    TY_CELLS.filter(c => c.g === g).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; delete ty.ans[c.id]; });
+  app().querySelectorAll("[data-gr], [data-gw]").forEach(b => b.onclick = () => {
+    const g = b.dataset.gr || b.dataset.gw, onlyWrong = !!b.dataset.gw;
+    // 틀린 것만: 맞힌(초록) 칸은 두고 정답 공개·힌트·잘못 친 칸만 비움
+    TY_CELLS.filter(c => c.g === g && (!onlyWrong || ty.st[c.id] !== "ok")).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; delete ty.ans[c.id]; });
     if (!tyIds().some(i => ty.st[i] === "show")) ty.checked = false;
     tyKeep(renderType);
     const f = app().querySelector(`[data-gh="${g}"]`);
-    const first = f && TY_CELLS.find(c => c.g === g);
+    const first = f && TY_CELLS.find(c => c.g === g && ty.st[c.id] !== "ok");
     const el = first && app().querySelector(`.ty-in[data-id="${first.id}"]`);
     if (el) el.focus({ preventScroll: true });
   });
