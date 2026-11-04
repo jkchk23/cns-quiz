@@ -1,4 +1,4 @@
-const CACHE = 'study-hub-202611042206';
+const CACHE = 'study-hub-202611042214';
 const FILES = ['./', 'index.html', 'pharm/', 'pharm/index.html', 'cns/', 'cns/index.html', 'micro/', 'micro/index.html', 'drugs/', 'drugs/index.html', 'manifest.json', 'icon-180.png', 'icon-512.png'];
 // 설치 시 HTTP 캐시를 건너뛰고 서버에서 새로 받아 저장
 self.addEventListener('install', e => {

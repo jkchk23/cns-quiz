@@ -308,10 +308,6 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "eslicarbazepine"
-},
-",",
-{
 "a": "lamotrigine",
 "n": "임신, rash→SJS"
 },
@@ -338,6 +334,11 @@ const LIST_SECS = [
 ",",
 {
 "a": "fosphenytoin",
+"o": 1
+},
+",",
+{
+"a": "eslicarbazepine",
 "o": 1
 }
 ],
@@ -792,16 +793,6 @@ const LIST_SECS = [
 "k": "premedication",
 "i": [
 {
-"a": "famotidine",
-"n": "H₂"
-},
-",",
-{
-"a": "ranitidine",
-"n": "H₂"
-},
-",",
-{
 "a": "midazolam",
 "n": "불안↓"
 },
@@ -822,8 +813,21 @@ const LIST_SECS = [
 },
 ",",
 {
+"a": "famotidine",
+"n": "H₂",
+"o": 1
+},
+",",
+{
+"a": "ranitidine",
+"n": "H₂",
+"o": 1
+},
+",",
+{
 "a": "glycopyrrolate",
-"n": "서맥, 분비물 예방"
+"n": "서맥, 분비물 예방",
+"o": 1
 }
 ],
 "b": true
@@ -1064,15 +1068,18 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "biperiden"
+"a": "biperiden",
+"o": 1
 },
 ",",
 {
-"a": "orphenadrine"
+"a": "orphenadrine",
+"o": 1
 },
 ",",
 {
-"a": "procyclidine"
+"a": "procyclidine",
+"o": 1
 }
 ],
 "b": true
@@ -1128,13 +1135,11 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "rivastigmine",
-"o": 1
+"a": "rivastigmine"
 },
 ",",
 {
-"a": "tacrine",
-"o": 1
+"a": "tacrine"
 }
 ],
 "b": true
@@ -1611,12 +1616,14 @@ const LIST_SECS = [
 ",",
 {
 "a": "maprotiline",
-"n": "NET 우세"
+"n": "NET 우세",
+"o": 1
 },
 ",",
 {
 "a": "vilazodone",
-"n": "SERT만"
+"n": "SERT만",
+"o": 1
 }
 ],
 "b": true
@@ -1859,24 +1866,27 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "sufentanil"
-},
-",",
-{
-"a": "alfentanil"
-},
-",",
-{
-"a": "remifentanil"
-},
-",",
-{
 "a": "meperidine",
 "n": "normeperidine, 빈맥 금기"
 },
 ",",
 {
 "a": "levorphanol"
+},
+",",
+{
+"a": "sufentanil",
+"o": 1
+},
+",",
+{
+"a": "alfentanil",
+"o": 1
+},
+",",
+{
+"a": "remifentanil",
+"o": 1
 }
 ],
 "b": true
@@ -2135,11 +2145,13 @@ const LIST_SECS = [
 {
 "a": "dronabinol",
 "n": "식욕 증진",
-"p": "의료용"
+"p": "의료용",
+"o": 1
 },
 ",",
 {
-"a": "nabilone"
+"a": "nabilone",
+"o": 1
 }
 ],
 "b": true
@@ -2189,14 +2201,6 @@ const LIST_SECS = [
 "k": "nicotine / 금연 보조",
 "i": [
 {
-"a": "nicotine patch"
-},
-",",
-{
-"a": "gum"
-},
-",",
-{
 "a": "bupropion",
 "n": "1주 전 시작"
 },
@@ -2209,6 +2213,16 @@ const LIST_SECS = [
 {
 "a": "cytisine",
 "n": "nAChR partial"
+},
+",",
+{
+"a": "nicotine patch",
+"o": 1
+},
+",",
+{
+"a": "gum",
+"o": 1
 }
 ],
 "b": true
