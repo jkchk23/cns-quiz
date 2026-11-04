@@ -17,7 +17,7 @@ shared_css = (src / 'shared' / 'hub.css').read_text()
 APPS = {
     'pharm': ['data_units.js', 'q_cns1.js', 'q_cns2.js', 'q_cns3.js', 'q_lec1.js', 'q_lec2.js', 'q_extra.js', 'engine.js', 'ui.js'],
     'micro': ['data_essay.js', 'engine.js', 'ui.js'],
-    'drugs': ['data_drugs.js', 'data_pairs.js', 'data_tf.js', 'ui.js'],
+    'drugs': ['data_drugs.js', 'data_pairs.js', 'data_tf.js', 'data_list.js', 'ui.js'],
 }
 
 for app, files in APPS.items():

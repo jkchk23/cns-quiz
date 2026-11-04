@@ -21,7 +21,8 @@ const MODES = {
   d2i: { label: "약물 → 정보", desc: "약 이름을 보고 기전·용도·부작용 떠올리기" },
   i2d: { label: "기전·용도 → 약물", desc: "단서를 보고 약 이름 맞히기" },
   pair: { label: "핵심 짝 카드", desc: "시험 직전 30초 · 상황→약 · 부작용·해독제 역검색" },
-  tf: { label: "T/F 함정 문항", desc: `요약본의 ${TFS.length}문항, O/X로 바로 채점` }
+  tf: { label: "T/F 함정 문항", desc: `요약본의 ${TFS.length}문항, O/X로 바로 채점` },
+  type: { label: "약물 리스트 타이핑", desc: "종류별 약물 리스트의 빈칸에 약 이름을 직접 입력" }
 };
 
 // ───── 저장
@@ -32,6 +33,8 @@ const state = (() => {
   s = s || {};
   s.k = s.k || {};      // 카드 id → 1(알았음) / 0(다시)
   s.tf = s.tf || {};    // T/F id → [맞음, 틀림]
+  s.ty = s.ty || {};    // 타이핑 칸 id → 1(맞힘) / 0(틀림·힌트)
+  s.tyb = s.tyb || {};  // 타이핑 단원 → [맞힘, 전체, 시각]
   s.set = Object.assign({ units: ALL_UNITS.slice(), only: "", count: 20, sets: Object.keys(PAIR_SETS) }, s.set || {});
   s.set.units = s.set.units.filter(u => SECTIONS[u]);
   return s;
@@ -77,7 +80,7 @@ function tfPool() {
   return TFS.filter(t => (units.has(t.u) || (t.u === "x" && units.size === ALL_UNITS.length)) &&
     (only !== "again" || (state.tf[t.id] && state.tf[t.id][1] > 0 && state.tf[t.id][2] === 0)));
 }
-function poolFor(mode) { return mode === "pair" ? pairPool() : mode === "tf" ? tfPool() : filt(CARDS); }
+function poolFor(mode) { if (mode === "type") return TY_CELLS; return mode === "pair" ? pairPool() : mode === "tf" ? tfPool() : filt(CARDS); }
 
 // ───── 홈
 function renderHome() {
@@ -175,7 +178,7 @@ function renderHome() {
   app().querySelectorAll(".mode").forEach(b => b.onclick = () => start(b.dataset.m));
   $("#allU").onclick = () => { state.set.units = ALL_UNITS.slice(); save(); renderHome(); };
   $("#noneU").onclick = () => { state.set.units = []; save(); renderHome(); };
-  $("#reset").onclick = () => { if (confirm("외운 카드·T/F 기록을 모두 지울까요? 설정은 유지됩니다.")) { state.k = {}; state.tf = {}; save(); renderHome(); } };
+  $("#reset").onclick = () => { if (confirm("외운 카드·T/F·타이핑 기록을 모두 지울까요? 설정은 유지됩니다.")) { state.k = {}; state.tf = {}; state.ty = {}; state.tyb = {}; save(); renderHome(); } };
   view = "home";
   window.scrollTo(0, keepY);
 }
@@ -183,6 +186,7 @@ function renderHome() {
 // ───── 시작
 function start(mode) {
   if (mode === "browse") return renderBrowse();
+  if (mode === "type") return renderType();
   let pool = poolFor(mode);
   if (!pool.length) return;
   // 다시 볼 것 → 안 본 것 → 외운 것 순
@@ -355,6 +359,174 @@ function fillBrowse() {
         <div class="fname sm">${esc(c.name)}</div>${drugBody(c)}</article>`).join("") +
       pairs.map(c => `<article class="dcard"><div class="fmeta">${PAIR_SETS[c.set]}</div><div class="fq sm">${rich(c.front)}</div><div class="fa">${rich(c.back)}</div></article>`).join("")
     : `<p class="empty">“${esc(brQ)}”가 들어간 약물이 없어요. 철자를 바꾸거나 단원을 ‘전체’로 바꿔 보세요.</p>`;
+}
+
+
+// ───── 약물 리스트 타이핑 (PDF 'CNS Drugs 1-4 약물 리스트'의 빈칸본과 같은 배치)
+// 칸 id = 단원 + 줄 번호 + 칸 번호 → 같은 약이 여러 줄에 나와도 따로 기록
+const TY_CELLS = [];
+LIST_SECS.forEach((sec, si) => sec.r.forEach((row, ri) => row.i.forEach((it, ii) => {
+  if (it && it.a) TY_CELLS.push({ id: "y:" + hash(sec.t + "|" + ri + "|" + ii + "|" + it.a), si, a: it.a, n: it.n || "", p: it.p || "" });
+})));
+const TY_BYPOS = {};
+TY_CELLS.forEach(c => (TY_BYPOS[c.id] = c));
+function tyNorm(s) { return String(s).normalize("NFKC").toLowerCase().replace(/<[^>]+>/g, "").replace(/[\s\-–·,.'’()]/g, ""); }
+// 정답: 전체 이름 · 괄호 앞 이름 · 괄호 속 약어(N₂O, THC, PCP, ecstasy) 모두 인정
+function tyAnswers(a) {
+  const set = new Set([tyNorm(a)]);
+  const m = a.match(/^(.*?)\((.*)\)$/);
+  if (m) { set.add(tyNorm(m[1])); set.add(tyNorm(m[2])); }
+  if (a === "gum") set.add("nicotinegum");
+  return set;
+}
+let ty = null;   // { si: 단원 번호 | -1 전체, val: {id: 입력}, st: {id: "ok"|"no"|"hint"|"show"}, notes, checked }
+function tyIds() { return TY_CELLS.filter(c => ty.si < 0 || c.si === ty.si).map(c => c.id); }
+function tyNew(si) {
+  const prev = ty;
+  ty = { si, val: {}, st: {}, notes: prev ? prev.notes : (state.set.tyNotes !== false), checked: false, onlyWrong: false };
+}
+function renderType() {
+  view = "type"; session = null;
+  if (!ty) tyNew(state.set.tySec ?? 0);
+  const secs = ty.si < 0 ? LIST_SECS.map((s, i) => i) : [ty.si];
+  const chips = [...LIST_SECS.map((s, i) => [i, s.t]), [-1, "전체"]].map(([i, l]) => {
+    const b = state.tyb[i];
+    return `<button class="chip ${ty.si === i ? "on" : ""}" data-si="${i}">${l}${b ? `<small>${b[0]}/${b[1]}</small>` : ""}</button>`;
+  }).join("");
+  let html = "";
+  secs.forEach(si => {
+    const sec = LIST_SECS[si];
+    html += `<section class="ty-sec"><div class="ty-sh"><b>${sec.t}</b><span>${esc(sec.s)}</span></div>`;
+    let open = 0;
+    const close = to => { while (open > to) { html += "</ul>"; open--; } };
+    sec.r.forEach((row, ri) => {
+      const pcs = [];   // 쉼표 등은 앞 칸에 붙여 줄바꿈 때 혼자 떨어지지 않게
+      row.i.forEach((it, ii) => {
+        if (typeof it === "string") { const sp = `<span class="ty-sep">${esc(it)}</span>`; pcs.length ? (pcs[pcs.length - 1] += sp) : pcs.push(sp); return; }
+        if (Array.isArray(it)) { pcs.push(`<span class="ty-txt">${it[0]}</span>`); return; }
+        const id = "y:" + hash(sec.t + "|" + ri + "|" + ii + "|" + it.a);
+        const st = ty.st[id] || "", v = ty.val[id] || "";
+        const w = Math.max(it.a.length, 4) + 1.5;
+        const was = state.ty[id] === 0 ? " was-no" : "";
+        pcs.push(`<span class="ty-cell">${it.p ? `<span class="ty-pre">${esc(it.p)}</span>` : ""}<span class="ty-col2">
+          <input class="ty-in ${st}${was}" data-id="${id}" style="width:${w}ch" value="${esc(st === "show" ? it.a : v)}" ${st === "ok" || st === "show" ? "readonly" : ""}
+            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" aria-label="빈칸${it.n ? " — " + esc(it.n) : ""}">
+          ${st === "show" && v ? `<s class="ty-mine">${esc(v)}</s>` : ""}
+          ${it.n && ty.notes ? `<span class="ty-note">${esc(it.n)}</span>` : ""}</span></span>`);
+      });
+      const line = (row.k ? `<span class="ty-k">${row.k}</span><span class="ty-col"> : </span>` : "") + pcs.map(x => `<span class="ty-grp">${x}</span>`).join(" ");
+      if (row.l === 0) { close(0); html += `<div class="ty-cat">${line}</div>`; }
+      else { while (open < row.l) { html += "<ul class=ty-ul>"; open++; } close(row.l); html += `<li>${line}</li>`; }
+    });
+    close(0);
+    html += "</section>";
+  });
+  const ids = tyIds(), ok = ids.filter(i => ty.st[i] === "ok").length;
+  app().innerHTML = `
+  <div class="qtop"><button class="icon" id="back" aria-label="처음으로">✕</button><h2 class="dhead">약물 리스트 타이핑</h2></div>
+  <div class="chips">${chips}</div>
+  <div class="ty-bar">
+    <div class="ty-prog"><b id="tyOk">${ok}</b><small>/${ids.length}</small></div>
+    <button class="secondary sm" id="tyHint">힌트 한 글자</button>
+    <button class="primary sm" id="tyCheck">${ty.checked ? "다시 채점" : "채점·정답"}</button>
+  </div>
+  <label class="ty-tg"><input type="checkbox" id="tyNotes" ${ty.notes ? "checked" : ""}> 약 이름 밑 특징 글씨 보기</label>
+  <p class="note ty-res" id="tyRes"></p>
+  <p class="note ty-help">약 이름을 치면 맞는 순간 초록색으로 바뀌고 다음 칸으로 넘어가요. 대소문자·띄어쓰기·하이픈은 상관없어요. 지난번에 틀린 칸은 왼쪽에 빨간 줄이 있어요.</p>
+  <div class="ty-list">${html}</div>
+  <div class="ty-actions">
+    <div class="row2"><button class="secondary" id="tyWrong" ${ids.some(i => ty.st[i] === "show" || ty.st[i] === "hint") ? "" : "disabled"}>틀린 칸만 다시</button><button class="secondary" id="tyReset">처음부터</button></div>
+  </div>`;
+  $("#back").onclick = () => renderHome();
+  app().querySelectorAll("[data-si]").forEach(b => b.onclick = () => {
+    const si = +b.dataset.si;
+    if (si === ty.si) return;
+    if (Object.values(ty.val).some(v => v) && !ty.checked && !confirm("입력한 내용이 지워져요. 다른 단원으로 갈까요?")) return;
+    state.set.tySec = si; save(); tyNew(si); renderType(); window.scrollTo(0, 0);
+  });
+  $("#tyNotes").onchange = e => { ty.notes = e.target.checked; state.set.tyNotes = ty.notes; save(); tyKeep(renderType); };
+  app().querySelectorAll(".ty-in").forEach(inp => {
+    inp.oninput = () => tyInput(inp);
+    inp.onkeydown = e => {
+      if (e.key === "Enter") { e.preventDefault(); tyCheckOne(inp, true); tyFocusNext(inp); }
+    };
+    inp.onblur = () => tyCheckOne(inp, false);
+  });
+  // 힌트·채점 버튼을 눌러도 입력칸 포커스를 잃지 않게
+  ["#tyHint"].forEach(sel => $(sel).addEventListener("pointerdown", e => e.preventDefault()));
+  $("#tyHint").onclick = tyHint;
+  $("#tyCheck").onclick = tyCheck;
+  $("#tyWrong").onclick = () => {
+    tyIds().forEach(i => { if (ty.st[i] === "show" || ty.st[i] === "hint") { delete ty.st[i]; ty.val[i] = ""; } });
+    ty.checked = false; renderType();
+    const f = app().querySelector(".ty-in:not([readonly])"); if (f) { f.focus(); f.scrollIntoView({ block: "center" }); }
+  };
+  $("#tyReset").onclick = () => { if (confirm("이 단원 입력을 모두 지우고 처음부터 할까요?")) { tyNew(ty.si); renderType(); window.scrollTo(0, 0); } };
+  if (!ty.checked && !Object.values(ty.val).some(v => v)) { const f = app().querySelector(".ty-in"); if (f) f.focus({ preventScroll: true }); }
+}
+let tyLast = null;
+function tyKeep(fn) {
+  const y = window.scrollY, f = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.id : null;
+  fn(); window.scrollTo(0, y);
+  if (f) { const el = app().querySelector(`.ty-in[data-id="${f}"]`); if (el) el.focus({ preventScroll: true }); }
+}
+function tyInput(inp) {
+  const id = inp.dataset.id, c = TY_BYPOS[id];
+  ty.val[id] = inp.value; tyLast = inp;
+  inp.classList.remove("no");
+  if (tyAnswers(c.a).has(tyNorm(inp.value))) {
+    if (ty.st[id] !== "hint") ty.st[id] = "ok";
+    inp.value = c.a; ty.val[id] = c.a;
+    inp.classList.add(ty.st[id]); inp.readOnly = true;
+    if (ty.st[id] === "ok") state.ty[id] = 1;
+    save();
+    $("#tyOk").textContent = tyIds().filter(i => ty.st[i] === "ok").length;
+    tyFocusNext(inp);
+  }
+}
+function tyCheckOne(inp, strict) {
+  const id = inp.dataset.id;
+  if (inp.readOnly || !inp.value.trim()) return;
+  if (!tyAnswers(TY_BYPOS[id].a).has(tyNorm(inp.value)) && strict) inp.classList.add("no");
+}
+function tyFocusNext(inp) {
+  const all = [...app().querySelectorAll(".ty-in")];
+  const i = all.indexOf(inp);
+  const nx = all.slice(i + 1).find(x => !x.readOnly) || all.slice(0, i).find(x => !x.readOnly);
+  if (nx) { nx.focus({ preventScroll: true }); const r = nx.getBoundingClientRect(); if (r.top < 80 || r.bottom > window.innerHeight - 160) nx.scrollIntoView({ block: "center", behavior: "smooth" }); }
+  else inp.blur();
+}
+function tyHint() {
+  let inp = document.activeElement && document.activeElement.classList.contains("ty-in") ? document.activeElement : tyLast;
+  if (!inp || inp.readOnly || !document.body.contains(inp)) inp = app().querySelector(".ty-in:not([readonly])");
+  if (!inp) return;
+  const id = inp.dataset.id, a = TY_BYPOS[id].a;
+  // 이미 맞게 친 앞부분 다음 글자 하나를 채움
+  let k = 0; const v = inp.value;
+  while (k < v.length && k < a.length && v[k].toLowerCase() === a[k].toLowerCase()) k++;
+  inp.value = a.slice(0, k + 1);
+  ty.st[id] = "hint"; state.ty[id] = 0; save();
+  inp.classList.add("hint");
+  inp.focus({ preventScroll: true });
+  tyInput(inp);
+}
+function tyCheck() {
+  const ids = tyIds();
+  let ok = 0;
+  ids.forEach(id => {
+    const c = TY_BYPOS[id], v = ty.val[id] || "";
+    if (ty.st[id] === "ok") { ok++; state.ty[id] = 1; return; }
+    if (tyAnswers(c.a).has(tyNorm(v)) && ty.st[id] !== "hint") { ty.st[id] = "ok"; ok++; state.ty[id] = 1; return; }
+    if (ty.st[id] === "hint" && tyAnswers(c.a).has(tyNorm(v))) { state.ty[id] = 0; return; }
+    ty.st[id] = "show"; state.ty[id] = 0;
+  });
+  ty.checked = true;
+  state.tyb[ty.si] = [ok, ids.length, Date.now()];
+  save();
+  renderType();
+  const first = app().querySelector(".ty-in.show, .ty-in.hint");
+  if (first) first.scrollIntoView({ block: "center" }); else window.scrollTo(0, 0);
+  $("#tyRes").textContent = ok === ids.length ? "전부 맞혔어요!" : `틀림·힌트 ${ids.length - ok}칸 — 빨간 글씨가 정답, 노란 글씨는 힌트를 쓴 칸이에요.`;
 }
 
 // ───── 키보드

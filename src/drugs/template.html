@@ -278,6 +278,52 @@ h1,h2{margin:0}
 .oxb.wrong{background:var(--no-bg);border-color:var(--no);color:var(--no)}
 .oxb.dim{opacity:.45}
 @media (max-width:520px){.fname{font-size:32px}.dl .r{grid-template-columns:1fr;gap:0}.dl dt{font-size:13px}.prog3 b{font-size:22px}}
+
+/* ── 약물 리스트 타이핑 */
+.ty-bar{display:flex;align-items:center;gap:8px;margin:8px 0 0;position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line)}
+.ty-bar .ty-prog{flex:1}
+.ty-bar .sm{width:auto;padding:9px 14px;font-size:15px;border-radius:11px}
+.ty-prog b{font:700 26px/1 var(--name);font-variant-numeric:tabular-nums}.ty-prog small{color:var(--muted);margin-left:2px}
+.ty-res{font-size:14.5px;color:var(--no);font-weight:600}.ty-res:empty{display:none}
+.ty-tg{margin-top:10px;display:flex;align-items:center;gap:7px;font-size:15px;color:var(--muted)}
+.ty-tg input{width:20px;height:20px;accent-color:var(--cobalt)}
+.ty-help{margin:4px 2px 4px;font-size:14px}
+.ty-list{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:6px 16px 16px;margin-top:10px}
+.ty-sec+.ty-sec{margin-top:18px}
+.ty-sh{display:flex;align-items:baseline;gap:10px;border-bottom:1.2px solid var(--line);padding:12px 0 6px;margin-bottom:6px}
+.ty-sh b{font-size:20px}.ty-sh span{color:var(--muted);font-size:14px}
+.ty-cat{font-weight:700;color:#6f7f6a;margin:12px 0 4px;font-size:16px}
+:root[data-theme="dark"] .ty-cat{color:#A9BBA2}
+@media (prefers-color-scheme: dark){:root:not([data-theme]) .ty-cat{color:#A9BBA2}}
+.ty-ul{margin:0;padding-left:22px}
+.ty-ul .ty-ul{padding-left:24px}
+.ty-ul li{margin:5px 0;line-height:34px}
+.ty-ul li > :first-child{vertical-align:top}
+.ty-ul li::marker{color:var(--line)}
+.ty-k{color:var(--cobalt);font-weight:600;line-height:34px;vertical-align:top}
+.ty-col{color:var(--muted);line-height:34px;vertical-align:top}
+.ty-cat .ty-txt{line-height:1.5}
+.ty-sep{color:var(--muted);margin:0 6px 0 2px;vertical-align:top;line-height:34px}
+.ty-txt{vertical-align:top;line-height:34px}
+.ty-grp{display:inline-flex;align-items:flex-start;vertical-align:top}
+.chip small{margin-left:6px}
+.ty-cell{display:inline-flex;align-items:flex-start;gap:5px;vertical-align:top;margin:0 0 4px}
+.ty-pre{line-height:34px;color:var(--muted);font-size:15px}
+.ty-col2{display:inline-flex;flex-direction:column}
+.ty-in{font:16px var(--body);color:var(--ink);background:transparent;border:0;border-bottom:1.5px solid var(--muted);border-radius:0;padding:5px 2px 3px;height:34px;min-width:5ch;max-width:100%;-webkit-appearance:none;outline:none}
+.ty-in:focus{border-bottom-color:var(--cobalt);background:var(--hl);border-radius:5px 5px 0 0}
+.ty-in.was-no{box-shadow:inset 2px 0 0 var(--no)}
+.ty-in.ok{color:var(--ok);border-bottom-color:var(--ok);font-weight:600;box-shadow:none}
+.ty-in.hint{color:#9A6B00;border-bottom-color:var(--amber)}
+.ty-in.hint[readonly]{font-weight:600}
+.ty-in.no{border-bottom-color:var(--no);background:var(--no-bg);animation:tyShake .25s}
+.ty-in.show{color:var(--no);border-bottom-color:var(--no);font-weight:600;box-shadow:none}
+.ty-mine{font-size:12.5px;color:var(--muted)}
+.ty-note{font-size:12px;line-height:1.25;color:#a19a90;margin-top:2px;max-width:22ch}
+@keyframes tyShake{0%,100%{transform:none}30%{transform:translateX(-3px)}70%{transform:translateX(3px)}}
+.ty-actions{margin-top:16px}
+.ty-actions .row2 .secondary{padding:12px}
+@media (max-width:520px){.ty-list{padding:4px 10px 12px}.ty-ul{padding-left:16px}}
 /*__HUBCSS__*/
 </style>
 </head>
