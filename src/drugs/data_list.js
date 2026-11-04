@@ -1,5 +1,5 @@
 // 자동 생성: druglist/export_list.py ← CNS Drugs 1-4 약물 리스트(PDF)와 같은 내용
-// LIST_SECS: [{t: 단원, s: 부제, r: [{l: 0 분류명 / 1·2 글머리 단계, k: 묶음 이름, b: 빈칸 줄 여부, i: [ {a: 약물(정답), n: 특징, p: 앞 글자} | "," "/" "+" | [그냥 글자] ]}]}]
+// LIST_SECS: [{t: 단원, s: 부제, r: [{l: 0 분류명 / 1·2 글머리 단계, k: 묶음 이름, b: 빈칸 줄 여부, i: [ {a: 약물(정답), n: 특징, p: 앞 글자, o: 1 = 밑줄·족보(보라) 아닌 약 → 묶음 맨 뒤, 회색 칸} | "," "/" "+" | [그냥 글자] ]}]}]
 const LIST_SECS = [
 {
 "t": "CNS 1",
@@ -168,11 +168,13 @@ const LIST_SECS = [
 "i": [
 {
 "a": "ramelteon",
-"n": "의존 없음"
+"n": "의존 없음",
+"o": 1
 },
 ",",
 {
-"a": "tasimelteon"
+"a": "tasimelteon",
+"o": 1
 }
 ],
 "b": true
@@ -187,7 +189,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "lemborexant"
+"a": "lemborexant",
+"o": 1
 }
 ],
 "b": true
@@ -239,13 +242,14 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "acamprosate",
-"n": "NMDA, 신부전 금기"
+"a": "disulfiram",
+"n": "ALDH 억제"
 },
 ",",
 {
-"a": "disulfiram",
-"n": "ALDH 억제"
+"a": "acamprosate",
+"n": "NMDA, 신부전 금기",
+"o": 1
 }
 ],
 "b": true
@@ -299,20 +303,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "fosphenytoin"
-},
-",",
-{
 "a": "carbamazepine",
 "n": "focal 1st, hyponatremia"
-},
-",",
-{
-"a": "oxcarbazepine"
-},
-",",
-{
-"a": "eslicarbazepine"
 },
 ",",
 {
@@ -321,23 +313,42 @@ const LIST_SECS = [
 },
 ",",
 {
+"a": "fosphenytoin",
+"o": 1
+},
+",",
+{
+"a": "oxcarbazepine",
+"o": 1
+},
+",",
+{
+"a": "eslicarbazepine",
+"o": 1
+},
+",",
+{
 "a": "lacosamide",
-"n": "내약성 좋음"
+"n": "내약성 좋음",
+"o": 1
 },
 ",",
 {
 "a": "zonisamide",
-"n": "신결석"
+"n": "신결석",
+"o": 1
 },
 ",",
 {
 "a": "rufinamide",
-"n": "LGS"
+"n": "LGS",
+"o": 1
 },
 ",",
 {
 "a": "cenobamate",
-"n": "QT 단축"
+"n": "QT 단축",
+"o": 1
 }
 ],
 "b": true
@@ -359,12 +370,14 @@ const LIST_SECS = [
 "i": [
 {
 "a": "gabapentin",
-"n": "신경병증 통증"
+"n": "신경병증 통증",
+"o": 1
 },
 ",",
 {
 "a": "pregabalin",
-"n": "섬유근통"
+"n": "섬유근통",
+"o": 1
 }
 ],
 "b": true
@@ -379,7 +392,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "brivaracetam"
+"a": "brivaracetam",
+"o": 1
 }
 ],
 "b": true
@@ -423,7 +437,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "tiagabine",
-"n": "confusion"
+"n": "confusion",
+"o": 1
 }
 ],
 "b": true
@@ -443,16 +458,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "clonazepam"
-},
-",",
-{
 "a": "clobazam",
 "n": "LGS, Dravet"
-},
-",",
-{
-"a": "nitrazepam"
 },
 ",",
 {
@@ -465,12 +472,24 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "primidone"
+"a": "clonazepam",
+"o": 1
+},
+",",
+{
+"a": "nitrazepam",
+"o": 1
+},
+",",
+{
+"a": "primidone",
+"o": 1
 },
 ",",
 {
 "a": "stiripentol",
-"n": "Dravet"
+"n": "Dravet",
+"o": 1
 }
 ],
 "b": true
@@ -496,23 +515,26 @@ const LIST_SECS = [
 "k": "기타",
 "i": [
 {
-"a": "everolimus",
-"n": "mTORC1, TSC"
-},
-",",
-{
-"a": "acetazolamide",
-"n": "월경 발작"
-},
-",",
-{
 "a": "cannabidiol",
 "n": "Dravet, LGS"
 },
 ",",
 {
+"a": "everolimus",
+"n": "mTORC1, TSC",
+"o": 1
+},
+",",
+{
+"a": "acetazolamide",
+"n": "월경 발작",
+"o": 1
+},
+",",
+{
 "a": "fenfluramine",
-"n": "Dravet, LGS"
+"n": "Dravet, LGS",
+"o": 1
 }
 ],
 "b": true
@@ -585,25 +607,29 @@ const LIST_SECS = [
 "k": "long",
 "i": [
 {
-"a": "doxacurium"
-},
-",",
-{
 "a": "pancuronium",
 "n": "빈맥, 고혈압"
 },
 ",",
 {
-"a": "pipecuronium"
+"a": "doxacurium",
+"o": 1
+},
+",",
+{
+"a": "pipecuronium",
+"o": 1
 },
 "/",
 {
 "a": "tubocurarine",
-"n": "ganglia 차단 + histamine"
+"n": "ganglia 차단 + histamine",
+"o": 1
 },
 ",",
 {
-"a": "metocurine"
+"a": "metocurine",
+"o": 1
 }
 ],
 "b": true
@@ -651,12 +677,14 @@ const LIST_SECS = [
 ",",
 {
 "a": "baclofen",
-"n": "GABA_B"
+"n": "GABA_B",
+"o": 1
 },
 ",",
 {
 "a": "tizanidine",
-"n": "α2"
+"n": "α2",
+"o": 1
 }
 ],
 "b": true
@@ -672,7 +700,8 @@ const LIST_SECS = [
 ",",
 {
 "a": "botulinum toxin",
-"n": "ACh 방출↓, 주름"
+"n": "ACh 방출↓, 주름",
+"o": 1
 }
 ],
 "b": true
@@ -728,7 +757,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "xenon"
+"a": "xenon",
+"o": 1
 }
 ],
 "b": true
@@ -767,18 +797,20 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "etomidate",
-"n": "심혈관 안정, 부신억제"
-},
-",",
-{
 "a": "ketamine",
 "n": "NMDA, 교감자극, 천식"
 },
 ",",
 {
+"a": "etomidate",
+"n": "심혈관 안정, 부신억제",
+"o": 1
+},
+",",
+{
 "a": "dexmedetomidine",
-"n": "α2, ICU 진정"
+"n": "α2, ICU 진정",
+"o": 1
 }
 ],
 "b": true
@@ -787,16 +819,6 @@ const LIST_SECS = [
 "l": 1,
 "k": "premedication",
 "i": [
-{
-"a": "famotidine",
-"n": "H₂"
-},
-",",
-{
-"a": "ranitidine",
-"n": "H₂"
-},
-",",
 {
 "a": "midazolam",
 "n": "불안↓"
@@ -813,13 +835,27 @@ const LIST_SECS = [
 },
 ",",
 {
+"a": "famotidine",
+"n": "H₂",
+"o": 1
+},
+",",
+{
+"a": "ranitidine",
+"n": "H₂",
+"o": 1
+},
+",",
+{
 "a": "ondansetron",
-"n": "항구토"
+"n": "항구토",
+"o": 1
 },
 ",",
 {
 "a": "glycopyrrolate",
-"n": "서맥, 분비물 예방"
+"n": "서맥, 분비물 예방",
+"o": 1
 }
 ],
 "b": true
@@ -850,19 +886,23 @@ const LIST_SECS = [
 "i": [
 {
 "a": "lidocaine",
-"n": "기준 약"
+"n": "기준 약",
+"o": 1
 },
 ",",
 {
-"a": "articaine"
+"a": "articaine",
+"o": 1
 },
 ",",
 {
-"a": "prilocaine"
+"a": "prilocaine",
+"o": 1
 },
 ",",
 {
-"a": "mepivacaine"
+"a": "mepivacaine",
+"o": 1
 }
 ],
 "b": true
@@ -873,15 +913,18 @@ const LIST_SECS = [
 "i": [
 {
 "a": "bupivacaine",
-"n": "심독성"
+"n": "심독성",
+"o": 1
 },
 ",",
 {
-"a": "ropivacaine"
+"a": "ropivacaine",
+"o": 1
 },
 ",",
 {
-"a": "levobupivacaine"
+"a": "levobupivacaine",
+"o": 1
 }
 ],
 "b": true
@@ -902,15 +945,18 @@ const LIST_SECS = [
 "i": [
 {
 "a": "chloroprocaine",
-"n": "초단시간"
+"n": "초단시간",
+"o": 1
 },
 "/",
 {
-"a": "procaine"
+"a": "procaine",
+"o": 1
 },
 ",",
 {
-"a": "tetracaine"
+"a": "tetracaine",
+"o": 1
 }
 ],
 "b": true
@@ -921,12 +967,14 @@ const LIST_SECS = [
 "i": [
 {
 "a": "cocaine",
-"n": "ENT, 혈관수축"
+"n": "ENT, 혈관수축",
+"o": 1
 },
 ",",
 {
 "a": "benzocaine",
-"n": "methemoglobinemia"
+"n": "methemoglobinemia",
+"o": 1
 }
 ],
 "b": true
@@ -979,7 +1027,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "bromocriptine",
-"n": "D2"
+"n": "D2",
+"o": 1
 }
 ],
 "b": true
@@ -990,17 +1039,20 @@ const LIST_SECS = [
 "i": [
 {
 "a": "pramipexole",
-"n": "D3"
+"n": "D3",
+"o": 1
 },
 ",",
 {
 "a": "ropinirole",
-"n": "D2"
+"n": "D2",
+"o": 1
 },
 ",",
 {
 "a": "rotigotine",
-"n": "patch"
+"n": "patch",
+"o": 1
 }
 ],
 "b": true
@@ -1010,15 +1062,18 @@ const LIST_SECS = [
 "k": "MAO-B inhibitor",
 "i": [
 {
-"a": "selegiline"
+"a": "selegiline",
+"o": 1
 },
 ",",
 {
-"a": "rasagiline"
+"a": "rasagiline",
+"o": 1
 },
 ",",
 {
-"a": "safinamide"
+"a": "safinamide",
+"o": 1
 }
 ],
 "b": true
@@ -1029,12 +1084,14 @@ const LIST_SECS = [
 "i": [
 {
 "a": "entacapone",
-"n": "Stalevo"
+"n": "Stalevo",
+"o": 1
 },
 ",",
 {
 "a": "opicapone",
-"n": "취침 시 1회"
+"n": "취침 시 1회",
+"o": 1
 },
 "/",
 {
@@ -1058,15 +1115,18 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "biperiden"
+"a": "biperiden",
+"o": 1
 },
 ",",
 {
-"a": "orphenadrine"
+"a": "orphenadrine",
+"o": 1
 },
 ",",
 {
-"a": "procyclidine"
+"a": "procyclidine",
+"o": 1
 }
 ],
 "b": true
@@ -1077,7 +1137,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "apomorphine",
-"n": "off-period 급속 완화"
+"n": "off-period 급속 완화",
+"o": 1
 },
 "+",
 {
@@ -1087,12 +1148,14 @@ const LIST_SECS = [
 ",",
 {
 "a": "amantadine",
-"n": "livedo reticularis"
+"n": "livedo reticularis",
+"o": 1
 },
 ",",
 {
 "a": "istradefylline",
-"n": "A2A 길항, wearing-off↓"
+"n": "A2A 길항, wearing-off↓",
+"o": 1
 }
 ],
 "b": true
@@ -1118,15 +1181,18 @@ const LIST_SECS = [
 ",",
 {
 "a": "galantamine",
-"n": "PD 치매"
+"n": "PD 치매",
+"o": 1
 },
 ",",
 {
-"a": "rivastigmine"
+"a": "rivastigmine",
+"o": 1
 },
 ",",
 {
-"a": "tacrine"
+"a": "tacrine",
+"o": 1
 }
 ],
 "b": true
@@ -1147,7 +1213,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "aducanumab",
-"n": "승인 취소"
+"n": "승인 취소",
+"o": 1
 }
 ],
 "b": true
@@ -1202,7 +1269,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "trifluoperazine"
+"a": "trifluoperazine",
+"o": 1
 },
 "/",
 {
@@ -1211,7 +1279,8 @@ const LIST_SECS = [
 },
 "/",
 {
-"a": "thiothixene"
+"a": "thiothixene",
+"o": 1
 }
 ],
 "b": true
@@ -1260,32 +1329,39 @@ const LIST_SECS = [
 },
 "/",
 {
-"a": "asenapine"
+"a": "asenapine",
+"o": 1
 },
 ",",
 {
-"a": "brexpiprazole"
+"a": "brexpiprazole",
+"o": 1
 },
 ",",
 {
-"a": "cariprazine"
+"a": "cariprazine",
+"o": 1
 },
 ",",
 {
 "a": "droperidol",
-"n": "항구토"
+"n": "항구토",
+"o": 1
 },
 ",",
 {
-"a": "loxapine"
+"a": "loxapine",
+"o": 1
 },
 ",",
 {
-"a": "lurasidone"
+"a": "lurasidone",
+"o": 1
 },
 ",",
 {
-"a": "sertindole"
+"a": "sertindole",
+"o": 1
 }
 ],
 "b": true
@@ -1304,7 +1380,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "amantadine"
+"a": "amantadine",
+"o": 1
 }
 ],
 "b": true
@@ -1338,15 +1415,18 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "droperidol"
+"a": "droperidol",
+"o": 1
 },
 "/",
 {
-"a": "prochlorperazine"
+"a": "prochlorperazine",
+"o": 1
 },
 ",",
 {
-"a": "benzquinamide"
+"a": "benzquinamide",
+"o": 1
 }
 ],
 "b": true
@@ -1486,15 +1566,18 @@ const LIST_SECS = [
 ",",
 {
 "a": "fluvoxamine",
-"n": "과수면, OCD"
+"n": "과수면, OCD",
+"o": 1
 },
 ",",
 {
-"a": "citalopram"
+"a": "citalopram",
+"o": 1
 },
 ",",
 {
-"a": "escitalopram"
+"a": "escitalopram",
+"o": 1
 }
 ],
 "b": true
@@ -1504,24 +1587,29 @@ const LIST_SECS = [
 "k": "SNRI",
 "i": [
 {
-"a": "venlafaxine"
+"a": "venlafaxine",
+"o": 1
 },
 ",",
 {
-"a": "desvenlafaxine"
+"a": "desvenlafaxine",
+"o": 1
 },
 ",",
 {
-"a": "milnacipran"
+"a": "milnacipran",
+"o": 1
 },
 ",",
 {
-"a": "levomilnacipran"
+"a": "levomilnacipran",
+"o": 1
 },
 ",",
 {
 "a": "duloxetine",
-"n": "통증 동반 우울"
+"n": "통증 동반 우울",
+"o": 1
 }
 ],
 "b": true
@@ -1557,11 +1645,13 @@ const LIST_SECS = [
 ",",
 {
 "a": "amitriptyline",
-"n": "편두통, 만성통증"
+"n": "편두통, 만성통증",
+"o": 1
 },
 ",",
 {
-"a": "protriptyline"
+"a": "protriptyline",
+"o": 1
 }
 ],
 "b": true
@@ -1588,17 +1678,20 @@ const LIST_SECS = [
 "i": [
 {
 "a": "amoxapine",
-"n": "D2 억제, 조현병+우울"
+"n": "D2 억제, 조현병+우울",
+"o": 1
 },
 ",",
 {
 "a": "maprotiline",
-"n": "NET 우세"
+"n": "NET 우세",
+"o": 1
 },
 ",",
 {
 "a": "vilazodone",
-"n": "SERT만"
+"n": "SERT만",
+"o": 1
 }
 ],
 "b": true
@@ -1637,12 +1730,14 @@ const LIST_SECS = [
 "i": [
 {
 "a": "moclobemide",
-"n": "MAO-A"
+"n": "MAO-A",
+"o": 1
 },
 ",",
 {
 "a": "selegiline",
-"n": "MAO-B → 고용량 A"
+"n": "MAO-B → 고용량 A",
+"o": 1
 }
 ],
 "b": true
@@ -1652,18 +1747,20 @@ const LIST_SECS = [
 "k": "5-HT antagonist / reuptake inhibitor",
 "i": [
 {
-"a": "trazodone",
-"n": "진정, 지속발기증"
-},
-",",
-{
 "a": "nefazodone",
 "n": "간독성, 성기능 부작용↓"
 },
 ",",
 {
+"a": "trazodone",
+"n": "진정, 지속발기증",
+"o": 1
+},
+",",
+{
 "a": "vortioxetine",
-"n": "오심, 성기능장애"
+"n": "오심, 성기능장애",
+"o": 1
 }
 ],
 "b": true
@@ -1696,7 +1793,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "esketamine",
-"n": "비강, 2시간 병원 관찰"
+"n": "비강, 2시간 병원 관찰",
+"o": 1
 }
 ],
 "b": true
@@ -1707,7 +1805,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "brexanolone",
-"n": "산후우울증, IV 60 h"
+"n": "산후우울증, IV 60 h",
+"o": 1
 }
 ],
 "b": true
@@ -1733,10 +1832,6 @@ const LIST_SECS = [
 "k": "natural",
 "i": [
 {
-"a": "opium"
-},
-",",
-{
 "a": "morphine"
 },
 ",",
@@ -1745,7 +1840,13 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "thebaine"
+"a": "opium",
+"o": 1
+},
+",",
+{
+"a": "thebaine",
+"o": 1
 }
 ],
 "b": true
@@ -1793,11 +1894,13 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "tapentadol"
+"a": "tapentadol",
+"o": 1
 },
 ",",
 {
-"a": "tramadol"
+"a": "tramadol",
+"o": 1
 }
 ],
 "b": true
@@ -1840,24 +1943,27 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "sufentanil"
-},
-",",
-{
-"a": "alfentanil"
-},
-",",
-{
-"a": "remifentanil"
-},
-",",
-{
 "a": "meperidine",
 "n": "normeperidine, 빈맥 금기"
 },
 ",",
 {
 "a": "levorphanol"
+},
+",",
+{
+"a": "sufentanil",
+"o": 1
+},
+",",
+{
+"a": "alfentanil",
+"o": 1
+},
+",",
+{
+"a": "remifentanil",
+"o": 1
 }
 ],
 "b": true
@@ -1881,7 +1987,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "dihydrocodeine"
+"a": "dihydrocodeine",
+"o": 1
 }
 ],
 "b": true
@@ -1895,7 +2002,8 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "dextromethorphan"
+"a": "dextromethorphan",
+"o": 1
 }
 ],
 "b": true
@@ -1905,16 +2013,19 @@ const LIST_SECS = [
 "k": "지사",
 "i": [
 {
-"a": "diphenoxylate"
+"a": "diphenoxylate",
+"o": 1
 },
 ",",
 {
-"a": "difenoxin"
+"a": "difenoxin",
+"o": 1
 },
 ",",
 {
 "a": "loperamide",
-"n": "BBB 통과 ✗"
+"n": "BBB 통과 ✗",
+"o": 1
 }
 ],
 "b": true
@@ -1925,16 +2036,19 @@ const LIST_SECS = [
 "i": [
 {
 "a": "nalbuphine",
-"n": "naloxone 반전 ✗"
+"n": "naloxone 반전 ✗",
+"o": 1
 },
 ",",
 {
-"a": "butorphanol"
+"a": "butorphanol",
+"o": 1
 },
 ",",
 {
 "a": "pentazocine",
-"n": "약함, 피하주사 ✗"
+"n": "약함, 피하주사 ✗",
+"o": 1
 }
 ],
 "b": true
@@ -1956,12 +2070,14 @@ const LIST_SECS = [
 "i": [
 {
 "a": "tramadol",
-"n": "SERT + weak μ, neuropathic pain"
+"n": "SERT + weak μ, neuropathic pain",
+"o": 1
 },
 ",",
 {
 "a": "tapentadol",
-"n": "NET + μ, ~oxycodone"
+"n": "NET + μ, ~oxycodone",
+"o": 1
 }
 ],
 "b": true
@@ -1992,19 +2108,23 @@ const LIST_SECS = [
 "k": "peripheral antagonist",
 "i": [
 {
-"a": "methylnaltrexone"
+"a": "methylnaltrexone",
+"o": 1
 },
 ",",
 {
-"a": "naloxegol"
+"a": "naloxegol",
+"o": 1
 },
 ",",
 {
-"a": "naldemedine"
+"a": "naldemedine",
+"o": 1
 },
 ",",
 {
-"a": "alvimopan"
+"a": "alvimopan",
+"o": 1
 }
 ],
 "b": true
@@ -2110,11 +2230,13 @@ const LIST_SECS = [
 {
 "a": "dronabinol",
 "n": "식욕 증진",
-"p": "의료용"
+"p": "의료용",
+"o": 1
 },
 ",",
 {
-"a": "nabilone"
+"a": "nabilone",
+"o": 1
 }
 ],
 "b": true
@@ -2125,7 +2247,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "GHB",
-"n": "데이트 강간 약, amnesia"
+"n": "데이트 강간 약, amnesia",
+"o": 1
 }
 ],
 "b": true
@@ -2136,15 +2259,18 @@ const LIST_SECS = [
 "i": [
 {
 "a": "LSD",
-"n": "교차내성, 의존 ✗"
+"n": "교차내성, 의존 ✗",
+"o": 1
 },
 ",",
 {
-"a": "mescaline"
+"a": "mescaline",
+"o": 1
 },
 ",",
 {
-"a": "psilocybin"
+"a": "psilocybin",
+"o": 1
 }
 ],
 "b": true
@@ -2164,14 +2290,6 @@ const LIST_SECS = [
 "k": "nicotine / 금연 보조",
 "i": [
 {
-"a": "nicotine patch"
-},
-",",
-{
-"a": "gum"
-},
-",",
-{
 "a": "bupropion",
 "n": "1주 전 시작"
 },
@@ -2184,6 +2302,16 @@ const LIST_SECS = [
 {
 "a": "cytisine",
 "n": "nAChR partial"
+},
+",",
+{
+"a": "nicotine patch",
+"o": 1
+},
+",",
+{
+"a": "gum",
+"o": 1
 }
 ],
 "b": true
@@ -2237,7 +2365,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "cocaine",
-"n": "DAT 직접 억제, 고열"
+"n": "DAT 직접 억제, 고열",
+"o": 1
 }
 ],
 "b": true
@@ -2252,12 +2381,13 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "dextroamphetamine"
+"a": "methamphetamine",
+"n": "필로폰"
 },
 ",",
 {
-"a": "methamphetamine",
-"n": "필로폰"
+"a": "dextroamphetamine",
+"o": 1
 }
 ],
 "b": true
@@ -2268,7 +2398,8 @@ const LIST_SECS = [
 "i": [
 {
 "a": "MDMA(ecstasy)",
-"n": "SERT 우세, 탈수+고열"
+"n": "SERT 우세, 탈수+고열",
+"o": 1
 }
 ],
 "b": true

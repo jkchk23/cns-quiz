@@ -423,7 +423,7 @@ function renderType() {
         const w = Math.max(it.a.length, 4) + 1.5;
         const was = state.ty[id] === 0 ? " was-no" : "";
         pcs.push(`<span class="ty-cell">${it.p ? `<span class="ty-pre">${esc(it.p)}</span>` : ""}<span class="ty-col2">
-          <input class="ty-in ${st}${was}" data-id="${id}" style="width:${w}ch" value="${esc(st === "show" ? (ty.ans[id] || it.a) : v)}" ${st === "ok" || st === "show" ? "readonly" : ""}
+          <input class="ty-in ${st}${was}${it.o ? " minor" : ""}" data-id="${id}" style="width:${w}ch" value="${esc(st === "show" ? (ty.ans[id] || it.a) : v)}" ${st === "ok" || st === "show" ? "readonly" : ""}
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" aria-label="빈칸${it.n ? " — " + esc(it.n) : ""}">
           ${st === "show" && v ? `<s class="ty-mine">${esc(v)}</s>` : ""}
           ${it.n && ty.notes ? `<span class="ty-note">${esc(it.n)}</span>` : ""}</span></span>`);
@@ -469,7 +469,9 @@ function renderType() {
   app().querySelectorAll(".ty-in").forEach(inp => {
     inp.oninput = () => tyInput(inp);
     inp.onkeydown = e => {
-      if (e.key === "Enter") { e.preventDefault(); tyCheckOne(inp, true); tyFocusNext(inp); }
+      // 엔터·탭 = 이 칸 확인 후 다음 칸, Shift+탭 = 앞 칸, 빈칸에서 ← = 앞 칸
+      if (e.key === "Enter" || (e.key === "Tab" && !e.shiftKey)) { e.preventDefault(); tyCheckOne(inp, true); tyFocusNext(inp); }
+      else if ((e.key === "Tab" && e.shiftKey) || (e.key === "ArrowLeft" && !inp.value)) { e.preventDefault(); tyFocusPrev(inp); }
     };
     inp.onblur = () => tyCheckOne(inp, false);
   });
@@ -539,6 +541,14 @@ function tyFocusNext(inp) {
   const nx = all.slice(i + 1).find(x => !x.readOnly) || all.slice(0, i).find(x => !x.readOnly);
   if (nx) { nx.focus({ preventScroll: true }); const r = nx.getBoundingClientRect(); if (r.top < 80 || r.bottom > window.innerHeight - 160) nx.scrollIntoView({ block: "center", behavior: "smooth" }); }
   else inp.blur();
+}
+function tyFocusPrev(inp) {
+  const all = [...app().querySelectorAll(".ty-in")];
+  const pv = all.slice(0, all.indexOf(inp)).reverse().find(x => !x.readOnly);
+  if (!pv) return;
+  pv.focus({ preventScroll: true });
+  const n = pv.value.length; try { pv.setSelectionRange(n, n); } catch (e) {}
+  const r = pv.getBoundingClientRect(); if (r.top < 80 || r.bottom > window.innerHeight - 160) pv.scrollIntoView({ block: "center", behavior: "smooth" });
 }
 function tyHint() {
   let inp = document.activeElement && document.activeElement.classList.contains("ty-in") ? document.activeElement : tyLast;
