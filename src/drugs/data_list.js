@@ -168,13 +168,11 @@ const LIST_SECS = [
 "i": [
 {
 "a": "ramelteon",
-"n": "의존 없음",
-"o": 1
+"n": "의존 없음"
 },
 ",",
 {
-"a": "tasimelteon",
-"o": 1
+"a": "tasimelteon"
 }
 ],
 "b": true
@@ -189,8 +187,7 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "lemborexant",
-"o": 1
+"a": "lemborexant"
 }
 ],
 "b": true
@@ -242,14 +239,13 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "disulfiram",
-"n": "ALDH 억제"
+"a": "acamprosate",
+"n": "NMDA, 신부전 금기"
 },
 ",",
 {
-"a": "acamprosate",
-"n": "NMDA, 신부전 금기",
-"o": 1
+"a": "disulfiram",
+"n": "ALDH 억제"
 }
 ],
 "b": true
@@ -313,6 +309,16 @@ const LIST_SECS = [
 },
 ",",
 {
+"a": "lacosamide",
+"n": "내약성 좋음"
+},
+",",
+{
+"a": "zonisamide",
+"n": "신결석"
+},
+",",
+{
 "a": "fosphenytoin",
 "o": 1
 },
@@ -324,18 +330,6 @@ const LIST_SECS = [
 ",",
 {
 "a": "eslicarbazepine",
-"o": 1
-},
-",",
-{
-"a": "lacosamide",
-"n": "내약성 좋음",
-"o": 1
-},
-",",
-{
-"a": "zonisamide",
-"n": "신결석",
 "o": 1
 },
 ",",
@@ -472,17 +466,16 @@ const LIST_SECS = [
 },
 ",",
 {
+"a": "primidone"
+},
+",",
+{
 "a": "clonazepam",
 "o": 1
 },
 ",",
 {
 "a": "nitrazepam",
-"o": 1
-},
-",",
-{
-"a": "primidone",
 "o": 1
 },
 ",",
@@ -623,13 +616,11 @@ const LIST_SECS = [
 "/",
 {
 "a": "tubocurarine",
-"n": "ganglia 차단 + histamine",
-"o": 1
+"n": "ganglia 차단 + histamine"
 },
 ",",
 {
-"a": "metocurine",
-"o": 1
+"a": "metocurine"
 }
 ],
 "b": true
@@ -677,14 +668,12 @@ const LIST_SECS = [
 ",",
 {
 "a": "baclofen",
-"n": "GABA_B",
-"o": 1
+"n": "GABA_B"
 },
 ",",
 {
 "a": "tizanidine",
-"n": "α2",
-"o": 1
+"n": "α2"
 }
 ],
 "b": true
@@ -700,8 +689,7 @@ const LIST_SECS = [
 ",",
 {
 "a": "botulinum toxin",
-"n": "ACh 방출↓, 주름",
-"o": 1
+"n": "ACh 방출↓, 주름"
 }
 ],
 "b": true
@@ -797,20 +785,18 @@ const LIST_SECS = [
 },
 ",",
 {
+"a": "etomidate",
+"n": "심혈관 안정, 부신억제"
+},
+",",
+{
 "a": "ketamine",
 "n": "NMDA, 교감자극, 천식"
 },
 ",",
 {
-"a": "etomidate",
-"n": "심혈관 안정, 부신억제",
-"o": 1
-},
-",",
-{
 "a": "dexmedetomidine",
-"n": "α2, ICU 진정",
-"o": 1
+"n": "α2, ICU 진정"
 }
 ],
 "b": true
@@ -886,8 +872,11 @@ const LIST_SECS = [
 "i": [
 {
 "a": "lidocaine",
-"n": "기준 약",
-"o": 1
+"n": "기준 약"
+},
+",",
+{
+"a": "mepivacaine"
 },
 ",",
 {
@@ -897,11 +886,6 @@ const LIST_SECS = [
 ",",
 {
 "a": "prilocaine",
-"o": 1
-},
-",",
-{
-"a": "mepivacaine",
 "o": 1
 }
 ],
@@ -913,13 +897,11 @@ const LIST_SECS = [
 "i": [
 {
 "a": "bupivacaine",
-"n": "심독성",
-"o": 1
+"n": "심독성"
 },
 ",",
 {
-"a": "ropivacaine",
-"o": 1
+"a": "ropivacaine"
 },
 ",",
 {
@@ -950,13 +932,11 @@ const LIST_SECS = [
 },
 "/",
 {
-"a": "procaine",
-"o": 1
+"a": "procaine"
 },
 ",",
 {
-"a": "tetracaine",
-"o": 1
+"a": "tetracaine"
 }
 ],
 "b": true
@@ -1027,8 +1007,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "bromocriptine",
-"n": "D2",
-"o": 1
+"n": "D2"
 }
 ],
 "b": true
@@ -1137,8 +1116,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "apomorphine",
-"n": "off-period 급속 완화",
-"o": 1
+"n": "off-period 급속 완화"
 },
 "+",
 {
@@ -1148,14 +1126,12 @@ const LIST_SECS = [
 ",",
 {
 "a": "amantadine",
-"n": "livedo reticularis",
-"o": 1
+"n": "livedo reticularis"
 },
 ",",
 {
 "a": "istradefylline",
-"n": "A2A 길항, wearing-off↓",
-"o": 1
+"n": "A2A 길항, wearing-off↓"
 }
 ],
 "b": true
@@ -1380,8 +1356,7 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "amantadine",
-"o": 1
+"a": "amantadine"
 }
 ],
 "b": true
@@ -1678,8 +1653,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "amoxapine",
-"n": "D2 억제, 조현병+우울",
-"o": 1
+"n": "D2 억제, 조현병+우울"
 },
 ",",
 {
@@ -1730,8 +1704,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "moclobemide",
-"n": "MAO-A",
-"o": 1
+"n": "MAO-A"
 },
 ",",
 {
@@ -1747,20 +1720,18 @@ const LIST_SECS = [
 "k": "5-HT antagonist / reuptake inhibitor",
 "i": [
 {
+"a": "trazodone",
+"n": "진정, 지속발기증"
+},
+",",
+{
 "a": "nefazodone",
 "n": "간독성, 성기능 부작용↓"
 },
 ",",
 {
-"a": "trazodone",
-"n": "진정, 지속발기증",
-"o": 1
-},
-",",
-{
 "a": "vortioxetine",
-"n": "오심, 성기능장애",
-"o": 1
+"n": "오심, 성기능장애"
 }
 ],
 "b": true
@@ -1793,8 +1764,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "esketamine",
-"n": "비강, 2시간 병원 관찰",
-"o": 1
+"n": "비강, 2시간 병원 관찰"
 }
 ],
 "b": true
@@ -1805,8 +1775,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "brexanolone",
-"n": "산후우울증, IV 60 h",
-"o": 1
+"n": "산후우울증, IV 60 h"
 }
 ],
 "b": true
@@ -1894,12 +1863,11 @@ const LIST_SECS = [
 },
 ",",
 {
-"a": "tapentadol",
-"o": 1
+"a": "tramadol"
 },
 ",",
 {
-"a": "tramadol",
+"a": "tapentadol",
 "o": 1
 }
 ],
@@ -2013,19 +1981,16 @@ const LIST_SECS = [
 "k": "지사",
 "i": [
 {
-"a": "diphenoxylate",
-"o": 1
+"a": "diphenoxylate"
 },
 ",",
 {
-"a": "difenoxin",
-"o": 1
+"a": "difenoxin"
 },
 ",",
 {
 "a": "loperamide",
-"n": "BBB 통과 ✗",
-"o": 1
+"n": "BBB 통과 ✗"
 }
 ],
 "b": true
@@ -2036,13 +2001,11 @@ const LIST_SECS = [
 "i": [
 {
 "a": "nalbuphine",
-"n": "naloxone 반전 ✗",
-"o": 1
+"n": "naloxone 반전 ✗"
 },
 ",",
 {
-"a": "butorphanol",
-"o": 1
+"a": "butorphanol"
 },
 ",",
 {
@@ -2070,8 +2033,7 @@ const LIST_SECS = [
 "i": [
 {
 "a": "tramadol",
-"n": "SERT + weak μ, neuropathic pain",
-"o": 1
+"n": "SERT + weak μ, neuropathic pain"
 },
 ",",
 {
@@ -2259,18 +2221,15 @@ const LIST_SECS = [
 "i": [
 {
 "a": "LSD",
-"n": "교차내성, 의존 ✗",
-"o": 1
+"n": "교차내성, 의존 ✗"
 },
 ",",
 {
-"a": "mescaline",
-"o": 1
+"a": "mescaline"
 },
 ",",
 {
-"a": "psilocybin",
-"o": 1
+"a": "psilocybin"
 }
 ],
 "b": true
