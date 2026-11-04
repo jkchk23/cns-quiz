@@ -13,7 +13,7 @@
 | `index.html` | 시작 페이지 — 마지막으로 연 과목으로 즉시 이동 | `build.py` 안 |
 
 ## 구조
-- `src/shared/hub.js`, `hub.css` — 과목 전환 메뉴(`subjectSwitcher()`), 화면 색(`getTheme`/`setTheme`), 마지막 과목, 서비스워커 등록. 두 앱에 똑같이 들어감
+- `src/shared/hub.js`, `hub.css` — 과목 전환 메뉴(`subjectSwitcher()`, 탭 4개: 약리 · CNS 약물 · 약물 리스트 타이핑(`drugs/#type`) · 미생물), 화면 색(`getTheme`/`setTheme`), 마지막 과목, 서비스워커 등록. 두 앱에 똑같이 들어감
   - 새 과목을 추가하려면 `SUBJECTS`에 한 줄, `build.py`의 `APPS`에 한 줄, `src/<id>/` 폴더 추가. 시작 페이지·sw의 과목 목록도 함께 고칠 것
 - 약리 (`src/pharm/`) — 2026-10 옛 CNS 자동생성 퀴즈를 폐기하고 강의록 + 2017–2025 기출 스타일로 새로 씀
   - `data_units.js` — 단원(`UNITS`, `UNIT_GROUPS`), 유형 태그(`TAGS`), 빈 문항 배열 `Q`

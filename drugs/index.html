@@ -346,6 +346,7 @@ const HUB_KEY = "study-hub-v1";
 const SUBJECTS = [
   { id: "pharm", path: "pharm", label: "약리학", sub: "객관식" },
   { id: "drugs", path: "drugs", label: "CNS 약물", sub: "암기" },
+  { id: "drugtype", path: "drugs/#type", label: "약물 리스트", sub: "타이핑" },
   { id: "micro", path: "micro", label: "미생물", sub: "서술형" }
 ];
 const hub = (() => {
@@ -368,11 +369,14 @@ hubSave();
 function getTheme() { return hub.theme || "auto"; }
 function setTheme(t) { hub.theme = t; hubSave(); }
 
+// 지금 탭: 약물 앱에서 #type 이면 '약물 리스트 타이핑' 탭
+function currentTab() { return CURRENT_SUBJECT === "drugs" && location.hash === "#type" ? "drugtype" : CURRENT_SUBJECT; }
 function subjectSwitcher() {
+  const cur = currentTab();
   return `<nav class="subj" aria-label="과목 전환" style="grid-template-columns:repeat(${SUBJECTS.length},1fr)">${SUBJECTS.map(s =>
-    s.id === CURRENT_SUBJECT
+    s.id === cur
       ? `<span class="sbtn on" aria-current="page"><b>${s.label}</b><small>${s.sub}</small></span>`
-      : `<a class="sbtn" href="../${s.path}/"><b>${s.label}</b><small>${s.sub}</small></a>`
+      : `<a class="sbtn" href="../${s.path.includes("#") ? s.path : s.path + "/"}"><b>${s.label}</b><small>${s.sub}</small></a>`
   ).join("")}</nav>`;
 }
 
@@ -4785,7 +4789,7 @@ function renderHome() {
 // ───── 시작
 function start(mode) {
   if (mode === "browse") return renderBrowse();
-  if (mode === "type") return renderType();
+  if (mode === "type") { if (location.hash !== "#type") history.pushState(null, "", "#type"); return renderType(); }
   let pool = poolFor(mode);
   if (!pool.length) return;
   // 다시 볼 것 → 안 본 것 → 외운 것 순
@@ -5022,6 +5026,7 @@ function renderType() {
   });
   const ids = tyIds(), ok = ids.filter(i => ty.st[i] === "ok").length;
   app().innerHTML = `
+  ${subjectSwitcher()}
   <div class="qtop"><button class="icon" id="back" aria-label="처음으로">✕</button><h2 class="dhead">약물 리스트 타이핑</h2></div>
   <div class="chips">${chips}</div>
   <div class="ty-bar">
@@ -5036,7 +5041,7 @@ function renderType() {
   <div class="ty-actions">
     <div class="row2"><button class="secondary" id="tyWrong" ${ids.some(i => ty.st[i] === "show" || ty.st[i] === "hint") ? "" : "disabled"}>틀린 칸만 다시</button><button class="secondary" id="tyReset">처음부터</button></div>
   </div>`;
-  $("#back").onclick = () => renderHome();
+  $("#back").onclick = () => tyLeave();
   app().querySelectorAll("[data-si]").forEach(b => b.onclick = () => {
     const si = +b.dataset.si;
     if (si === ty.si) return;
@@ -5062,6 +5067,14 @@ function renderType() {
   };
   $("#tyReset").onclick = () => { if (confirm("이 단원 입력을 모두 지우고 처음부터 할까요?")) { tyNew(ty.si); renderType(); window.scrollTo(0, 0); } };
   if (!ty.checked && !Object.values(ty.val).some(v => v)) { const f = app().querySelector(".ty-in"); if (f) f.focus({ preventScroll: true }); }
+}
+function tyLeave() { if (location.hash === "#type") history.pushState(null, "", location.pathname + location.search); renderHome(); }
+// 위 탭(drugs/#type)·뒤로가기로 오갈 때
+window.addEventListener("hashchange", tyRoute);
+window.addEventListener("popstate", tyRoute);
+function tyRoute() {
+  if (location.hash === "#type") { if (view !== "type") { renderType(); window.scrollTo(0, 0); } }
+  else if (view === "type") renderHome();
 }
 let tyLast = null;
 function tyKeep(fn) {
@@ -5144,7 +5157,7 @@ document.addEventListener("keydown", e => {
   else if (session.flipped && (k === "2" || k === "enter")) grade(true);
 });
 
-renderHome();
+location.hash === "#type" ? renderType() : renderHome();
 registerSW();
 
 </script>

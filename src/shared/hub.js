@@ -4,6 +4,7 @@ const HUB_KEY = "study-hub-v1";
 const SUBJECTS = [
   { id: "pharm", path: "pharm", label: "약리학", sub: "객관식" },
   { id: "drugs", path: "drugs", label: "CNS 약물", sub: "암기" },
+  { id: "drugtype", path: "drugs/#type", label: "약물 리스트", sub: "타이핑" },
   { id: "micro", path: "micro", label: "미생물", sub: "서술형" }
 ];
 const hub = (() => {
@@ -26,11 +27,14 @@ hubSave();
 function getTheme() { return hub.theme || "auto"; }
 function setTheme(t) { hub.theme = t; hubSave(); }
 
+// 지금 탭: 약물 앱에서 #type 이면 '약물 리스트 타이핑' 탭
+function currentTab() { return CURRENT_SUBJECT === "drugs" && location.hash === "#type" ? "drugtype" : CURRENT_SUBJECT; }
 function subjectSwitcher() {
+  const cur = currentTab();
   return `<nav class="subj" aria-label="과목 전환" style="grid-template-columns:repeat(${SUBJECTS.length},1fr)">${SUBJECTS.map(s =>
-    s.id === CURRENT_SUBJECT
+    s.id === cur
       ? `<span class="sbtn on" aria-current="page"><b>${s.label}</b><small>${s.sub}</small></span>`
-      : `<a class="sbtn" href="../${s.path}/"><b>${s.label}</b><small>${s.sub}</small></a>`
+      : `<a class="sbtn" href="../${s.path.includes("#") ? s.path : s.path + "/"}"><b>${s.label}</b><small>${s.sub}</small></a>`
   ).join("")}</nav>`;
 }
 

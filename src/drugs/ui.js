@@ -186,7 +186,7 @@ function renderHome() {
 // ───── 시작
 function start(mode) {
   if (mode === "browse") return renderBrowse();
-  if (mode === "type") return renderType();
+  if (mode === "type") { if (location.hash !== "#type") history.pushState(null, "", "#type"); return renderType(); }
   let pool = poolFor(mode);
   if (!pool.length) return;
   // 다시 볼 것 → 안 본 것 → 외운 것 순
@@ -423,6 +423,7 @@ function renderType() {
   });
   const ids = tyIds(), ok = ids.filter(i => ty.st[i] === "ok").length;
   app().innerHTML = `
+  ${subjectSwitcher()}
   <div class="qtop"><button class="icon" id="back" aria-label="처음으로">✕</button><h2 class="dhead">약물 리스트 타이핑</h2></div>
   <div class="chips">${chips}</div>
   <div class="ty-bar">
@@ -437,7 +438,7 @@ function renderType() {
   <div class="ty-actions">
     <div class="row2"><button class="secondary" id="tyWrong" ${ids.some(i => ty.st[i] === "show" || ty.st[i] === "hint") ? "" : "disabled"}>틀린 칸만 다시</button><button class="secondary" id="tyReset">처음부터</button></div>
   </div>`;
-  $("#back").onclick = () => renderHome();
+  $("#back").onclick = () => tyLeave();
   app().querySelectorAll("[data-si]").forEach(b => b.onclick = () => {
     const si = +b.dataset.si;
     if (si === ty.si) return;
@@ -463,6 +464,14 @@ function renderType() {
   };
   $("#tyReset").onclick = () => { if (confirm("이 단원 입력을 모두 지우고 처음부터 할까요?")) { tyNew(ty.si); renderType(); window.scrollTo(0, 0); } };
   if (!ty.checked && !Object.values(ty.val).some(v => v)) { const f = app().querySelector(".ty-in"); if (f) f.focus({ preventScroll: true }); }
+}
+function tyLeave() { if (location.hash === "#type") history.pushState(null, "", location.pathname + location.search); renderHome(); }
+// 위 탭(drugs/#type)·뒤로가기로 오갈 때
+window.addEventListener("hashchange", tyRoute);
+window.addEventListener("popstate", tyRoute);
+function tyRoute() {
+  if (location.hash === "#type") { if (view !== "type") { renderType(); window.scrollTo(0, 0); } }
+  else if (view === "type") renderHome();
 }
 let tyLast = null;
 function tyKeep(fn) {
@@ -545,5 +554,5 @@ document.addEventListener("keydown", e => {
   else if (session.flipped && (k === "2" || k === "enter")) grade(true);
 });
 
-renderHome();
+location.hash === "#type" ? renderType() : renderHome();
 registerSW();
