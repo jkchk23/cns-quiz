@@ -434,7 +434,7 @@ function renderType() {
         const g = si + ":" + gi, gids = TY_CELLS.filter(c => c.g === g).map(c => c.id);
         const gok = gids.filter(i => ty.st[i] === "ok").length, gdone = gids.some(i => ty.st[i] === "show" || ty.st[i] === "hint");
         html += `<div class="ty-cat" data-gh="${g}"><span>${line}</span>${gids.length ? `<span class="ty-gs">${gok}/${gids.length}</span>
-          <button class="ty-gb" data-gc="${g}">채점</button><button class="ty-gb ghost" data-gw="${g}" ${gids.some(i => ty.st[i] === "show" || ty.st[i] === "hint" || (ty.val[i] && ty.st[i] !== "ok")) ? "" : "disabled"}>틀린 것만 초기화</button><button class="ty-gb ghost" data-gr="${g}">초기화</button>` : ""}</div>`;
+          <button class="ty-gb" data-gc="${g}" title="⌘/Ctrl + Enter">채점</button><button class="ty-gb ghost" title="⌘/Ctrl + ⌫" data-gw="${g}" ${gids.some(i => ty.st[i] === "show" || ty.st[i] === "hint" || (ty.val[i] && ty.st[i] !== "ok")) ? "" : "disabled"}>틀린 것만 초기화</button><button class="ty-gb ghost" data-gr="${g}" title="⌘/Ctrl + Shift + ⌫">초기화</button>` : ""}</div>`;
       }
       else { while (open < row.l) { html += "<ul class=ty-ul>"; open++; } close(row.l); html += `<li>${line}</li>`; }
     });
@@ -454,6 +454,7 @@ function renderType() {
   <label class="ty-tg"><input type="checkbox" id="tyNotes" ${ty.notes ? "checked" : ""}> 약 이름 밑 특징 글씨 보기</label>
   <p class="note ty-res" id="tyRes"></p>
   <p class="note ty-help">약 이름을 치면 맞는 순간 초록색으로 바뀌고 다음 칸으로 넘어가요. 대소문자·띄어쓰기·하이픈은 상관없어요. 지난번에 틀린 칸은 왼쪽에 빨간 줄이 있어요.</p>
+  <p class="note ty-help ty-keys">단축키(커서가 있는 중분류): <kbd>⌘/Ctrl</kbd>+<kbd>Enter</kbd> 채점 · <kbd>⌘/Ctrl</kbd>+<kbd>⌫</kbd> 틀린 것만 초기화 · <kbd>⌘/Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>⌫</kbd> 초기화 · <kbd>Tab</kbd>/<kbd>Enter</kbd> 다음 칸 · 빈칸에서 <kbd>←</kbd> 앞 칸</p>
   <div class="ty-list">${html}</div>
   <div class="ty-actions">
     <div class="row2"><button class="secondary" id="tyWrong" ${ids.some(i => ty.st[i] === "show" || ty.st[i] === "hint") ? "" : "disabled"}>틀린 칸만 다시</button><button class="secondary" id="tyReset">처음부터</button></div>
@@ -479,18 +480,8 @@ function renderType() {
   ["#tyHint"].forEach(sel => $(sel).addEventListener("pointerdown", e => e.preventDefault()));
   $("#tyHint").onclick = tyHint;
   $("#tyCheck").onclick = () => tyCheck();
-  app().querySelectorAll("[data-gc]").forEach(b => b.onclick = () => tyCheck(b.dataset.gc));
-  app().querySelectorAll("[data-gr], [data-gw]").forEach(b => b.onclick = () => {
-    const g = b.dataset.gr || b.dataset.gw, onlyWrong = !!b.dataset.gw;
-    // 틀린 것만: 맞힌(초록) 칸은 두고 정답 공개·힌트·잘못 친 칸만 비움
-    TY_CELLS.filter(c => c.g === g && (!onlyWrong || ty.st[c.id] !== "ok")).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; delete ty.ans[c.id]; });
-    if (!tyIds().some(i => ty.st[i] === "show")) ty.checked = false;
-    tyKeep(renderType);
-    const f = app().querySelector(`[data-gh="${g}"]`);
-    const first = f && TY_CELLS.find(c => c.g === g && ty.st[c.id] !== "ok");
-    const el = first && app().querySelector(`.ty-in[data-id="${first.id}"]`);
-    if (el) el.focus({ preventScroll: true });
-  });
+  app().querySelectorAll("[data-gc]").forEach(b => b.onclick = () => { ty.lastG = b.dataset.gc; tyCheck(b.dataset.gc); });
+  app().querySelectorAll("[data-gr], [data-gw]").forEach(b => b.onclick = () => tyResetGroup(b.dataset.gr || b.dataset.gw, !!b.dataset.gw));
   $("#tyWrong").onclick = () => {
     tyIds().forEach(i => { if (ty.st[i] === "show" || ty.st[i] === "hint") { delete ty.st[i]; ty.val[i] = ""; delete ty.ans[i]; } });
     ty.checked = false; renderType();
@@ -499,6 +490,40 @@ function renderType() {
   $("#tyReset").onclick = () => { if (confirm("이 단원 입력을 모두 지우고 처음부터 할까요?")) { tyNew(ty.si); renderType(); window.scrollTo(0, 0); } };
   if (!ty.checked && !Object.values(ty.val).some(v => v)) { const f = app().querySelector(".ty-in"); if (f) f.focus({ preventScroll: true }); }
 }
+// 중분류 초기화 (onlyWrong: 맞힌 초록 칸은 두고 정답 공개·힌트·잘못 친 칸만 비움)
+function tyResetGroup(g, onlyWrong) {
+  // 틀린 것만: 맞힌(초록) 칸은 두고 정답 공개·힌트·잘못 친 칸만 비움
+  TY_CELLS.filter(c => c.g === g && (!onlyWrong || ty.st[c.id] !== "ok")).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; delete ty.ans[c.id]; });
+  if (!tyIds().some(i => ty.st[i] === "show")) ty.checked = false;
+  tyKeep(renderType);
+  const f = app().querySelector(`[data-gh="${g}"]`);
+  const first = f && TY_CELLS.find(c => c.g === g && ty.st[c.id] !== "ok");
+  const el = first && app().querySelector(`.ty-in[data-id="${first.id}"]`);
+  if (el) el.focus({ preventScroll: true });
+}
+// 지금 작업 중인 중분류: 커서 있는 칸 → 마지막으로 친 칸 → 마지막으로 버튼·단축키 쓴 곳 → 화면 가운데 위쪽 제목
+function tyCurGroup() {
+  const a = document.activeElement;
+  if (a && a.classList && a.classList.contains("ty-in")) return TY_BYPOS[a.dataset.id].g;
+  if (tyLast && document.body.contains(tyLast)) return TY_BYPOS[tyLast.dataset.id].g;
+  if (ty.lastG && app().querySelector(`[data-gh="${ty.lastG}"]`)) return ty.lastG;
+  let best = null;
+  app().querySelectorAll("[data-gh]").forEach(h => { if (h.getBoundingClientRect().top < window.innerHeight / 2) best = h.dataset.gh; });
+  const f = app().querySelector("[data-gh]");
+  return best || (f ? f.dataset.gh : null);
+}
+// 단축키 (입력 중에도 동작, 지금 중분류에): ⌘/Ctrl+Enter 채점 · ⌘/Ctrl+⌫ 틀린 것만 초기화 · ⌘/Ctrl+Shift+⌫ 초기화
+document.addEventListener("keydown", e => {
+  if (view !== "type" || !(e.metaKey || e.ctrlKey)) return;
+  const k = e.key;
+  if (k !== "Enter" && k !== "Backspace" && k !== "Delete") return;
+  const g = tyCurGroup();
+  if (!g) return;
+  e.preventDefault(); e.stopPropagation();
+  ty.lastG = g;
+  if (k === "Enter") tyCheck(g);
+  else tyResetGroup(g, !e.shiftKey);
+}, true);
 function tyLeave() { if (location.hash === "#type") history.pushState(null, "", location.pathname + location.search); renderHome(); }
 // 위 탭(drugs/#type)·뒤로가기로 오갈 때
 window.addEventListener("hashchange", tyRoute);
