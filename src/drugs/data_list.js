@@ -1358,8 +1358,7 @@ const LIST_SECS = [
 },
 "/",
 {
-"a": "prochlorperazine",
-"o": 1
+"a": "prochlorperazine"
 },
 ",",
 {
