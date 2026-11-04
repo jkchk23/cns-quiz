@@ -292,7 +292,11 @@ h1,h2{margin:0}
 .ty-sec+.ty-sec{margin-top:18px}
 .ty-sh{display:flex;align-items:baseline;gap:10px;border-bottom:1.2px solid var(--line);padding:12px 0 6px;margin-bottom:6px}
 .ty-sh b{font-size:20px}.ty-sh span{color:var(--muted);font-size:14px}
-.ty-cat{font-weight:700;color:#6f7f6a;margin:12px 0 4px;font-size:16px}
+.ty-cat{font-weight:700;color:#6f7f6a;margin:14px 0 4px;font-size:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ty-gs{font:600 13px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums;margin-left:2px}
+.ty-gs.all{color:var(--ok)}.ty-gs.some{color:var(--no)}
+.ty-gb{font:600 13px/1 var(--body);padding:6px 11px;border-radius:8px;border:1.5px solid var(--cobalt);background:var(--cobalt);color:var(--cobalt-ink)}
+.ty-gb.ghost{background:var(--surface);color:var(--muted);border-color:var(--line)}
 :root[data-theme="dark"] .ty-cat{color:#A9BBA2}
 @media (prefers-color-scheme: dark){:root:not([data-theme]) .ty-cat{color:#A9BBA2}}
 .ty-ul{margin:0;padding-left:22px}

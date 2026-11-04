@@ -365,9 +365,10 @@ function fillBrowse() {
 // ───── 약물 리스트 타이핑 (PDF 'CNS Drugs 1-4 약물 리스트'의 빈칸본과 같은 배치)
 // 칸 id = 단원 + 줄 번호 + 칸 번호 → 같은 약이 여러 줄에 나와도 따로 기록
 const TY_CELLS = [];
-LIST_SECS.forEach((sec, si) => sec.r.forEach((row, ri) => row.i.forEach((it, ii) => {
-  if (it && it.a) TY_CELLS.push({ id: "y:" + hash(sec.t + "|" + ri + "|" + ii + "|" + it.a), si, a: it.a, n: it.n || "", p: it.p || "" });
-})));
+// 중분류(진정수면제, Alcohols …) = 분류명 줄(l 0)부터 다음 분류명 전까지 → g: "단원:번호"
+LIST_SECS.forEach((sec, si) => { let gi = -1; sec.r.forEach((row, ri) => { if (row.l === 0) gi++; row.i.forEach((it, ii) => {
+  if (it && it.a) TY_CELLS.push({ id: "y:" + hash(sec.t + "|" + ri + "|" + ii + "|" + it.a), si, g: si + ":" + gi, a: it.a, n: it.n || "", p: it.p || "" });
+}); }); });
 const TY_BYPOS = {};
 TY_CELLS.forEach(c => (TY_BYPOS[c.id] = c));
 function tyNorm(s) { return String(s).normalize("NFKC").toLowerCase().replace(/<[^>]+>/g, "").replace(/[\s\-–·,.'’()]/g, ""); }
@@ -397,9 +398,10 @@ function renderType() {
   secs.forEach(si => {
     const sec = LIST_SECS[si];
     html += `<section class="ty-sec"><div class="ty-sh"><b>${sec.t}</b><span>${esc(sec.s)}</span></div>`;
-    let open = 0;
+    let open = 0, gi = -1;
     const close = to => { while (open > to) { html += "</ul>"; open--; } };
     sec.r.forEach((row, ri) => {
+      if (row.l === 0) gi++;
       const pcs = [];   // 쉼표 등은 앞 칸에 붙여 줄바꿈 때 혼자 떨어지지 않게
       row.i.forEach((it, ii) => {
         if (typeof it === "string") { const sp = `<span class="ty-sep">${esc(it)}</span>`; pcs.length ? (pcs[pcs.length - 1] += sp) : pcs.push(sp); return; }
@@ -415,7 +417,13 @@ function renderType() {
           ${it.n && ty.notes ? `<span class="ty-note">${esc(it.n)}</span>` : ""}</span></span>`);
       });
       const line = (row.k ? `<span class="ty-k">${row.k}</span><span class="ty-col"> : </span>` : "") + pcs.map(x => `<span class="ty-grp">${x}</span>`).join(" ");
-      if (row.l === 0) { close(0); html += `<div class="ty-cat">${line}</div>`; }
+      if (row.l === 0) {
+        close(0);
+        const g = si + ":" + gi, gids = TY_CELLS.filter(c => c.g === g).map(c => c.id);
+        const gok = gids.filter(i => ty.st[i] === "ok").length, gdone = gids.some(i => ty.st[i] === "show" || ty.st[i] === "hint");
+        html += `<div class="ty-cat" data-gh="${g}"><span>${line}</span>${gids.length ? `<span class="ty-gs">${gok}/${gids.length}</span>
+          <button class="ty-gb" data-gc="${g}">채점</button><button class="ty-gb ghost" data-gr="${g}">초기화</button>` : ""}</div>`;
+      }
       else { while (open < row.l) { html += "<ul class=ty-ul>"; open++; } close(row.l); html += `<li>${line}</li>`; }
     });
     close(0);
@@ -456,7 +464,18 @@ function renderType() {
   // 힌트·채점 버튼을 눌러도 입력칸 포커스를 잃지 않게
   ["#tyHint"].forEach(sel => $(sel).addEventListener("pointerdown", e => e.preventDefault()));
   $("#tyHint").onclick = tyHint;
-  $("#tyCheck").onclick = tyCheck;
+  $("#tyCheck").onclick = () => tyCheck();
+  app().querySelectorAll("[data-gc]").forEach(b => b.onclick = () => tyCheck(b.dataset.gc));
+  app().querySelectorAll("[data-gr]").forEach(b => b.onclick = () => {
+    const g = b.dataset.gr;
+    TY_CELLS.filter(c => c.g === g).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; });
+    if (!tyIds().some(i => ty.st[i] === "show")) ty.checked = false;
+    tyKeep(renderType);
+    const f = app().querySelector(`[data-gh="${g}"]`);
+    const first = f && TY_CELLS.find(c => c.g === g);
+    const el = first && app().querySelector(`.ty-in[data-id="${first.id}"]`);
+    if (el) el.focus({ preventScroll: true });
+  });
   $("#tyWrong").onclick = () => {
     tyIds().forEach(i => { if (ty.st[i] === "show" || ty.st[i] === "hint") { delete ty.st[i]; ty.val[i] = ""; } });
     ty.checked = false; renderType();
@@ -490,6 +509,8 @@ function tyInput(inp) {
     if (ty.st[id] === "ok") state.ty[id] = 1;
     save();
     $("#tyOk").textContent = tyIds().filter(i => ty.st[i] === "ok").length;
+    const gh = app().querySelector(`[data-gh="${c.g}"] .ty-gs`);
+    if (gh) { const gids = TY_CELLS.filter(x => x.g === c.g); gh.textContent = gids.filter(x => ty.st[x.id] === "ok").length + "/" + gids.length; }
     tyFocusNext(inp);
   }
 }
@@ -519,8 +540,9 @@ function tyHint() {
   inp.focus({ preventScroll: true });
   tyInput(inp);
 }
-function tyCheck() {
-  const ids = tyIds();
+// g 가 있으면 그 중분류만 채점
+function tyCheck(g) {
+  const ids = g ? TY_CELLS.filter(c => c.g === g).map(c => c.id) : tyIds();
   let ok = 0;
   ids.forEach(id => {
     const c = TY_BYPOS[id], v = ty.val[id] || "";
@@ -529,9 +551,18 @@ function tyCheck() {
     if (ty.st[id] === "hint" && tyAnswers(c.a).has(tyNorm(v))) { state.ty[id] = 0; return; }
     ty.st[id] = "show"; state.ty[id] = 0;
   });
-  ty.checked = true;
-  state.tyb[ty.si] = [ok, ids.length, Date.now()];
+  if (!g) { ty.checked = true; state.tyb[ty.si] = [ok, ids.length, Date.now()]; }
   save();
+  if (g) {
+    // 그 중분류 제목 위치를 그대로 두고 다시 그림
+    const h0 = app().querySelector(`[data-gh="${g}"]`), top0 = h0 ? h0.getBoundingClientRect().top : 0;
+    renderType();
+    const h1 = app().querySelector(`[data-gh="${g}"]`);
+    if (h1) window.scrollBy(0, h1.getBoundingClientRect().top - top0);
+    const gs = h1 && h1.querySelector(".ty-gs");
+    if (gs) gs.classList.add(ok === ids.length ? "all" : "some");
+    return;
+  }
   renderType();
   const first = app().querySelector(".ty-in.show, .ty-in.hint");
   if (first) first.scrollIntoView({ block: "center" }); else window.scrollTo(0, 0);
