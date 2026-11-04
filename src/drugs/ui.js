@@ -454,7 +454,7 @@ function renderType() {
   <label class="ty-tg"><input type="checkbox" id="tyNotes" ${ty.notes ? "checked" : ""}> 약 이름 밑 특징 글씨 보기</label>
   <p class="note ty-res" id="tyRes"></p>
   <p class="note ty-help">약 이름을 치면 맞는 순간 초록색으로 바뀌고 다음 칸으로 넘어가요. 대소문자·띄어쓰기·하이픈은 상관없어요. 지난번에 틀린 칸은 왼쪽에 빨간 줄이 있어요.</p>
-  <p class="note ty-help ty-keys">단축키(커서가 있는 중분류): <kbd>⌘/Ctrl</kbd>+<kbd>Enter</kbd> 채점 · <kbd>⌘/Ctrl</kbd>+<kbd>⌫</kbd> 틀린 것만 초기화 · <kbd>⌘/Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>⌫</kbd> 초기화 · <kbd>Tab</kbd>/<kbd>Enter</kbd> 다음 칸 · 빈칸에서 <kbd>←</kbd> 앞 칸</p>
+  <p class="note ty-help ty-keys">단축키(커서가 있는 중분류): <kbd>⌘/Ctrl</kbd>+<kbd>Enter</kbd> 채점 · <kbd>⌘/Ctrl</kbd>+<kbd>⌫</kbd> 틀린 것만 초기화 · <kbd>⌘/Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>⌫</kbd> 초기화 · <kbd>Tab</kbd>/<kbd>Enter</kbd> 다음 칸 · 빈칸에서 <kbd>←</kbd> 앞 칸 · <kbd>→</kbd> 다음 칸</p>
   <div class="ty-list">${html}</div>
   <div class="ty-actions">
     <div class="row2"><button class="secondary" id="tyWrong" ${ids.some(i => ty.st[i] === "show" || ty.st[i] === "hint") ? "" : "disabled"}>틀린 칸만 다시</button><button class="secondary" id="tyReset">처음부터</button></div>
@@ -470,9 +470,10 @@ function renderType() {
   app().querySelectorAll(".ty-in").forEach(inp => {
     inp.oninput = () => tyInput(inp);
     inp.onkeydown = e => {
-      // 엔터·탭 = 이 칸 확인 후 다음 칸, Shift+탭 = 앞 칸, 빈칸에서 ← = 앞 칸
+      // 엔터·탭 = 이 칸 확인 후 다음 칸, Shift+탭 = 앞 칸, 빈칸에서 ← = 앞 칸 / → = 다음 칸
       if (e.key === "Enter" || (e.key === "Tab" && !e.shiftKey)) { e.preventDefault(); tyCheckOne(inp, true); tyFocusNext(inp); }
       else if ((e.key === "Tab" && e.shiftKey) || (e.key === "ArrowLeft" && !inp.value)) { e.preventDefault(); tyFocusPrev(inp); }
+      else if (e.key === "ArrowRight" && !inp.value) { e.preventDefault(); tyFocusNext(inp); }
     };
     inp.onblur = () => tyCheckOne(inp, false);
   });
