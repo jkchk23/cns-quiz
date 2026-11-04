@@ -4974,8 +4974,11 @@ function fillBrowse() {
 // 칸 id = 단원 + 줄 번호 + 칸 번호 → 같은 약이 여러 줄에 나와도 따로 기록
 const TY_CELLS = [];
 // 중분류(진정수면제, Alcohols …) = 분류명 줄(l 0)부터 다음 분류명 전까지 → g: "단원:번호"
-LIST_SECS.forEach((sec, si) => { let gi = -1; sec.r.forEach((row, ri) => { if (row.l === 0) gi++; row.i.forEach((it, ii) => {
-  if (it && it.a) TY_CELLS.push({ id: "y:" + hash(sec.t + "|" + ri + "|" + ii + "|" + it.a), si, g: si + ":" + gi, a: it.a, n: it.n || "", p: it.p || "" });
+// 특징 글씨가 없는 칸끼리는 같은 줄·같은 '/' 묶음 안에서 순서 상관없이 정답 → pk(묶음 키)
+LIST_SECS.forEach((sec, si) => { let gi = -1; sec.r.forEach((row, ri) => { if (row.l === 0) gi++; let seg = 0; row.i.forEach((it, ii) => {
+  if (it === "/") seg++;
+  if (it && it.a) TY_CELLS.push({ id: "y:" + hash(sec.t + "|" + ri + "|" + ii + "|" + it.a), si, g: si + ":" + gi, a: it.a, n: it.n || "", p: it.p || "",
+    pk: !it.n && !it.p ? si + "|" + ri + "|" + seg : "" });
 }); }); });
 const TY_BYPOS = {};
 TY_CELLS.forEach(c => (TY_BYPOS[c.id] = c));
@@ -4989,10 +4992,19 @@ function tyAnswers(a) {
   return set;
 }
 let ty = null;   // { si: 단원 번호 | -1 전체, val: {id: 입력}, st: {id: "ok"|"no"|"hint"|"show"}, notes, checked }
+// 이 칸에 들어갈 수 있는 정답들: 순서 자유 묶음이면 다른 칸이 아직 안 쓴 약 이름 전부(제자리 약을 맨 앞에)
+function tyPoolAns(id) {
+  const c = TY_BYPOS[id];
+  if (!c.pk) return [c.a];
+  const mem = TY_CELLS.filter(m => m.pk === c.pk);
+  const used = new Set(mem.filter(m => m.id !== id && ty.ans[m.id]).map(m => ty.ans[m.id]));
+  return [c.a, ...mem.map(m => m.a).filter(a => a !== c.a)].filter(a => !used.has(a));
+}
+function tyMatch(id, v) { const n = tyNorm(v); return n ? tyPoolAns(id).find(a => tyAnswers(a).has(n)) : undefined; }
 function tyIds() { return TY_CELLS.filter(c => ty.si < 0 || c.si === ty.si).map(c => c.id); }
 function tyNew(si) {
   const prev = ty;
-  ty = { si, val: {}, st: {}, notes: prev ? prev.notes : (state.set.tyNotes !== false), checked: false, onlyWrong: false };
+  ty = { si, val: {}, st: {}, ans: {}, notes: prev ? prev.notes : (state.set.tyNotes !== false), checked: false, onlyWrong: false };
 }
 function renderType() {
   view = "type"; session = null;
@@ -5019,7 +5031,7 @@ function renderType() {
         const w = Math.max(it.a.length, 4) + 1.5;
         const was = state.ty[id] === 0 ? " was-no" : "";
         pcs.push(`<span class="ty-cell">${it.p ? `<span class="ty-pre">${esc(it.p)}</span>` : ""}<span class="ty-col2">
-          <input class="ty-in ${st}${was}" data-id="${id}" style="width:${w}ch" value="${esc(st === "show" ? it.a : v)}" ${st === "ok" || st === "show" ? "readonly" : ""}
+          <input class="ty-in ${st}${was}" data-id="${id}" style="width:${w}ch" value="${esc(st === "show" ? (ty.ans[id] || it.a) : v)}" ${st === "ok" || st === "show" ? "readonly" : ""}
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" aria-label="빈칸${it.n ? " — " + esc(it.n) : ""}">
           ${st === "show" && v ? `<s class="ty-mine">${esc(v)}</s>` : ""}
           ${it.n && ty.notes ? `<span class="ty-note">${esc(it.n)}</span>` : ""}</span></span>`);
@@ -5076,7 +5088,7 @@ function renderType() {
   app().querySelectorAll("[data-gc]").forEach(b => b.onclick = () => tyCheck(b.dataset.gc));
   app().querySelectorAll("[data-gr]").forEach(b => b.onclick = () => {
     const g = b.dataset.gr;
-    TY_CELLS.filter(c => c.g === g).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; });
+    TY_CELLS.filter(c => c.g === g).forEach(c => { delete ty.st[c.id]; delete ty.val[c.id]; delete ty.ans[c.id]; });
     if (!tyIds().some(i => ty.st[i] === "show")) ty.checked = false;
     tyKeep(renderType);
     const f = app().querySelector(`[data-gh="${g}"]`);
@@ -5085,7 +5097,7 @@ function renderType() {
     if (el) el.focus({ preventScroll: true });
   });
   $("#tyWrong").onclick = () => {
-    tyIds().forEach(i => { if (ty.st[i] === "show" || ty.st[i] === "hint") { delete ty.st[i]; ty.val[i] = ""; } });
+    tyIds().forEach(i => { if (ty.st[i] === "show" || ty.st[i] === "hint") { delete ty.st[i]; ty.val[i] = ""; delete ty.ans[i]; } });
     ty.checked = false; renderType();
     const f = app().querySelector(".ty-in:not([readonly])"); if (f) { f.focus(); f.scrollIntoView({ block: "center" }); }
   };
@@ -5110,9 +5122,10 @@ function tyInput(inp) {
   const id = inp.dataset.id, c = TY_BYPOS[id];
   ty.val[id] = inp.value; tyLast = inp;
   inp.classList.remove("no");
-  if (tyAnswers(c.a).has(tyNorm(inp.value))) {
+  const m = tyMatch(id, inp.value);
+  if (m) {
     if (ty.st[id] !== "hint") ty.st[id] = "ok";
-    inp.value = c.a; ty.val[id] = c.a;
+    ty.ans[id] = m; inp.value = m; ty.val[id] = m;
     inp.classList.add(ty.st[id]); inp.readOnly = true;
     if (ty.st[id] === "ok") state.ty[id] = 1;
     save();
@@ -5125,7 +5138,7 @@ function tyInput(inp) {
 function tyCheckOne(inp, strict) {
   const id = inp.dataset.id;
   if (inp.readOnly || !inp.value.trim()) return;
-  if (!tyAnswers(TY_BYPOS[id].a).has(tyNorm(inp.value)) && strict) inp.classList.add("no");
+  if (!tyMatch(id, inp.value) && strict) inp.classList.add("no");
 }
 function tyFocusNext(inp) {
   const all = [...app().querySelectorAll(".ty-in")];
@@ -5138,9 +5151,11 @@ function tyHint() {
   let inp = document.activeElement && document.activeElement.classList.contains("ty-in") ? document.activeElement : tyLast;
   if (!inp || inp.readOnly || !document.body.contains(inp)) inp = app().querySelector(".ty-in:not([readonly])");
   if (!inp) return;
-  const id = inp.dataset.id, a = TY_BYPOS[id].a;
-  // 이미 맞게 친 앞부분 다음 글자 하나를 채움
-  let k = 0; const v = inp.value;
+  const id = inp.dataset.id, v = inp.value;
+  // 순서 자유 칸이면 지금까지 친 글자로 시작하는 약을 고름 → 이미 맞게 친 앞부분 다음 글자 하나를 채움
+  const cands = tyPoolAns(id);
+  const a = cands.find(x => x.toLowerCase().startsWith(v.toLowerCase())) || cands[0];
+  let k = 0;
   while (k < v.length && k < a.length && v[k].toLowerCase() === a[k].toLowerCase()) k++;
   inp.value = a.slice(0, k + 1);
   ty.st[id] = "hint"; state.ty[id] = 0; save();
@@ -5152,13 +5167,18 @@ function tyHint() {
 function tyCheck(g) {
   const ids = g ? TY_CELLS.filter(c => c.g === g).map(c => c.id) : tyIds();
   let ok = 0;
+  const miss = [];
   ids.forEach(id => {
-    const c = TY_BYPOS[id], v = ty.val[id] || "";
+    const v = ty.val[id] || "";
     if (ty.st[id] === "ok") { ok++; state.ty[id] = 1; return; }
-    if (tyAnswers(c.a).has(tyNorm(v)) && ty.st[id] !== "hint") { ty.st[id] = "ok"; ok++; state.ty[id] = 1; return; }
-    if (ty.st[id] === "hint" && tyAnswers(c.a).has(tyNorm(v))) { state.ty[id] = 0; return; }
-    ty.st[id] = "show"; state.ty[id] = 0;
+    if (ty.st[id] === "hint" && ty.ans[id]) { state.ty[id] = 0; return; }
+    const m = tyMatch(id, v);
+    if (m && ty.st[id] !== "hint") { ty.st[id] = "ok"; ty.ans[id] = m; ok++; state.ty[id] = 1; return; }
+    if (m) { ty.ans[id] = m; state.ty[id] = 0; return; }
+    delete ty.ans[id]; miss.push(id);
   });
+  // 못 맞힌 칸에는 그 묶음에서 아직 안 나온 약을 차례로 보여 줌
+  miss.forEach(id => { ty.st[id] = "show"; state.ty[id] = 0; ty.ans[id] = tyPoolAns(id)[0] || TY_BYPOS[id].a; });
   if (!g) { ty.checked = true; state.tyb[ty.si] = [ok, ids.length, Date.now()]; }
   save();
   if (g) {
